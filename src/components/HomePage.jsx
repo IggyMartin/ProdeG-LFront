@@ -1,7 +1,7 @@
 
 function HomePage() {
   return (
-    <div>HomePage</div>
+    <div className="bg-blue-200">HomePage</div>
   )
 }
 
