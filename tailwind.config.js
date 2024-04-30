@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+      'seleccionCampeona': "url('./src/assets/Fondos-de-pantalla/fondo08.jpg')"
+      }
+    },
   },
   plugins: [],
 }

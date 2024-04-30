@@ -1,7 +1,9 @@
+import Layout from "./Layout"
 
 function HomePage() {
   return (
-    <div className="bg-blue-200">HomePage</div>
+    <Layout>
+    </Layout>
   )
 }
 
