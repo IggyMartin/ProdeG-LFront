@@ -9,7 +9,7 @@ function Layout({ children, backgroundImage }) {
 
         {/* Content */}
         <div className="relative flex flex-col justify-between p-4 text-white">
-            <header className="flex justify-between mb-4">
+            <header className="flex justify-between">
             <img className="w-32 h-32 rounded-2xl" src={GL} alt="Logo GyL" />
             <img className="w-32 h-32 rounded-2xl" src={logo_copa_america} alt="Logo Copa America" />
             </header>
