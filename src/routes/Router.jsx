@@ -8,7 +8,7 @@ function Router() {
     <Routes>
         <Route path='/home' element={<HomePage />} />
         <Route path='/rules&conditions' element={<RulesAndConditions />}/>
-        <Route path='/groupStage' element={<Stage stage="Fase De Grupos" start={0} end={24} division={4}/>}/>
+        <Route path='/groupStage' element={<Stage stage="groups" division={4}/>}/>
     </Routes>
   )
 }
