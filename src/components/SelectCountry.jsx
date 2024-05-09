@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react"
 import { getAllCountriesDB } from "../services/countryService"
 import ReactSelect from "react-select"
-import objetoBanderas from "../utils/flagsJSON"
+import getCountryFlag from "../utils/flagsJSON"
 
 function SelectCountry() {
     const [selectOptions, setSelectOptions] = useState([])
-
-    const getCountryFlag = (country) => {
-        for(let key in objetoBanderas) {
-            if(key === country) {
-                return objetoBanderas[key]
-            }      
-        }
-    }
 
     useEffect(() => {
         (async function getCountriesAndSetSelectOptions() {
@@ -36,7 +28,7 @@ function SelectCountry() {
             isSearchable={false}
             formatOptionLabel={country => (
                 <div className="flex gap-2 text-black">
-                <img className=" w-6 h-auto aspect-auto" src={country.countryImg} alt="country image" />
+                <img className=" w-6 h-auto object-contain" src={country.countryImg} alt="country image" />
                 <span>{country.label}</span>
                 </div>
             )}

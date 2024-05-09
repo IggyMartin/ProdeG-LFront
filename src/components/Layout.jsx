@@ -24,14 +24,14 @@ function Layout({ children, page }) {
                 <span>Hola Usuario</span> {/*alias del usuario*/}
               </div>
             </header>
-            <main className='flex-grow'>
-              <div className='flex flex-col items-center gap-4 mb-16'>
+            <main className='flex-grow overflow-y-scroll'>
+              <div className='flex flex-col items-center gap-4 mb-8'>
                 <h1 className='text-[28px]'>Copa America 2024</h1>
                 <h2 className='text-[22px]'>{page}</h2>
               </div>
               {children}
             </main>
-            <nav className="flex justify-center items-center mb-6 h-16">
+            <nav className="flex justify-center items-center mb-6 mt-10 h-16">
               <span className='text-[24px] hover:cursor-pointer	mx-8'>Fase De Grupos</span>
               <span className='text-[24px] hover:cursor-pointer mx-8'>Cuartos de Final</span>
               <span className='text-[24px] hover:cursor-pointer mx-8'>Semifinales</span>

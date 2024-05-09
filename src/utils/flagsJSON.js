@@ -16,7 +16,7 @@ import usaFlag from "../assets/banderas/bandera_usa.png"
 import venezuelaFlag from "../assets/banderas/bandera_venezuela.png"
 
 
-export default {
+const countriesFlags = {
     Argentina: argentinaFlag,
     Bolivia: boliviaFlag,
     Brasil: brasilFlag,
@@ -34,3 +34,13 @@ export default {
     "Estados Unidos": usaFlag,
     Venezuela: venezuelaFlag
 }
+
+const getCountryFlag = (country) => {
+    for(let key in countriesFlags) {
+        if(key === country) {
+            return countriesFlags[key]
+        }      
+    }
+}
+
+export default getCountryFlag
