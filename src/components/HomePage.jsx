@@ -1,10 +1,11 @@
 import Layout from "./Layout"
 import SelectCountry from "./SelectCountry"
+import homeDivider from "../assets/fondos-de-pantalla/homeDivider.png"
 
 function HomePage() {
   return (
     <Layout page="Prediccion de tus 4 mejores de America">
-      <div>
+      <div className="text-center">
         <section className="flex flex-col items-center">
           <div className="flex flex-col gap-6">
             <div className="flex justify-center gap-4">
@@ -25,11 +26,26 @@ function HomePage() {
                 <SelectCountry/>
               </div>
             </div>
-            <button className="self-center p-4 bg-blue-800 text-[18px] active:bg-blue-950 border-[1px]	border-solid border-white">Guardar</button>
+            <p>¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p>
+            <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white">Guardar</button>
           </div>
+        <img className="my-4" src={homeDivider} alt="home divider" />
         </section>
         <section>
+          <h2 className='text-[28px]'>Posiciones</h2>
+          <div className="flex justify-center">
+            <img src="" alt="" /> {/* avatar del usuario */}
+            <div className="flex flex-col">
+              <span>Tu posicion</span>
+              <span>Posicion del usuario</span>
+            </div>
+            <div className="flex flex-col">
+              <span>Tu Puntaje</span>
+              <span>Puntos del usuario</span> 
+            </div>
+          </div>
         </section>
+        {/* Tabla de posiciones */}
       </div>
     </Layout>
   )

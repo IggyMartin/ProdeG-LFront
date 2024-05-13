@@ -1,5 +1,5 @@
-import fondoCopaAmerica2024 from '../assets/fondo-copa-america-2024/fondo_copa_america_01.jpeg'
-import GL from '../assets/logo-GyL/GL.png'
+import fondoCopaAmerica2024 from '../assets/fondos-de-pantalla/prodeFondo.png'
+import GL from '../assets/logo-GyL/GL2.png'
 
 function Layout({ children, page }) {
   return (
@@ -9,7 +9,7 @@ function Layout({ children, page }) {
 
         {/* Content */}
         <div className="h-screen relative flex flex-col justify-between text-white">
-            <header className="bg-blue-950 flex justify-between items-center p-2 mb-4">
+            <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center p-2 mb-6 border-b-2 border-solid border-opacity-90 border-white">
               <img className="w-24 h-24 rounded-2xl" src={GL} alt="Logo GyL" />
               <nav className='w-1/2	'>
                 <ul className='flex justify-between'>       
@@ -19,7 +19,7 @@ function Layout({ children, page }) {
                   <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline'>Premios</li>
                 </ul>
               </nav>
-              <div>
+              <div className="flex gap-3">
                 <img src="" alt="Profile avatar" /> {/*avatar del usuario*/}
                 <span>Hola Usuario</span> {/*alias del usuario*/}
               </div>

@@ -1,7 +1,6 @@
 import Layout from "./Layout"
 import { getAllGamesDB } from "../services/gameService"
 import { useEffect, useState } from "react"
-import MatchCard from "./MatchCard"
 import { divideGames, getTitle } from "../utils/functions"
 import getCountryFlag from "../utils/flagsJSON"
 

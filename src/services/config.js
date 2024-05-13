@@ -14,3 +14,4 @@ const makeRequest = (method, url, data, config = {}) => {
 };
 
 export const getWithHeaders = url => makeRequest("get", url);
+export const postWithHeaders = (url, data) => makeRequest("post", url, data);

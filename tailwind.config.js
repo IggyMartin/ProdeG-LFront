@@ -6,8 +6,10 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-      'seleccionCampeona': "url('./src/assets/Fondos-de-pantalla/fondo08.jpg')"
+      boxShadow: {
+        'login': '0 0 30px 5px rgba(255, 255, 255, 0.2)',
+        'headerUp': 'inset 0 -10px 10px 5px rgba(255, 255, 255, 0.7)',
+        'headerDn': '0 10px 10px 5px rgba(255, 255, 255, 0.8)'
       }
     },
   },
