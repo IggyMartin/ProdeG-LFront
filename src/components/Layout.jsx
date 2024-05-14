@@ -1,27 +1,26 @@
-import fondoCopaAmerica2024 from '../assets/fondos-de-pantalla/prodeFondo.png'
+import { useNavigate } from 'react-router-dom'
+import fondo from '../assets/fondos-de-pantalla/fondoProde.png'
 import GL from '../assets/logo-GyL/GL2.png'
+import logoCA from '../assets/fondo-copa-america-2024/logitoCA.png'
 
 function Layout({ children, page }) {
+  const navigate = useNavigate()
   return (
-    <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url(${fondoCopaAmerica2024})`}}>
-        {/* Background image with opacity */}
-        <div className="absolute inset-0 bg-black opacity-80"></div>
-
-        {/* Content */}
+    <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url(${fondo})`}}>
         <div className="h-screen relative flex flex-col justify-between text-white">
-            <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center p-2 mb-6 border-b-2 border-solid border-opacity-90 border-white">
-              <img className="w-24 h-24 rounded-2xl" src={GL} alt="Logo GyL" />
-              <nav className='w-1/2	'>
+          <img className='absolute bottom-0 right-0' src={logoCA} alt="logo" />
+            <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center px-4 py-2 mb-6 border-b-2 border-solid border-opacity-90 border-white">
+              <img className="w-24 h-24 rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
+              <nav className='w-1/3'>
                 <ul className='flex justify-between'>       
-                  <li className='text-[24px] hover:cursor-pointer hover:underline'>Fixture</li>
-                  <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline'>Posiciones</li>
-                  <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline'>Reglas</li>
-                  <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline'>Premios</li>
+                  <li className='text-[24px] hover:cursor-pointer hover:underline' onClick={() => navigate('/groupStage')}>Fixture</li>
+                  <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline' onClick={() => navigate('/rules')}>Reglas</li>
+                  <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline' onClick={() => navigate('/rewards')}>Premios</li>
                 </ul>
               </nav>
-              <div className="flex gap-3">
+              <div className="flex items-center gap gap-3">
                 <img src="" alt="Profile avatar" /> {/*avatar del usuario*/}
-                <span>Hola Usuario</span> {/*alias del usuario*/}
+                <span className='text-[26px]'>USUARIO</span> {/*alias del usuario*/}
               </div>
             </header>
             <main className='flex-grow overflow-y-scroll'>
