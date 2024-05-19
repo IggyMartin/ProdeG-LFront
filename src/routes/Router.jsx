@@ -4,6 +4,7 @@ import Rules from '../components/Rules'
 import GroupStage from '../components/GroupStage'
 import Login from '../components/Login'
 import Rewards from '../components/Rewards'
+import NotFound from '../components/NotFound'
 
 function Router() {
   return (
@@ -13,6 +14,7 @@ function Router() {
         <Route path='/rules' element={<Rules />}/>
         <Route path='/rewards' element={<Rewards />} />
         <Route path='/groupStage' element={<GroupStage stage="groups" division={4}/>}/>
+        <Route path='*' element={<NotFound />} />  {/* Catch-all route */}
     </Routes>
   )
 }

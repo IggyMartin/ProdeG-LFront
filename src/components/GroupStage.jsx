@@ -41,26 +41,28 @@ function Stage({ stage, division }) {
                       const bgColorForRow = rowIndex % 2 === 0 ? 'bg-blue-950' : 'bg-blue-900';
 
                       return (
-                        <tr key={match?.id} className={`basis-full p-3 ${bgColorForRow}`}>
-                          <td className="flex items-center justify-between">
-                            <div className="w-1/5 flex justify-start items-center gap-2">
-                              <img className="w-8 h-8 object-cover rounded-full" src={leftCountryFlag} alt="left country flag" />
-                              <span>{match?.localCountryResponse?.name}</span>
+                        <tr key={match?.id} className={`p-3 ${bgColorForRow}`}>
+                          <td className="flex items-center">
+                            <div className="w-1/2 flex">
+                              <div className="w-1/3 flex justify-start items-center gap-2">
+                                <img className="w-8 h-8 object-cover rounded-full" src={leftCountryFlag} alt="left country flag" />
+                                <span>{match?.localCountryResponse?.name}</span>
+                              </div>
+                              <div className="w-1/3 flex justify-center items-center">
+                                <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" type="text" />
+                                <span className="px-2">vs</span>
+                                <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" type="text" />
+                              </div>
+                              <div className="w-1/3 flex justify-end items-center gap-2">
+                                <span>{match?.visitorCountryResponse?.name}</span>
+                                <img className="w-8 h-8 object-cover rounded-full" src={rightCountryFlag} alt="right country flag" />
+                              </div>
                             </div>
-                            <div className="w-1/5 flex justify-center">
-                              <input className="w-1/6 outline-none" type="text" />
-                              <span className="px-2">vs</span>
-                              <input className="w-1/6	outline-none" type="text" />
-                            </div>
-                            <div className="w-1/5 flex justify-end items-center gap-2">
-                              <span>{match?.visitorCountryResponse?.name}</span>
-                              <img className="w-8 h-8 object-cover rounded-full" src={rightCountryFlag} alt="right country flag" />
-                            </div>
-                            <span className="w-1/5 flex justify-end">{match?.matchStartDateTime}</span>
-                            <div className="w-1/5 flex justify-end">
-                              {/*este seria condicional a si es guest o admin */}
-                              <span className="pr-2">Resultado Final:</span>
-                              <span className="justify-self-center	">{match?.localScore === null ? "?" : match?.localScore} - {match?.visitorScore === null ? "?" : match?.visitorScore}</span>
+                            <div className="w-1/2 flex justify-evenly items-center">
+                              <button className="px-4 py-1 border-solid border-2 border-white rounded-2xl text-[18px]">Guardar</button> {/* guardar prediccion */}
+                              <span>{match?.localScore === null ? "?" : match?.localScore} - {match?.visitorScore === null ? "?" : match?.visitorScore}</span> {/* resultado final */}
+                              <span>-</span> {/* puntos */}
+                              <span>{match?.matchStartDateTime}</span>
                             </div>
                           </td>
                         </tr>
