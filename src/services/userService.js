@@ -1,9 +1,9 @@
-import { getWithHeaders } from "./config"; 
+import { getWithHeaders } from "./config";
 
-const PATH = '/prode/profile'
+const PATH = '/prode/user'
 
-export const getAllProfilesDB = async () => {
-    const url = `${PATH}/all`
+export const getUserByIdDB = async (id) => {
+    const url = `${PATH}/${id}`
     try {
         const response = await getWithHeaders(url)
         return response.data

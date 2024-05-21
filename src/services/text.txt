@@ -1,1 +1,0 @@
-// archivo para definicion de carpeta inicial 

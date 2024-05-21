@@ -1,9 +1,4 @@
-import fondoLogin from '../assets/fondo-copa-america-2024/fondoLogin.png'
-import logoCopaAmerica from '../assets/logos/logocopaAmerica.png'
-import GL from '../assets/logos/GL2.png'
-import tituloCopaAmerica from '../assets/fondo-copa-america-2024/tituloCopaAmerica.png'
 import argetinaLogin from '../assets/fondo-copa-america-2024/argentinaLogin.png'
-import logoCA from '../assets/fondo-copa-america-2024/logitoCA.png'
 import { useState, useEffect, useRef } from 'react';
 import { /*googleLogout*/GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
@@ -11,6 +6,7 @@ import { loginUserDB } from '../services/loginService';
 import adminEmails from '../utils/adminEmails';
 import { useNavigate } from 'react-router-dom'
 import RulesDefinition from './RulesDefinition'
+import LoginLayout from './LoginLayout';
 
 
 function Login() {
@@ -21,21 +17,24 @@ function Login() {
 
     const loginPlayer = async (loginData) => {
         const loginResponse = await loginUserDB(loginData)
-        if(loginResponse.termsAndConditions) {
-            if(loginResponse.selectAvatar) {
-                navigate("/home", {state: {user: loginResponse}})
+        const decodedResponse = jwtDecode(loginResponse.jwt)
+        console.log(decodedResponse)
+        if(decodedResponse.user.loginProcess.termsAndConditions) {
+            if(decodedResponse.user.loginProcess.selectAvatar) {
+                navigate("/home")
             } else {
-                navigate('/setAvatar', {state: {user: loginResponse}})
+                navigate('/setAvatar')
             }
         } else {
-            setUser(loginData)
+            setUser(decodedResponse.user)
             dialogRef.current.showModal()
             dialogRef.current.scrollTop = 0
         }
     }
 
     const acceptedTerms = () => {
-        navigate('/setAvatar', {state: {user: user}})
+        {/* funcion para settear termsAndConditions del player en true */}
+        navigate('/setAvatar')
     }
 
     useEffect(() => {
@@ -48,13 +47,7 @@ function Login() {
     }*/
 
     return (
-        <div className="relative bg-cover bg-center h-screen text-white" style={{backgroundImage: `url(${fondoLogin})`}}>
-            <img className='w-50 h-50 absolute bottom-0 right-0' src={logoCA} alt="styling logo" />
-            <header className='flex justify-between p-4'>
-                <img className='w-32 h-32' src={GL} alt="G&L logo" />
-                <img src={tituloCopaAmerica} alt="cup title" />
-                <img className='w-32 h-32' src={logoCopaAmerica} alt="cup logo" />
-            </header>
+        <LoginLayout>
             <main className='w-[44rem] h-[35rem] shadow-login absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 transition-transform bg-gray-900 rounded-2xl'>
                 <img className='absolute -bottom-3 -left-20 w-3/5 h-auto' src={argetinaLogin} alt="argentina players Login" />
                 {
@@ -80,16 +73,15 @@ function Login() {
                             <GoogleLogin
                             onSuccess={credentialResponse => {
                                 const decodedCredentials = jwtDecode(credentialResponse.credential);
-                                console.log(decodedCredentials);
                                 if (!adminEmails.includes(decodedCredentials.email)) {
                                 loginPlayer({
                                     fullName: decodedCredentials.name,
-                                    email: decodedCredentials.email,
+                                    username: decodedCredentials.email,
                                     roleId: 2
                                 });
                                 } else {
                                 setUser({
-                                    email: decodedCredentials.email,
+                                    username: decodedCredentials.email,
                                     fullName: decodedCredentials.name
                                 });
                                 }
@@ -109,7 +101,7 @@ function Login() {
                                     <span className={`text-[18px] ${acceptTerms ? 'text-green-600' : 'text-red-600'}`}>{acceptTerms ? 'Reglas aceptadas!' : 'Aceptar Reglas'}</span>
                                 </div>
                                 <div className='text-center mt-6'>
-                                    <button className={`px-10 py-2 rounded-3xl ${acceptTerms ? 'text-white bg-blue-800' : 'text-slate-200 bg-slate-500 cursor-default'}`} onClick={acceptTerms && acceptedTerms}>Aceptar</button>
+                                    <button className={`px-10 py-2 rounded-3xl ${acceptTerms ? 'text-white bg-blue-800' : 'text-slate-200 bg-slate-500 cursor-default'}`} disabled={!acceptTerms} onClick={acceptTerms ? acceptedTerms : undefined}>Aceptar</button>
                                 </div>
                             </section>
                         </dialog>
@@ -117,7 +109,7 @@ function Login() {
                     )
                     }
             </main>
-        </div>
+        </LoginLayout>
     )
 }
 

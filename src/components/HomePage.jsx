@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import Layout from "./Layout"
 import SelectCountry from "./SelectCountry"
 import homeDivider from "../assets/fondos-de-pantalla/homeDivider.png"
@@ -8,13 +9,19 @@ import { SlArrowUp } from "react-icons/sl";
 import { useState } from "react";
 import PositionsTable from "./PositionsTable";
 import ReactSelect from "react-select"
+import { useLocation } from "react-router-dom"
 
 
 function HomePage() {
-
+  const location = useLocation()
+  const userData = location.state.user
   const [typeOfUser, setTypeOfUser] = useState("player")
-
   const [showPlayers, setShowPlayers] = useState(false)
+
+  useEffect(() => {
+    console.log(userData)
+  }, [])
+
   return (
     <Layout page={typeOfUser !== "admin" && "Prediccion de tus 4 mejores de America"}>
       {
