@@ -1,4 +1,5 @@
 const adminEmails = [
+    "imartin@gylgroup.com",
     "pereyes@gylgroup.com",
 ]
 

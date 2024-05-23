@@ -7,10 +7,10 @@ import logoCopaAmerica from '../assets/logos/logocopaAmerica.png'
 function LoginLayout({ children }) {
   return (
     <div className="relative bg-cover bg-center h-screen text-white" style={{backgroundImage: `url(${fondoLogin})`}}>
-        <img className='w-50 h-50 absolute bottom-0 right-0' src={logoCA} alt="styling logo" />
+        <img className='w-1/5 h-auto absolute bottom-0 right-0' src={logoCA} alt="styling logo" />
         <header className='flex justify-between p-4'>
             <img className='w-32 h-32' src={GL} alt="G&L logo" />
-            <img src={tituloCopaAmerica} alt="cup title" />
+            <img className='z-10' src={tituloCopaAmerica} alt="cup title" />
             <img className='w-32 h-32' src={logoCopaAmerica} alt="cup logo" />
         </header>
         {children}

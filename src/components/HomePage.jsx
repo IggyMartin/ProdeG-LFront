@@ -9,23 +9,21 @@ import { SlArrowUp } from "react-icons/sl";
 import { useState } from "react";
 import PositionsTable from "./PositionsTable";
 import ReactSelect from "react-select"
-import { useLocation } from "react-router-dom"
+import { useSelector } from 'react-redux'
 
 
 function HomePage() {
-  const location = useLocation()
-  const userData = location.state.user
-  const [typeOfUser, setTypeOfUser] = useState("player")
+  const globalUser = useSelector(state => state.user.user)
   const [showPlayers, setShowPlayers] = useState(false)
 
   useEffect(() => {
-    console.log(userData)
-  }, [])
+    console.log(globalUser)
+  }, [globalUser])
 
   return (
-    <Layout page={typeOfUser !== "admin" && "Prediccion de tus 4 mejores de America"}>
+    <Layout page={globalUser.selectedRole === "PLAYER" && "Prediccion de tus 4 mejores de America"}>
       {
-        typeOfUser === "admin" ? (
+        globalUser.selectedRole === "ADMIN" ? (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <img className="mb-8" src={logoCATitulo} alt="logo CA titulo" />
             <div className="flex flex-col items-center gap-6">
@@ -69,8 +67,8 @@ function HomePage() {
           <img className="my-4 w-3/4" src={homeDivider} alt="home divider" />
           <section className="mb-8">
             <h2 className='text-[28px]'>Posiciones</h2>
-            <div className="flex justify-center">
-              <img src="" alt="" /> {/* avatar del usuario */}
+            <div className="flex justify-center items-center">
+              <img className='w-20 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex flex-col">
                 <span>Tu posicion</span>
                 <span>Posicion del usuario</span>
