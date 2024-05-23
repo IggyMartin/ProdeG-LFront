@@ -28,7 +28,18 @@ function Login() {
             fullName,
             roleId: 2
         })
-        dispatch(saveUserData(jwtDecode(getCookies("jwt"))))
+        if (globalUser?.loginProcess?.termsAndConditions) {
+            if (globalUser?.loginProcess?.selectAvatar) {
+                navigate("/home");
+            } else {
+                navigate("/setAvatar");
+            }
+        } else {
+            if (dialogRef.current) {
+                dialogRef.current.showModal();
+                dialogRef.current.scrollTop = 0;
+            }
+        }
     }
 
     const acceptedTerms = async () => {
@@ -44,26 +55,8 @@ function Login() {
             fullName,
             roleId: 1
         })
-        dispatch(saveUserData(jwtDecode(getCookies("jwt"))))
         navigate("/home")
     }
-
-    useEffect(() => {
-        if (Object.keys(globalUser).length > 0) {
-            if (globalUser.loginProcess?.termsAndConditions) {
-                if (globalUser.loginProcess?.selectAvatar) {
-                    navigate("/home");
-                } else {
-                    navigate("/setAvatar");
-                }
-            } else {
-                if (dialogRef.current) {
-                    dialogRef.current.showModal();
-                    dialogRef.current.scrollTop = 0;
-                }
-            }
-        }
-    }, [globalUser, navigate]);
 
     // pasar logout a nav al clickear usuario
     /*const logOut = () => {

@@ -1,9 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getCookies } from '../services/cookiesService'
+import { jwtDecode } from 'jwt-decode'
+
+const token = getCookies("jwt")
+const decodedToken = jwtDecode(token)
 
 export const userSlice = createSlice({
   name: 'userSlice',
   initialState: {
-    user: {}
+    user: decodedToken
   },
   reducers: {
     saveUserData: (state, action) => {
