@@ -1,4 +1,4 @@
-import { setCookies } from "./cookiesService";
+import { setCookies, getCookies, removeCookies } from "./cookiesService";
 
 export const loginUserDB = async (data) => {
     try {
@@ -16,6 +16,14 @@ export const loginUserDB = async (data) => {
             const data = await response.json();
             const [year, month, day] = data.expiration.split(" T")[0].split("-");
             let [hour, minute, second] = data.expiration.split(" T")[1].split(":");
+            if(getCookies("jwt")) {
+                removeCookies("jwt")
+                setCookies(
+                    "jwt",
+                    data.jwt,
+                    new Date(year, month - 1, day, hour, minute)
+                );
+            }
             setCookies(
                 "jwt",
                 data.jwt,

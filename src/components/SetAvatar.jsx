@@ -9,7 +9,10 @@ import lobo from '../assets/avatars/lobo.png'
 import { FaPencilAlt } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux'
 import { setUserAvatarDB } from '../services/loginProcess'
-import { updateUserLoginProcess } from '../redux/userSlice'
+import { saveUserData } from '../redux/userSlice'
+import { loginUserDB } from '../services/loginService'
+import { jwtDecode } from 'jwt-decode'
+import { getCookies } from '../services/cookiesService'
 
 
 const avatars = [gato, leon, tigre, leopardo, lobo]
@@ -32,11 +35,18 @@ function SetAvatar() {
     }
 
     const handleContinue = async () => {
-        const updatedUserLoginProcess = await setUserAvatarDB({
+        await setUserAvatarDB({
             id: globalUser?.loginProcess?.id,
             selectAvatar: userAvatar
         })
-        dispatch(updateUserLoginProcess(updatedUserLoginProcess))
+        await loginUserDB({
+            username: globalUser?.username,
+            fullName: globalUser?.fullName,
+            roleId: 2
+        })
+        const token = getCookies("jwt")
+        let decodedToken = jwtDecode(token)
+        dispatch(saveUserData(decodedToken))
         navigate('/home')
     }
 

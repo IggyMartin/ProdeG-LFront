@@ -10,15 +10,74 @@ import { useState } from "react";
 import PositionsTable from "./PositionsTable";
 import ReactSelect from "react-select"
 import { useSelector } from 'react-redux'
+import Swal from "sweetalert2"
+import { createUserTopFourPredictionDB } from "../services/topFourPredictionService"
 
 
 function HomePage() {
   const globalUser = useSelector(state => state.user.user)
   const [showPlayers, setShowPlayers] = useState(false)
+  const [topFour, setTopFour] = useState([null, null, null, null])
+
+  const addToTopFour = (place, selectedCountry) => {
+    setTopFour(prevTopFour => {
+        const newTopFour = [...prevTopFour];
+        switch (place) {
+            case "first":
+                newTopFour[0] = selectedCountry.value;
+                break;
+            case place = "second":
+                newTopFour[1] = selectedCountry.value;
+                break;
+            case place = "third":
+                newTopFour[2] = selectedCountry.value;
+                break;
+            case place = "fourth":
+                newTopFour[3] = selectedCountry.value;
+                break;
+            default:
+                break;
+        }
+        return newTopFour;
+    });
+  };
+
+  const handleTopFourSubmit = async (e) => {
+    e.preventDefault()
+    const copyTopFour = new Set(topFour)
+    if(topFour.includes(null)) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Asegurate de elegir las 4 posiciones!',
+        icon: 'error',
+        confirmButtonText: 'Hecho'
+      })
+      return
+    }
+    if(copyTopFour.size < 4) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'No puedes repetir el mismo país!',
+        icon: 'error',
+        confirmButtonText: 'Hecho'
+      })
+      return
+    }
+
+    const topFourCreationResponse = await createUserTopFourPredictionDB({
+      userId: globalUser?.userId,
+      countryIdList: topFour
+    })
+    console.log(topFourCreationResponse)
+  }
 
   useEffect(() => {
     console.log(globalUser)
   }, [globalUser])
+
+  useEffect(() => {
+    console.log(topFour)
+  }, [topFour])
 
   return (
     <Layout page={globalUser.selectedRole === "PLAYER" && "Prediccion de tus 4 mejores de America"}>
@@ -31,7 +90,7 @@ function HomePage() {
               <div className="w-52">
                 <ReactSelect
                 className="text-black bg-blue-700"
-                options={[{vale: "GroupStage", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
+                options={[{value: "GroupStage", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
                 placeholder="FIXTURE"
                 isSearchable={false}
                 />
@@ -44,23 +103,23 @@ function HomePage() {
             <div className="flex flex-col gap-6">
               <div className="flex justify-center gap-4">
                 <div className="flex flex-col items-center gap-2">
-                  <label htmlFor="champion">Campeon</label>
-                  <SelectCountry id="champion"/>
+                  <label>Campeon</label>
+                  <SelectCountry place="first" addToTopFour={addToTopFour}/>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                  <label htmlFor="champion">Sub-Campeon</label>
-                  <SelectCountry/>
+                  <label>Sub-Campeon</label>
+                  <SelectCountry place="second" addToTopFour={addToTopFour}/>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                  <label htmlFor="champion">Tercer Puesto</label>
-                  <SelectCountry/>
+                  <label>Tercer Puesto</label>
+                  <SelectCountry place="third" addToTopFour={addToTopFour}/>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                  <label htmlFor="champion">Cuarto Puesto</label>
-                  <SelectCountry/>
+                  <label>Cuarto Puesto</label>
+                  <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
                 </div>
               </div>
-              <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white">Guardar</button>
+              <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white" onClick={handleTopFourSubmit}>Guardar</button>
               <p>¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p>
             </div>
           </section>

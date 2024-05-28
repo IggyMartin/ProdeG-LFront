@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getAllCountriesDB } from "../services/countryService"
 import ReactSelect from "react-select"
 import getCountryFlag from "../utils/flagsJSON"
 
-function SelectCountry() {
+function SelectCountry({ place, addToTopFour }) {
     const [selectOptions, setSelectOptions] = useState([])
+
+    const handleAddToTopFour = (selectedCountry) => {
+        addToTopFour(place, selectedCountry)
+    }
 
     useEffect(() => {
         (async function getCountriesAndSetSelectOptions() {
@@ -22,16 +26,17 @@ function SelectCountry() {
 
     return (
         <div className="w-52">
-            <ReactSelect 
+            <ReactSelect
             options={selectOptions}
             placeholder="Paises"
             isSearchable={false}
             formatOptionLabel={country => (
                 <div className="flex gap-2 text-black">
-                <img className=" w-6 h-auto object-contain" src={country.countryImg} alt="country image" />
-                <span>{country.label}</span>
+                    <img className=" w-6 h-auto object-contain" src={country.countryImg} alt="country image" />
+                    <span>{country.label}</span>
                 </div>
             )}
+            onChange={handleAddToTopFour}
             />
         </div>
     )

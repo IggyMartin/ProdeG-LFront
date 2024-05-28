@@ -2,8 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 import { getCookies } from '../services/cookiesService'
 import { jwtDecode } from 'jwt-decode'
 
+let decodedToken
+
 const token = getCookies("jwt")
-const decodedToken = jwtDecode(token)
+if(token) {
+  decodedToken = jwtDecode(token)
+}
 
 export const userSlice = createSlice({
   name: 'userSlice',

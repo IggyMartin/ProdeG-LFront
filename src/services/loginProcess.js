@@ -13,7 +13,7 @@ export const acceptTermsAndConditionsDB = async (data) => {
 }
 
 export const setUserAvatarDB = async (data) => {
-    const url = `${PATH}/setUserAvatar`
+    const url = `${PATH}/updateAvatar`
     try {
         const response = await putWithHeaders(url, data)
         return response.data
