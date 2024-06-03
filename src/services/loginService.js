@@ -29,8 +29,6 @@ export const loginUserDB = async (data) => {
                 data.jwt,
                 new Date(year, month - 1, day, hour, minute)
             );
-
-            return
         }
     } catch (error) {
         throw error.response

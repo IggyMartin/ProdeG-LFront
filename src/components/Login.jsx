@@ -28,8 +28,11 @@ function Login() {
             fullName,
             roleId: 2
         })
-        if (globalUser?.loginProcess?.termsAndConditions) {
-            if (globalUser?.loginProcess?.selectAvatar) {
+        const userToken = getCookies("jwt");
+        const decodedToken = jwtDecode(userToken);
+        dispatch(saveUserData(decodedToken))
+        if (decodedToken?.loginProcess?.termsAndConditions) {
+            if (decodedToken?.loginProcess?.selectAvatar) {
                 navigate("/home");
             } else {
                 navigate("/setAvatar");
@@ -55,6 +58,9 @@ function Login() {
             fullName,
             roleId: 1
         })
+        const userToken = getCookies("jwt");
+        const decodedToken = jwtDecode(userToken);
+        dispatch(saveUserData(decodedToken))
         navigate("/home")
     }
 

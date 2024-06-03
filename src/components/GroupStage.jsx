@@ -1,25 +1,135 @@
 import Layout from "./Layout"
 import { getAllGamesDB } from "../services/gameService"
 import { useEffect, useState } from "react"
-import { divideGames, getTitle } from "../utils/functions"
+import { divideGames } from "../utils/functions"
 import getCountryFlag from "../utils/flagsJSON"
+import { useSelector } from "react-redux"
+import { createGamePredictionDB, findAllByUserIdDB } from "../services/predictionService"
+import Swal from "sweetalert2"
+import { convertToDateObject } from "../utils/functions"
 
 
 function Stage({ stage, division }) {
   const [allGames, setAllGames] = useState([])
+  const globalUser = useSelector(state => state.user.user)
+  const [makePredictions, setmakePredictions] = useState({})
+  const [existantPredictions, setExistantPredictions] = useState({})
 
   const getAllGames = async () => {
     const data = await getAllGamesDB()
     setAllGames(data)
   }
 
+  const handleMakePrediction = (e, matchId) => {
+    let newValue = e.target.value;
+    const regex = /^\d+$/;
+    if(newValue.length > 1 && newValue[0] == 0) {
+      newValue = newValue.slice(1)
+    }
+    if (newValue === '' || regex.test(newValue)) {
+      setmakePredictions(prevState => {
+        return {
+          ...prevState,
+          [matchId]: {
+            ...prevState[matchId],
+            [e.target.id]: newValue
+          }
+        };
+      });
+    }
+  }
+
+  const saveMatchPrediction = async (userId, matchId, matchLockDateTime) => {
+    const actualDateAndTime = new Date()
+    console.log(matchLockDateTime)
+    try {
+      await createGamePredictionDB({
+        userId,
+        gameId: matchId,
+        localScorePrediction: makePredictions[matchId].localScorePrediction,
+        visitorScorePrediction: makePredictions[matchId].visitorScorePrediction,
+        matchLockDateTime
+      })
+      const predictionsByUserResponse = await findAllByUserIdDB(globalUser?.userId)
+      const updatedPredictions = predictionsByUserResponse.reduce((accumulator, currentObject) => {
+        accumulator[currentObject.gameResponse.id] = {
+          localScorePrediction: currentObject.localScorePrediction,
+          visitorScorePrediction: currentObject.visitorScorePrediction
+        };
+        return accumulator;
+      }, {});
+      setExistantPredictions(prevState => ({
+        ...prevState,
+        updatedPredictions
+      }));
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        width: '300px',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Prediccion hecha!"
+      });
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'El partido ya fue bloqueado!',
+        icon: 'error',
+        confirmButtonText: 'Hecho'
+      })
+    }
+  }
+
   useEffect(() => {
-    getAllGames()
+    const fetchPredictions = async () => {
+      try {
+        const predictionsByUserResponse = await findAllByUserIdDB(globalUser?.userId);
+        const updatedPredictions = predictionsByUserResponse.reduce((accumulator, currentObject) => {
+          accumulator[currentObject.gameResponse.id] = {
+            localScorePrediction: currentObject.localScorePrediction,
+            visitorScorePrediction: currentObject.visitorScorePrediction
+          };
+          return accumulator;
+        }, {});
+        setExistantPredictions(updatedPredictions);
+      } catch (error) {
+        console.error('Error fetching predictions:', error);
+      }
+    };
+  
+    fetchPredictions();
+  }, [globalUser]);
+
+  useEffect(() => {
+    getAllGames();
   }, [])
 
   useEffect(() => {
+    const actualDateTime = new Date()
+    allGames.filter(game => game.stage === stage && !existantPredictions.hasOwnProperty(game.id)).map(game => {
+      const matchLockInDateTimeFormat = convertToDateObject(game.matchLockDateTime)
+      if(actualDateTime > matchLockInDateTimeFormat) {
+        setExistantPredictions(prevState => ({
+          ...prevState,
+          [game.id]: "expired"
+        }))
+      }
+    })
     console.log(allGames)
   }, [allGames])
+
+  useEffect(() => {
+    console.log(existantPredictions)
+  }, [existantPredictions])
+
   return (
     <Layout page="Fase De Grupos">
       <div className="flex flex-col items-center">
@@ -33,7 +143,7 @@ function Stage({ stage, division }) {
                 <span>Grupo D</span>
               </div>
               <table>
-                <tbody className="flex flex-col">
+                <tbody className="w-[950px] flex flex-col">
                   {
                     group.map((match, rowIndex) => {
                       const leftCountryFlag = getCountryFlag(match?.localCountryResponse?.name)
@@ -48,21 +158,78 @@ function Stage({ stage, division }) {
                                 <img className="w-8 h-8 object-cover rounded-full" src={leftCountryFlag} alt="left country flag" />
                                 <span>{match?.localCountryResponse?.name}</span>
                               </div>
-                              <div className="w-1/3 flex justify-center items-center">
-                                <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" type="text" />
-                                <span className="px-2">vs</span>
-                                <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" type="text" />
-                              </div>
+                              {
+                                globalUser?.selectedRole === "ADMIN" ? (
+                                <span className="w-1/3 flex justify-center items-center">vs</span>
+                                ) : (
+                                <div className="w-1/3 flex justify-center items-center">
+                                  <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" id="localScorePrediction" type="text" value={existantPredictions[match?.id]?.localScorePrediction !== undefined ? existantPredictions[match?.id]?.localScorePrediction : null || makePredictions[match?.id]?.localScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                  <span className="px-2">vs</span>
+                                  <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" id="visitorScorePrediction" type="text" value={existantPredictions[match?.id]?.visitorScorePrediction !== undefined ? existantPredictions[match?.id].visitorScorePrediction : null || makePredictions[match?.id]?.visitorScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                </div>
+                                )
+                              }
                               <div className="w-1/3 flex justify-end items-center gap-2">
                                 <span>{match?.visitorCountryResponse?.name}</span>
                                 <img className="w-8 h-8 object-cover rounded-full" src={rightCountryFlag} alt="right country flag" />
                               </div>
                             </div>
                             <div className="w-1/2 flex justify-evenly items-center">
-                              <button className="px-4 py-1 border-solid border-2 border-white rounded-2xl text-[18px]">Guardar</button> {/* guardar prediccion */}
-                              <span>{match?.localScore === null ? "?" : match?.localScore} - {match?.visitorScore === null ? "?" : match?.visitorScore}</span> {/* resultado final */}
-                              <span>-</span> {/* puntos */}
-                              <span>{match?.matchStartDateTime}</span>
+                              {
+                                globalUser?.selectedRole === "PLAYER" && (
+                                <button className={`${existantPredictions[match?.id] === "expired" ? 'text-orange-500 border-orange-500' : existantPredictions[match?.id] ? "text-green-400 border-green-400" : !makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("") ? "text-slate-400 border-slate-400 cursor-default" : "cursor-pointer"} px-4 py-1 border-solid border-2 rounded-2xl text-[18px]`} disabled={!makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("")} onClick={() => saveMatchPrediction(globalUser?.userId, match?.id, match?.matchLockDateTime)}>{typeof existantPredictions[match?.id] == "object" ? "Hecha!" : existantPredictions[match?.id] === "expired" ? "Venció!" : "Guardar"}</button>
+                                )
+                              }
+                              {
+                                globalUser?.selectedRole === "ADMIN" ? (
+                                  match?.localScore === null ? (
+                                  <div className="w-1/3 flex justify-center">
+                                    <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" id="localScorePrediction" type="text" onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                    <span className="px-2">vs</span>
+                                    <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" id="visitorScorePrediction" type="text" onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                  </div>
+                                  ) : (
+                                    <span className="w-1/3 text-center">{match?.localScore} - {match?.visitorScore}</span>
+                                  )
+                                ) : (
+                                  <span>{match?.localScore === null ? "?" : match?.localScore} - {match?.visitorScore === null ? "?" : match?.visitorScore}</span>
+                                )
+                              }
+                              {
+                                globalUser?.selectedRole === "ADMIN" && (
+                                  <span className="w-1/3">
+                                    <button className={`${match?.localScore && "border-green-400 text-green-400"} px-4 py-1 border-solid border-white border-2 rounded-2xl text-center`} disabled={match?.localScore}>{match?.localScore ? "Hecho!" : "Guardar"}</button>
+                                  </span>
+                                )
+                              }
+                              {
+                                globalUser?.selectedRole === "PLAYER" && (
+                              <span>
+                                {
+                                  existantPredictions[match?.id] && 
+                                  match?.localScore !== null && 
+                                  match?.visitorScore !== null ?
+                                  (
+                                    existantPredictions[match?.id]?.localScorePrediction == match?.localScore &&
+                                    existantPredictions[match?.id]?.visitorScorePrediction == match?.visitorScore
+                                  ) ? 2 :
+                                  (
+                                    (
+                                      existantPredictions[match?.id]?.localScorePrediction > existantPredictions[match?.id]?.visitorScorePrediction &&
+                                      match?.localScore > match?.visitorScore
+                                    ) || (
+                                      existantPredictions[match?.id]?.localScorePrediction < existantPredictions[match?.id]?.visitorScorePrediction &&
+                                      match?.localScore < match?.visitorScore
+                                    ) || (
+                                      existantPredictions[match?.id]?.localScorePrediction == existantPredictions[match?.id]?.visitorScorePrediction &&
+                                      match?.localScore == match?.visitorScore
+                                    )
+                                  ) ? 1 : 0 : "-"
+                                }
+                              </span>
+                                )
+                              }
+                              <span className={globalUser?.selectedRole === "ADMIN" && "w-1/3"}>{match?.matchStartDateTime}</span>
                             </div>
                           </td>
                         </tr>
