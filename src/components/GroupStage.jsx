@@ -1,5 +1,5 @@
 import Layout from "./Layout"
-import { getAllGamesDB } from "../services/gameService"
+import { getAllGamesDB, updateGameDB } from "../services/gameService"
 import { useEffect, useState } from "react"
 import { divideGames } from "../utils/functions"
 import getCountryFlag from "../utils/flagsJSON"
@@ -8,12 +8,26 @@ import { createGamePredictionDB, findAllByUserIdDB } from "../services/predictio
 import Swal from "sweetalert2"
 import { convertToDateObject } from "../utils/functions"
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top",
+  width: '300px',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: false,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+
 
 function Stage({ stage, division }) {
   const [allGames, setAllGames] = useState([])
   const globalUser = useSelector(state => state.user.user)
   const [makePredictions, setmakePredictions] = useState({})
   const [existantPredictions, setExistantPredictions] = useState({})
+  const [matchResults, setMatchResults] = useState({})
 
   const getAllGames = async () => {
     const data = await getAllGamesDB()
@@ -39,9 +53,26 @@ function Stage({ stage, division }) {
     }
   }
 
+  const handleMatchResult = (e, matchId) => {
+    let newValue = e.target.value;
+    const regex = /^\d+$/;
+    if(newValue.length > 1 && newValue[0] == 0) {
+      newValue = newValue.slice(1)
+    }
+    if (newValue === '' || regex.test(newValue)) {
+      setMatchResults(prevState => {
+        return {
+          ...prevState,
+          [matchId]: {
+            ...prevState[matchId],
+            [e.target.id]: newValue
+          }
+        };
+      });
+    }
+  }
+
   const saveMatchPrediction = async (userId, matchId, matchLockDateTime) => {
-    const actualDateAndTime = new Date()
-    console.log(matchLockDateTime)
     try {
       await createGamePredictionDB({
         userId,
@@ -58,21 +89,12 @@ function Stage({ stage, division }) {
         };
         return accumulator;
       }, {});
-      setExistantPredictions(prevState => ({
-        ...prevState,
-        updatedPredictions
-      }));
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top",
-        width: '300px',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: false,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
+      const existantPredictionsToArray = Object.entries(existantPredictions)
+      const onlyExpiredMatches = existantPredictionsToArray.filter(([key, val]) => val === "expired")
+      const onlyExpiredMatchesBackToObject = Object.fromEntries(onlyExpiredMatches)
+      setExistantPredictions({
+        ...onlyExpiredMatchesBackToObject,
+        ...updatedPredictions
       });
       Toast.fire({
         icon: "success",
@@ -88,9 +110,25 @@ function Stage({ stage, division }) {
     }
   }
 
+  const saveMatchResult = async (e, match) => {
+    console.log(match)
+    await updateGameDB({
+      id: match.id,
+      stage: match.stage,
+      localCountryId: match.localCountryResponse.id,
+      visitorCountryId: match.visitorCountryResponse.id,
+      localScore: matchResults[match.id].localScore,
+      visitorScore: matchResults[match.id].visitorScore,
+    })
+    await getAllGames()
+    Toast.fire({
+      icon: "success",
+      title: "Resultado cargado con exito!"
+    });
+  }
+
   useEffect(() => {
     const fetchPredictions = async () => {
-      try {
         const predictionsByUserResponse = await findAllByUserIdDB(globalUser?.userId);
         const updatedPredictions = predictionsByUserResponse.reduce((accumulator, currentObject) => {
           accumulator[currentObject.gameResponse.id] = {
@@ -99,10 +137,10 @@ function Stage({ stage, division }) {
           };
           return accumulator;
         }, {});
-        setExistantPredictions(updatedPredictions);
-      } catch (error) {
-        console.error('Error fetching predictions:', error);
-      }
+        setExistantPredictions(prevState => ({
+          ...prevState,
+          ...updatedPredictions
+        }));
     };
   
     fetchPredictions();
@@ -124,7 +162,11 @@ function Stage({ stage, division }) {
       }
     })
     console.log(allGames)
-  }, [allGames])
+  }, [existantPredictions])
+
+  useEffect(() => {
+    console.log(matchResults)
+  }, [matchResults])
 
   useEffect(() => {
     console.log(existantPredictions)
@@ -148,7 +190,7 @@ function Stage({ stage, division }) {
                     group.map((match, rowIndex) => {
                       const leftCountryFlag = getCountryFlag(match?.localCountryResponse?.name)
                       const rightCountryFlag = getCountryFlag(match?.visitorCountryResponse?.name)
-                      const bgColorForRow = rowIndex % 2 === 0 ? 'bg-blue-950' : 'bg-blue-900';
+                      const bgColorForRow = rowIndex % 2 === 0 ? 'bg-blue-900' : 'bg-blue-950';
 
                       return (
                         <tr key={match?.id} className={`p-3 ${bgColorForRow}`}>
@@ -184,9 +226,9 @@ function Stage({ stage, division }) {
                                 globalUser?.selectedRole === "ADMIN" ? (
                                   match?.localScore === null ? (
                                   <div className="w-1/3 flex justify-center">
-                                    <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" id="localScorePrediction" type="text" onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                    <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" id="localScore" type="text" value={matchResults[match?.id]?.localScore !== undefined ? matchResults[match?.id].localScore : ''} onChange={(e) => handleMatchResult(e, match?.id)} autoComplete="off"/>
                                     <span className="px-2">vs</span>
-                                    <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" id="visitorScorePrediction" type="text" onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                    <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" id="visitorScore" type="text" value={matchResults[match?.id]?.visitorScore !== undefined ? matchResults[match?.id].visitorScore : ''} onChange={(e) => handleMatchResult(e, match?.id)} autoComplete="off"/>
                                   </div>
                                   ) : (
                                     <span className="w-1/3 text-center">{match?.localScore} - {match?.visitorScore}</span>
@@ -198,7 +240,7 @@ function Stage({ stage, division }) {
                               {
                                 globalUser?.selectedRole === "ADMIN" && (
                                   <span className="w-1/3">
-                                    <button className={`${match?.localScore && "border-green-400 text-green-400"} px-4 py-1 border-solid border-white border-2 rounded-2xl text-center`} disabled={match?.localScore}>{match?.localScore ? "Hecho!" : "Guardar"}</button>
+                                    <button className={`${match?.localScore ? "border-green-400 text-green-400" : !matchResults[match?.id] || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("") ? "border-slate-400 text-slate-400" : "border-white"} w-2/3 px-4 py-1 border-solid border-2 rounded-2xl text-center`} disabled={match?.localScore} onClick={e => saveMatchResult(e, match)}>{match?.localScore ? "Hecho!" : "Guardar"}</button>
                                   </span>
                                 )
                               }
@@ -212,7 +254,7 @@ function Stage({ stage, division }) {
                                   (
                                     existantPredictions[match?.id]?.localScorePrediction == match?.localScore &&
                                     existantPredictions[match?.id]?.visitorScorePrediction == match?.visitorScore
-                                  ) ? 2 :
+                                  ) ? 3 :
                                   (
                                     (
                                       existantPredictions[match?.id]?.localScorePrediction > existantPredictions[match?.id]?.visitorScorePrediction &&

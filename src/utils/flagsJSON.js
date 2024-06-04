@@ -16,7 +16,7 @@ import usaFlag from "../assets/banderas/bandera_usa.png"
 import venezuelaFlag from "../assets/banderas/bandera_venezuela.png"
 
 
-const countriesFlags = {
+export const countriesFlags = {
     Argentina: argentinaFlag,
     Bolivia: boliviaFlag,
     Brasil: brasilFlag,

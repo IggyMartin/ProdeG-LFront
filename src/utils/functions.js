@@ -1,3 +1,8 @@
+import { countriesFlags } from "./flagsJSON"
+
+const countriesFlagsObj = countriesFlags
+console.log(countriesFlagsObj)
+
 export const divideGames = (arr, division) => {
     const size = Math.ceil(arr.length / division)
     const divided = []
@@ -26,3 +31,18 @@ export const convertToDateObject = (dateString) => {
   
   return new Date(year, month - 1, day, hours, minutes, seconds);
 };
+
+export const topFourPredictionCountriesWithFlags = (topFourArray) => {
+  const countriesWithFlags = []
+  topFourArray.forEach(countryName => {
+    for(let key in countriesFlagsObj) {
+      if(key === countryName) {
+          countriesWithFlags.push({
+            name: countryName,
+            flag: countriesFlags[key]
+          })
+      }      
+    }
+  })
+  return countriesWithFlags
+}

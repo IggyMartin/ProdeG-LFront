@@ -1,17 +1,41 @@
+import { useState, useEffect } from "react"
+import { getOrderedPlayersDB } from "../services/userService"
 
 function PositionsTable() {
+  const [players, setPlayers] = useState([])
+
+  const getPlayersInOrder = async () => {
+    const orderedPlayers = await getOrderedPlayersDB() 
+    setPlayers(orderedPlayers)
+  }
+
+  useEffect(() => {
+    getPlayersInOrder()
+  }, [])
+
+  useEffect(() => {
+    console.log(players)
+  }, [players])
+
   return (
-    <table>
+    <table className="w-1/2">
         <thead>
             <tr>
-                <th>Jugadores</th>
-                <th>Puntos</th>
+                <th></th>
+                <td>Posicion</td>
+                <td>Puntos</td>
             </tr>
         </thead>
         <tbody>
-            {/* mapeo de perfiles (jugadores) para renderizar su nombre y puntuacion (considerar una
-             lista ordenada dentro de tbody para incluir la posicion de la persona por cada perfil 
-             mapeado) */}
+            {
+              players?.map(player => (
+                <tr key={player.position} className="py-4 bg-white text-black font-bold">
+                  <td>{player.fullName}</td>
+                  <td>{player.position}</td>
+                  <td>{player.totalPoints}</td>
+                </tr>
+              ))
+            }
         </tbody>
     </table>
   )

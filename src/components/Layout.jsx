@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import fondo from '../assets/fondos-de-pantalla/fondoProde.png'
 import GL from '../assets/logos/GL2.png'
 import logoCA from '../assets/fondo-copa-america-2024/logitoCA.png'
@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux'
 function Layout({ children, page }) {
   const globalUser = useSelector(state => state.user.user)
   const navigate = useNavigate()
+  const location = useLocation()
+  console.log(location)
   return (
     <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url(${fondo})`}}>
         <div className="h-screen relative flex flex-col justify-between text-white">
@@ -42,10 +44,10 @@ function Layout({ children, page }) {
             </main>
             {page !== undefined && (
             <nav className="flex justify-center items-center mb-6 mt-10 h-16">
-              <span className='text-[24px] hover:cursor-pointer	mx-8'>Fase De Grupos</span>
-              <span className='text-[24px] hover:cursor-pointer mx-8'>Cuartos de Final</span>
-              <span className='text-[24px] hover:cursor-pointer mx-8'>Semifinales</span>
-              <span className='text-[24px] hover:cursor-pointer mx-8'>Estancia Final</span>
+              <span className='text-[24px] hover:cursor-pointer	mx-8' onClick={location.pathname !== "/groupStage" ? () => navigate('/groupstage') : null}>FASE DE GRUPOS</span>
+              <span className='text-[24px] hover:cursor-pointer mx-8' onClick={location.pathname !== "/quarterfinals" ? () => navigate('/quarterfinals') : null}>CUARTOS DE FINAL</span>
+              <span className='text-[24px] hover:cursor-pointer mx-8' onClick={location.pathname !== "/semifinals" ? () => navigate('/semifinals') : null}>SEMIFINALES</span>
+              <span className='text-[24px] hover:cursor-pointer mx-8' onClick={location.pathname !== "/finals" ? () => navigate('/finals') : null}>ESTANCIA FINAL</span>
             </nav>
             )}
         </div>

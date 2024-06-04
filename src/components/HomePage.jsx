@@ -9,12 +9,20 @@ import { SlArrowUp } from "react-icons/sl";
 import { useState } from "react";
 import PositionsTable from "./PositionsTable";
 import ReactSelect from "react-select"
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Swal from "sweetalert2"
 import { createUserTopFourPredictionDB } from "../services/topFourPredictionService"
+import { loginUserDB } from '../services/loginService'
+import { jwtDecode } from 'jwt-decode'
+import { getCookies } from '../services/cookiesService'
+import { saveUserData } from '../redux/userSlice'
+import { topFourPredictionCountriesWithFlags } from "../utils/functions"
+import { useNavigate } from "react-router-dom"
 
 
 function HomePage() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const globalUser = useSelector(state => state.user.user)
   const [showPlayers, setShowPlayers] = useState(false)
   const [topFour, setTopFour] = useState([null, null, null, null])
@@ -64,11 +72,25 @@ function HomePage() {
       return
     }
 
-    const topFourCreationResponse = await createUserTopFourPredictionDB({
+    await createUserTopFourPredictionDB({
       userId: globalUser?.userId,
-      countryIdList: topFour
+      countryIdList: topFour,
+      lockDateTime: "2024-06-20T20:50:00"
     })
-    console.log(topFourCreationResponse)
+    Swal.fire({
+      title: 'Exito!',
+      text: 'Tu prediccion fue guardada con exito!',
+      icon: 'success',
+      confirmButtonText: 'Hecho'
+    })
+    await loginUserDB({
+      username: globalUser?.username,
+      fullName: globalUser?.fullName,
+      roleId: 2
+    })
+    const token = getCookies("jwt")
+    let decodedToken = jwtDecode(token)
+    dispatch(saveUserData(decodedToken))
   }
 
   useEffect(() => {
@@ -90,58 +112,74 @@ function HomePage() {
               <div className="w-52">
                 <ReactSelect
                 className="text-black bg-blue-700"
-                options={[{value: "GroupStage", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
+                options={[{value: "groupStage", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
                 placeholder="FIXTURE"
                 isSearchable={false}
+                onChange={(e) => navigate(`/${e.value}`)}
                 />
               </div>
             </div>
           </div>
         ) : (
         <div className="flex flex-col items-center text-center">
-          <section className="flex flex-col items-center">
-            <div className="flex flex-col gap-6">
-              <div className="flex justify-center gap-4">
-                <div className="flex flex-col items-center gap-2">
-                  <label>Campeon</label>
-                  <SelectCountry place="first" addToTopFour={addToTopFour}/>
+          {
+            globalUser?.topFourCountriesPrediction.length > 0 ? (
+                <section className="w-1/2 flex justify-between">
+                  {
+                    topFourPredictionCountriesWithFlags(globalUser.topFourCountriesPrediction).map(country => (
+                      <div className="flex items-center gap-2">
+                        <img className="w-10 h-10 object-cover rounded-full" src={country.flag} alt="country image" />
+                        <span>{country.name}</span>
+                      </div>
+                    ))
+                  }
+                </section>
+            ) : (
+              <section className="flex flex-col items-center">
+                <div className="flex flex-col gap-6">
+                  <div className="flex justify-center gap-4">
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Campeon</label>
+                      <SelectCountry place="first" addToTopFour={addToTopFour}/>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Sub-Campeon</label>
+                      <SelectCountry place="second" addToTopFour={addToTopFour}/>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Tercer Puesto</label>
+                      <SelectCountry place="third" addToTopFour={addToTopFour}/>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Cuarto Puesto</label>
+                      <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
+                    </div>
+                  </div>
+                  <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white" onClick={handleTopFourSubmit}>Guardar</button>
+                  <p>¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <label>Sub-Campeon</label>
-                  <SelectCountry place="second" addToTopFour={addToTopFour}/>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <label>Tercer Puesto</label>
-                  <SelectCountry place="third" addToTopFour={addToTopFour}/>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <label>Cuarto Puesto</label>
-                  <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
-                </div>
-              </div>
-              <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white" onClick={handleTopFourSubmit}>Guardar</button>
-              <p>¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p>
-            </div>
-          </section>
+              </section>
+            )
+          }
           <img className="my-4 w-3/4" src={homeDivider} alt="home divider" />
           <section className="mb-8">
-            <h2 className='text-[28px]'>Posiciones</h2>
-            <div className="flex justify-center items-center">
+            <h2 className='text-[22px]'>Posiciones</h2>
+            <div className="flex justify-center items-center gap-4">
               <img className='w-20 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
-              <div className="flex flex-col">
-                <span>Tu posicion</span>
-                <span>Posicion del usuario</span>
+              <div className="flex flex-col gap-2">
+                <span className="text-[14px]">TU POSICION</span>
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.playerPosition}</span>
               </div>
-              <div className="flex flex-col">
-                <span>Tu Puntaje</span>
-                <span>Puntos del usuario</span> 
+              <div className="flex flex-col gap-2">
+                <span className="text-[14px]">TU PUNTAJE</span>
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.totalPoints}</span> 
               </div>
             </div>
           </section>
-          <div className="flex w-1/2">
+          <section className="flex w-1/2 justify-start">
             <img src={logitoCA} alt="logo chico CA" />
-            <span className="cursor-pointer" onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
-          </div>
+            <span onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
+          </section>
           { showPlayers && <PositionsTable />}
         </div>
         )

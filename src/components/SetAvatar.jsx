@@ -3,8 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import LoginLayout from './LoginLayout'
 import gato from '../assets/avatars/gato.png'
 import leon from '../assets/avatars/leon.png'
-import tigre from '../assets/avatars/tigre.png'
-import leopardo from '../assets/avatars/leopardo.png'
 import lobo from '../assets/avatars/lobo.png'
 import { FaPencilAlt } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux'
@@ -15,7 +13,7 @@ import { jwtDecode } from 'jwt-decode'
 import { getCookies } from '../services/cookiesService'
 
 
-const avatars = [gato, leon, tigre, leopardo, lobo]
+const avatars = [gato, leon, lobo]
 
 const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)]
 
