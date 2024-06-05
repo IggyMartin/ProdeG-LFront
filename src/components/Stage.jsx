@@ -33,6 +33,7 @@ function Stage({ stage, division }) {
   const [matchResults, setMatchResults] = useState({})
   const [ready, setReady] = useState(false)
   const [rivals, setRivals] = useState({})
+  const [selectedStage, setSelectedStage] = useState(0)
 
   const getAllGames = async () => {
     const data = await getAllGamesDB()
@@ -179,6 +180,10 @@ function Stage({ stage, division }) {
   }, [rivals])
 
   useEffect(() => {
+    setSelectedStage(0)
+  }, [stage])
+
+  useEffect(() => {
     const fetchPredictions = async () => {
         const predictionsByUserResponse = await findAllByUserIdDB(globalUser?.userId);
         const updatedPredictions = predictionsByUserResponse.reduce((accumulator, currentObject) => {
@@ -226,29 +231,54 @@ function Stage({ stage, division }) {
   return (
     <Layout page={stage === "groups" ? "Fase de grupos" : stage === "quarterfinals" ? "Cuartos de final" : stage === "semifinals" ? "Semifinales" : "Estancia Final"}>
       <div className="flex flex-col items-center">
+        <span className="text-xs relative inset-y-[-28px]">Consulta aquí todos los partidos de la Copa América y sigue el progreso de tu equipo favorito</span>
+        <p className="w-[950px] mb-10 text-xl items-center flex justify-between">
+          {stage === "groups" ? "⚽Fase de grupos" : stage === "quarterfinals" ? "⚽Cuartos de final" : stage === "semifinals" ? "⚽Semifinales" : "⚽Estancia Final"} 
+          {
+            stage !== "groups" && (
+                <button className="p-2 border-solid border-2 border-white rounded-2xl ">Habilitar</button>
+            )
+          }
+        </p>
+        <div className="w-[950px] flex-col justify-between text-[20px] ">
+          
+        </div>
+        <div className="flex w-2/3 gap-8">
+          {
+            divideGames(allGames.filter(game => game.stage === stage), division).map((el, elIndex) => (
+              <span className={`${selectedStage == elIndex ? "text-white border-b-2  border-red-500" : "text-[#A4A4A4]"} min-w-[75px] text-center cursor-pointer`} onClick={() => setSelectedStage(elIndex)} key={elIndex}>{getTitle(stage, elIndex)}</span>
+            ))
+          }
+        </div>
+        {globalUser?.selectedRole === "ADMIN" ? 
+        <div>
+          <div className="flex relative mt-[20px] mb-[10px] text-center text-xs w-[950px]">
+          <p className="w-1/2 text-[#EFE4E4] pl-[15px] ">PARTIDO</p>
+          <div className="flex w-1/2 justify-between pl-[45px]">
+            <p>RESULTADO</p>
+            <p className="w-[180px] flex justify-evenly"><span>FECHA</span><span className="">HORA</span></p>
+          </div>
+        </div>
+        </div>
+        :
+        <div className="flex relative mt-[20px] mb-[10px] text-center text-xs w-[950px]">
+          <p className="w-1/2 text-[#EFE4E4] ">PRONOSTICO</p>
+          <div className="flex w-1/2 justify-evenly pl-[125px] pr-[30px]">
+            <p className="w-[130px] relative inset-x-[5px] flex justify-evenly"><span >RESULTADO</span><span>PUNTAJE</span></p>
+            <p className="w-[140px] flex justify-evenly"><span>FECHA</span><span className="relative inset-x-[15px]">HORA</span></p>
+          </div>
+        </div>
+        }
         {
           ready && divideGames(allGames.filter(game => game.stage === stage), division).map((group, index, allGroupsArray) => (
-            <div key={index} className={`flex flex-col gap-6 ${index !== allGroupsArray.length - 1 &&  'mb-16'}`}>
-              <div className="w-[950px] flex-col justify-between text-[20px] ">
-                {
-                  stage !== "groups" && index === 0 && (
-                    <div className="flex justify-end">
-                      <button className="mb-4 p-2 border-solid border-2 border-white rounded-2xl ">Habilitar</button>
-                    </div>
-                  )
-                }
-                <div className="flex gap-8">
-                  {
-                    allGroupsArray.map((el, elIndex) => (
-                      <span key={elIndex}>{getTitle(stage, elIndex)}</span>
-                    ))
-                  }
-                </div>
-              </div>
+            <div key={index} className={`flex flex-col gap-6`}>
+              
+              {selectedStage == index ?
               <table>
                 <tbody className="w-[950px] flex flex-col">
                   {
                     group.map((match, rowIndex) => {
+                      console.log(match)
                       const leftCountryFlag = getCountryFlag(match?.localCountryResponse?.name)
                       const rightCountryFlag = getCountryFlag(match?.visitorCountryResponse?.name)
                       const bgColorForRow = rowIndex % 2 === 0 ? 'bg-blue-900' : 'bg-blue-950';
@@ -348,7 +378,7 @@ function Stage({ stage, division }) {
                               </span>
                                 )
                               }
-                              <span className={globalUser?.selectedRole === "ADMIN" && "w-1/3"}>{match?.matchStartDateTime}</span>
+                              <span className={globalUser?.selectedRole === "ADMIN" && "w-1/3"}>{match?.matchStartDateTime.split(" - ")[0].split("/").reverse().join("/") + " - " + match?.matchStartDateTime.split(" - ")[1]}</span>
                             </div>
                           </td>
                         </tr>
@@ -356,7 +386,8 @@ function Stage({ stage, division }) {
                     })
                   }
                 </tbody>
-              </table>
+              </table> : ""
+              }
             </div>
           ))
         }
