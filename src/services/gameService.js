@@ -13,7 +13,7 @@ export const getAllGamesDB = async () => {
 }
 
 export const updateGameDB = async (data) => {
-    console.log(data.id)
+    console.log(data)
     const url = `${PATH}/update/${data.id}`
     try {
         const response = await putWithHeaders(url, data)

@@ -1,4 +1,5 @@
 import { countriesFlags } from "./flagsJSON"
+import { getAllCountriesDB } from "../services/countryService"
 
 const countriesFlagsObj = countriesFlags
 console.log(countriesFlagsObj)
@@ -19,6 +20,12 @@ export const getTitle = (stage, index) => {
       return `Cuartos ${index + 1}`
     } else if(stage === "semifinals") {
       return `Semifinal ${index + 1}`
+    } else {
+      if(index === 0) {
+        return "Tercer Puesto"
+      } else {
+        return "Final"
+      }
     }
 }
 
@@ -45,4 +52,24 @@ export const topFourPredictionCountriesWithFlags = (topFourArray) => {
     }
   })
   return countriesWithFlags
+}
+
+export const getCountriesAndSetSelectOptions = async () => {
+  const countries = await getAllCountriesDB()
+  const mappedCountries = countries.map(country => {
+      return {
+          value: country.id,
+          label: country.name,
+          countryImg: getCountryFlag(country.name)
+      }
+  })
+  return mappedCountries
+}
+
+export const getCountryFlag = (country) => {
+  for(let key in countriesFlagsObj) {
+      if(key === country) {
+          return countriesFlagsObj[key]
+      }      
+  }
 }

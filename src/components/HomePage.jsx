@@ -115,7 +115,7 @@ function HomePage() {
                 options={[{value: "groupStage", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
                 placeholder="FIXTURE"
                 isSearchable={false}
-                onChange={(e) => navigate(`/${e.value}`)}
+                onChange={(chosenStage) => navigate(`/${chosenStage.value}`)}
                 />
               </div>
             </div>

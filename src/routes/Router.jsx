@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import HomePage from '../components/HomePage'
 import Rules from '../components/Rules'
-import Stage from '../components/GroupStage'
+import Stage from '../components/Stage'
 import Login from '../components/Login'
 import Rewards from '../components/Rewards'
 import NotFound from '../components/NotFound'

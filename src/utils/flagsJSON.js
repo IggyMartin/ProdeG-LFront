@@ -34,13 +34,3 @@ export const countriesFlags = {
     "Estados Unidos": usaFlag,
     Venezuela: venezuelaFlag
 }
-
-const getCountryFlag = (country) => {
-    for(let key in countriesFlags) {
-        if(key === country) {
-            return countriesFlags[key]
-        }      
-    }
-}
-
-export default getCountryFlag

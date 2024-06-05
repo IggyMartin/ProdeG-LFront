@@ -1,28 +1,28 @@
 import { useEffect, useRef, useState } from "react"
-import { getAllCountriesDB } from "../services/countryService"
 import ReactSelect from "react-select"
-import getCountryFlag from "../utils/flagsJSON"
+import { getCountriesAndSetSelectOptions } from "../utils/functions"
 
-function SelectCountry({ place, addToTopFour }) {
+function SelectCountry({place = null, addToTopFour = null, selectRivals = null, matchId = null, setLeftCountry = null}) {
     const [selectOptions, setSelectOptions] = useState([])
 
     const handleAddToTopFour = (selectedCountry) => {
         addToTopFour(place, selectedCountry)
     }
 
+    const handleSelectedCountry = (selectedCountry) => {
+        selectRivals(selectedCountry, matchId, setLeftCountry)
+    }
+
     useEffect(() => {
-        (async function getCountriesAndSetSelectOptions() {
-            const countries = await getAllCountriesDB()
-            const mappedCountries = countries.map(country => {
-                return {
-                    value: country.id,
-                    label: country.name,
-                    countryImg: getCountryFlag(country.name)
-                }
-            })
-            setSelectOptions(mappedCountries)
+        (async function() {
+            const countriesForSelect = await getCountriesAndSetSelectOptions()
+            setSelectOptions(countriesForSelect)
         })()
     }, [])
+
+    useEffect(() => {
+        console.log(selectOptions)
+    }, [selectOptions])
 
     return (
         <div className="w-52">
@@ -36,7 +36,7 @@ function SelectCountry({ place, addToTopFour }) {
                     <span>{country.label}</span>
                 </div>
             )}
-            onChange={handleAddToTopFour}
+            onChange={place ? handleAddToTopFour : handleSelectedCountry}
             />
         </div>
     )

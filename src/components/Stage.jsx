@@ -1,12 +1,14 @@
 import Layout from "./Layout"
 import { getAllGamesDB, updateGameDB } from "../services/gameService"
 import { useEffect, useState } from "react"
-import { divideGames } from "../utils/functions"
-import getCountryFlag from "../utils/flagsJSON"
+import { divideGames, getTitle } from "../utils/functions"
+import { getCountryFlag } from "../utils/functions"
 import { useSelector } from "react-redux"
 import { createGamePredictionDB, findAllByUserIdDB } from "../services/predictionService"
 import Swal from "sweetalert2"
 import { convertToDateObject } from "../utils/functions"
+import SelectCountry from "./SelectCountry"
+import { useLocation } from "react-router-dom"
 
 const Toast = Swal.mixin({
   toast: true,
@@ -23,11 +25,14 @@ const Toast = Swal.mixin({
 
 
 function Stage({ stage, division }) {
+  const location = useLocation()
   const [allGames, setAllGames] = useState([])
   const globalUser = useSelector(state => state.user.user)
   const [makePredictions, setmakePredictions] = useState({})
   const [existantPredictions, setExistantPredictions] = useState({})
   const [matchResults, setMatchResults] = useState({})
+  const [ready, setReady] = useState(false)
+  const [rivals, setRivals] = useState({})
 
   const getAllGames = async () => {
     const data = await getAllGamesDB()
@@ -110,7 +115,7 @@ function Stage({ stage, division }) {
     }
   }
 
-  const saveMatchResult = async (e, match) => {
+  const saveMatchResult = async (match) => {
     console.log(match)
     await updateGameDB({
       id: match.id,
@@ -126,6 +131,52 @@ function Stage({ stage, division }) {
       title: "Resultado cargado con exito!"
     });
   }
+
+  const selectRivals = (selectedCountry, matchId, leftCountry) => {
+    if(leftCountry) {
+      if(rivals.hasOwnProperty("id")) {
+        setRivals(prevState => {
+          return {
+            ...prevState,
+            localCountryId: selectedCountry.value
+          }
+        })
+      } else {
+        setRivals({
+          id: matchId,
+          localCountryId: selectedCountry.value
+        })
+      }
+    } else {
+      if(rivals.hasOwnProperty("id")) {
+        setRivals(prevState => {
+          return {
+            ...prevState,
+            visitorCountryId: selectedCountry.value
+          }
+        })
+      } else {
+        setRivals({
+          id: matchId,
+          visitorCountryId: selectedCountry.value
+        })
+      }
+    }
+  }
+
+  const saveMatchRivals = async (match) => {
+    await updateGameDB({
+      stage: match.stage,
+      localScore: "",
+      visitorScore: "",
+      ...rivals
+    })
+    await getAllGames()
+  }
+
+  useEffect(() => {
+    console.log(rivals)
+  }, [rivals])
 
   useEffect(() => {
     const fetchPredictions = async () => {
@@ -151,6 +202,10 @@ function Stage({ stage, division }) {
   }, [])
 
   useEffect(() => {
+    setRivals({})
+  }, [location.pathname])
+
+  useEffect(() => {
     const actualDateTime = new Date()
     allGames.filter(game => game.stage === stage && !existantPredictions.hasOwnProperty(game.id)).map(game => {
       const matchLockInDateTimeFormat = convertToDateObject(game.matchLockDateTime)
@@ -161,28 +216,34 @@ function Stage({ stage, division }) {
         }))
       }
     })
+    setReady(true)
+  }, [existantPredictions])
+
+  useEffect(() => {
     console.log(allGames)
-  }, [existantPredictions])
-
-  useEffect(() => {
-    console.log(matchResults)
-  }, [matchResults])
-
-  useEffect(() => {
-    console.log(existantPredictions)
-  }, [existantPredictions])
+  }, [allGames])
 
   return (
-    <Layout page="Fase De Grupos">
+    <Layout page={stage === "groups" ? "Fase de grupos" : stage === "quarterfinals" ? "Cuartos de final" : stage === "semifinals" ? "Semifinales" : "Estancia Final"}>
       <div className="flex flex-col items-center">
         {
-          allGames.length > 0 && divideGames(allGames.filter(game => game.stage === stage), division).map((group, index, allGroupsArray) => (
+          ready && divideGames(allGames.filter(game => game.stage === stage), division).map((group, index, allGroupsArray) => (
             <div key={index} className={`flex flex-col gap-6 ${index !== allGroupsArray.length - 1 &&  'mb-16'}`}>
-              <div className="w-1/2 flex justify-between text-[20px] ">
-                <span>Grupo A</span>
-                <span>Grupo B</span>
-                <span>Grupo C</span>
-                <span>Grupo D</span>
+              <div className="w-[950px] flex-col justify-between text-[20px] ">
+                {
+                  stage !== "groups" && index === 0 && (
+                    <div className="flex justify-end">
+                      <button className="mb-4 p-2 border-solid border-2 border-white rounded-2xl ">Habilitar</button>
+                    </div>
+                  )
+                }
+                <div className="flex gap-8">
+                  {
+                    allGroupsArray.map((el, elIndex) => (
+                      <span key={elIndex}>{getTitle(stage, elIndex)}</span>
+                    ))
+                  }
+                </div>
               </div>
               <table>
                 <tbody className="w-[950px] flex flex-col">
@@ -197,8 +258,16 @@ function Stage({ stage, division }) {
                           <td className="flex items-center">
                             <div className="w-1/2 flex">
                               <div className="w-1/3 flex justify-start items-center gap-2">
-                                <img className="w-8 h-8 object-cover rounded-full" src={leftCountryFlag} alt="left country flag" />
-                                <span>{match?.localCountryResponse?.name}</span>
+                                {
+                                  !leftCountryFlag ? (
+                                    <SelectCountry setLeftCountry={true} matchId={match?.id} selectRivals={selectRivals}/>
+                                  ) : (
+                                    <div className="flex items-center jus gap-3">
+                                      <img className="w-8 h-8 object-cover rounded-full" src={leftCountryFlag} alt="left country flag" />
+                                      <span>{match?.localCountryResponse?.name}</span>
+                                    </div>
+                                  )
+                                }
                               </div>
                               {
                                 globalUser?.selectedRole === "ADMIN" ? (
@@ -212,19 +281,27 @@ function Stage({ stage, division }) {
                                 )
                               }
                               <div className="w-1/3 flex justify-end items-center gap-2">
-                                <span>{match?.visitorCountryResponse?.name}</span>
-                                <img className="w-8 h-8 object-cover rounded-full" src={rightCountryFlag} alt="right country flag" />
+                              {
+                                  !rightCountryFlag ? (
+                                    <SelectCountry setRightCountry={true} matchId={match?.id} selectRivals={selectRivals}/>
+                                  ) : (
+                                    <div className="flex items-center gap-3">
+                                      <span>{match?.visitorCountryResponse?.name}</span>
+                                      <img className="w-8 h-8 object-cover rounded-full" src={rightCountryFlag} alt="left country flag" />
+                                    </div>
+                                  )
+                                }
                               </div>
                             </div>
                             <div className="w-1/2 flex justify-evenly items-center">
                               {
                                 globalUser?.selectedRole === "PLAYER" && (
-                                <button className={`${existantPredictions[match?.id] === "expired" ? 'text-orange-500 border-orange-500' : existantPredictions[match?.id] ? "text-green-400 border-green-400" : !makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("") ? "text-slate-400 border-slate-400 cursor-default" : "cursor-pointer"} px-4 py-1 border-solid border-2 rounded-2xl text-[18px]`} disabled={!makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("")} onClick={() => saveMatchPrediction(globalUser?.userId, match?.id, match?.matchLockDateTime)}>{typeof existantPredictions[match?.id] == "object" ? "Hecha!" : existantPredictions[match?.id] === "expired" ? "Venció!" : "Guardar"}</button>
+                                <button className={`${existantPredictions[match?.id] === "expired" ? 'text-orange-500 border-orange-500' : existantPredictions[match?.id] ? "text-green-400 border-green-400" : !makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("") ? "text-slate-400 border-slate-400 cursor-default" : "cursor-pointer"} px-4 py-1 border-solid border-2 rounded-2xl text-[18px]`} disabled={!makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("")} onClick={() => saveMatchPrediction(globalUser?.userId, match?.id, match?.matchLockDateTime)}>{typeof existantPredictions[match?.id] == "object" ? "Completo" : existantPredictions[match?.id] === "expired" ? "Finalizo!" : "Guardar"}</button>
                                 )
                               }
                               {
                                 globalUser?.selectedRole === "ADMIN" ? (
-                                  match?.localScore === null ? (
+                                  !match?.localScore ? (
                                   <div className="w-1/3 flex justify-center">
                                     <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" id="localScore" type="text" value={matchResults[match?.id]?.localScore !== undefined ? matchResults[match?.id].localScore : ''} onChange={(e) => handleMatchResult(e, match?.id)} autoComplete="off"/>
                                     <span className="px-2">vs</span>
@@ -234,13 +311,13 @@ function Stage({ stage, division }) {
                                     <span className="w-1/3 text-center">{match?.localScore} - {match?.visitorScore}</span>
                                   )
                                 ) : (
-                                  <span>{match?.localScore === null ? "?" : match?.localScore} - {match?.visitorScore === null ? "?" : match?.visitorScore}</span>
+                                  <span>{!match?.localScore ? "?" : match?.localScore} - {!match?.visitorScore ? "?" : match?.visitorScore}</span>
                                 )
                               }
                               {
                                 globalUser?.selectedRole === "ADMIN" && (
                                   <span className="w-1/3">
-                                    <button className={`${match?.localScore ? "border-green-400 text-green-400" : !matchResults[match?.id] || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("") ? "border-slate-400 text-slate-400" : "border-white"} w-2/3 px-4 py-1 border-solid border-2 rounded-2xl text-center`} disabled={match?.localScore} onClick={e => saveMatchResult(e, match)}>{match?.localScore ? "Hecho!" : "Guardar"}</button>
+                                    <button className={`${match?.localScore ? "border-green-400 text-green-400" : (!matchResults[match?.id] || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")) ? "border-slate-400 text-slate-400" : "border-white"} ${Object.keys(rivals).length === 3 && rivals.id === match?.id ? "border-white text-white" : ""} w-2/3 px-4 py-1 border-solid border-2 rounded-2xl text-center`} disabled={match?.localScore || Object.keys(rivals).length > 0 && Object.keys(rivals).length < 3 && rivals.id !== match?.id} onClick={!leftCountryFlag ? () => saveMatchRivals(match) : () => saveMatchResult(match)}>{!leftCountryFlag ? "Guardar rivales" : match?.localScore ? "Completo" : "Guardar"}</button>
                                   </span>
                                 )
                               }
@@ -249,8 +326,8 @@ function Stage({ stage, division }) {
                               <span>
                                 {
                                   existantPredictions[match?.id] && 
-                                  match?.localScore !== null && 
-                                  match?.visitorScore !== null ?
+                                  !match?.localScore && 
+                                  !match?.visitorScore ?
                                   (
                                     existantPredictions[match?.id]?.localScorePrediction == match?.localScore &&
                                     existantPredictions[match?.id]?.visitorScorePrediction == match?.visitorScore

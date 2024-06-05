@@ -30,7 +30,10 @@ function PositionsTable() {
             {
               players?.map(player => (
                 <tr key={player.position} className="py-4 bg-white text-black font-bold">
-                  <td>{player.fullName}</td>
+                  <td className="flex items-center gap-2 pl-6">
+                    <img className="w-8 h-auto" src={player.selectAvatar} alt="player avatar" />
+                    {player.fullName}
+                  </td>
                   <td>{player.position}</td>
                   <td>{player.totalPoints}</td>
                 </tr>
