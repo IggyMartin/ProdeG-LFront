@@ -213,6 +213,17 @@ function Stage({ stage, division }) {
     }))
   }
 
+  const checkAvailability = () => {
+    let disabled = false
+    const games = allGames.filter(game => game.stage === stage)
+    games.forEach((game) => {
+      if(!game.localCountryResponse || !game.visitorCountryResponse){
+        disabled = true
+      }
+    })
+    return disabled
+  }
+
   useEffect(() => {
     console.log(rivals)
   }, [rivals])
@@ -279,7 +290,7 @@ function Stage({ stage, division }) {
           {stage === "groups" ? "⚽Fase de grupos" : stage === "quarterfinals" ? "⚽Cuartos de final" : stage === "semifinals" ? "⚽Semifinales" : "⚽Estancia Final"} 
           {
             globalUser.selectedRole === "ADMIN" && stages.some(obj => obj.name === stage && obj.status === false) && stage !== "groups" && (
-                <button className="p-2 border-solid border-2 border-white rounded-2xl " onClick={enableView}>Habilitar</button>
+                <button disabled={checkAvailability()} className={`py-1 px-4 border-solid border-2 border-[#F6EFEF] text-[#F6EFEF] bg-[#F6EFEF33] rounded-2xl cursor-pointer ${!checkAvailability() && "hover:border-[#42AD9C] hover:text-[#42AD9C] hover:bg-[#A0E9DD] "} disabled:cursor-default disabled:border-slate-400 disabled:text-slate-400`} onClick={enableView}>Habilitar</button>
             )
           }
         </p>
@@ -305,10 +316,10 @@ function Stage({ stage, division }) {
         </div>
         :
         <div className="flex relative mt-[20px] mb-[10px] text-center text-xs w-[950px]">
-          <p className="w-1/2 text-[#EFE4E4] ">PRONOSTICO</p>
+          <p className="w-1/2 text-[#EFE4E4] pl-[12px] ">PRONOSTICO</p>
           <div className="flex w-1/2 justify-evenly pl-[125px] pr-[30px]">
-            <p className="w-[130px] relative inset-x-[5px] flex justify-evenly"><span >RESULTADO</span><span>PUNTAJE</span></p>
-            <p className="w-[140px] flex justify-evenly"><span>FECHA</span><span className="relative inset-x-[15px]">HORA</span></p>
+            <p className="w-[175px] relative inset-x-[4px] flex justify-evenly"><span >RESULTADO</span><span>PUNTAJE</span></p>
+            <p className="w-[150px] flex justify-evenly"><span>FECHA</span><span className="relative inset-x-[12px]">HORA</span></p>
           </div>
         </div>
         }
@@ -323,10 +334,10 @@ function Stage({ stage, division }) {
                     group.map((match, rowIndex) => {
                       const leftCountryFlag = getCountryFlag(match?.localCountryResponse?.name)
                       const rightCountryFlag = getCountryFlag(match?.visitorCountryResponse?.name)
-                      const bgColorForRow = rowIndex % 2 === 0 ? 'bg-blue-900' : 'bg-blue-950';
+                      const bgColorForRow = rowIndex % 2 === 0 ? "bg-white" : "bg-[#FEE6EB]";
 
                       return (
-                        <tr key={match?.id} className={`p-3 ${bgColorForRow}`}>
+                        <tr key={match?.id} className={`p-3 rounded-[8px] mb-2 text-black ${bgColorForRow}`}>
                           <td className="flex items-center">
                             <div className="w-1/2 flex">
                               <div className="w-1/3 flex justify-start items-center gap-2">
@@ -345,10 +356,10 @@ function Stage({ stage, division }) {
                                 globalUser?.selectedRole === "ADMIN" ? (
                                 <span className="w-1/3 flex justify-center items-center">vs</span>
                                 ) : (
-                                <div className="w-1/3 flex justify-center items-center">
-                                  <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" id="localScorePrediction" type="text" value={existantPredictions[match?.id]?.localScorePrediction !== undefined ? existantPredictions[match?.id]?.localScorePrediction : null || makePredictions[match?.id]?.localScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
-                                  <span className="px-2">vs</span>
-                                  <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" id="visitorScorePrediction" type="text" value={existantPredictions[match?.id]?.visitorScorePrediction !== undefined ? existantPredictions[match?.id].visitorScorePrediction : null || makePredictions[match?.id]?.visitorScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                <div className="w-1/3 flex justify-center items-center gap-[8px]">
+                                  <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]" id="localScorePrediction" type="text" value={existantPredictions[match?.id]?.localScorePrediction !== undefined ? existantPredictions[match?.id]?.localScorePrediction : null || makePredictions[match?.id]?.localScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                  <span className="outline-none text-[#5742A9] font-bold text-center text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]">vs</span>
+                                  <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]" id="visitorScorePrediction" type="text" value={existantPredictions[match?.id]?.visitorScorePrediction !== undefined ? existantPredictions[match?.id].visitorScorePrediction : null || makePredictions[match?.id]?.visitorScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
                                 </div>
                                 )
                               }
@@ -368,34 +379,34 @@ function Stage({ stage, division }) {
                             <div className="w-1/2 flex justify-evenly items-center">
                               {
                                 globalUser?.selectedRole === "PLAYER" && (
-                                <button className={`${existantPredictions[match?.id] === "expired" ? 'text-orange-500 border-orange-500' : existantPredictions[match?.id] ? "text-green-400 border-green-400" : !makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("") ? "text-slate-400 border-slate-400 cursor-default" : "cursor-pointer"} px-4 py-1 border-solid border-2 rounded-2xl text-[18px]`} disabled={!makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("")} onClick={() => saveMatchPrediction(globalUser?.userId, match?.id, match?.matchLockDateTime)}>{typeof existantPredictions[match?.id] == "object" ? "Completo" : existantPredictions[match?.id] === "expired" ? "Finalizo!" : "Guardar"}</button>
+                                <button className={`${existantPredictions[match?.id] === "expired" ? 'bg-[#C0CBC9] text-[#626366] border-none' : existantPredictions[match?.id] ? "bg-[#A0E9DD] text-[#0D9A83] border-none" : !makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("") ? "text-slate-400 border-slate-400 cursor-default" : "border-black text-black cursor-pointer hover:bg-[#A0E9DD] hover:text-[#42AD9C] hover:border-transparent"} px-4 py-1 border-solid border-2 rounded-2xl text-[14px] w-[100px]`} disabled={!makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("")} onClick={() => saveMatchPrediction(globalUser?.userId, match?.id, match?.matchLockDateTime)}>{typeof existantPredictions[match?.id] == "object" ? "Completo" : existantPredictions[match?.id] === "expired" ? "Finalizo" : "Guardar"}</button>
                                 )
                               }
                               {
                                 globalUser?.selectedRole === "ADMIN" ? (
                                   !match?.localScore ? (
-                                  <div className="w-1/3 flex justify-center">
-                                    <input className="w-1/4 outline-none text-black text-center font-black text-[20px]" id="localScore" type="text" value={matchResults[match?.id]?.localScore !== undefined ? matchResults[match?.id].localScore : ''} onChange={(e) => handleMatchResult(e, match?.id)} autoComplete="off"/>
-                                    <span className="px-2">vs</span>
-                                    <input className="w-1/4	outline-none text-black text-center font-black text-[20px]" id="visitorScore" type="text" value={matchResults[match?.id]?.visitorScore !== undefined ? matchResults[match?.id].visitorScore : ''} onChange={(e) => handleMatchResult(e, match?.id)} autoComplete="off"/>
+                                  <div className="w-1/3 flex justify-center gap-[4px]">
+                                    <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[30px] rounded-[12px] bg-[#3C3C4319]" id="localScore" type="text" value={matchResults[match?.id]?.localScore !== undefined ? matchResults[match?.id].localScore : ''} onChange={(e) => handleMatchResult(e, match?.id)} autoComplete="off"/>
+                                    <span className="outline-none text-[#5742A9] font-bold text-center text-[12px] py-1 w-[30px] rounded-[12px] bg-[#3C3C4319]">vs</span>
+                                    <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[30px] rounded-[12px] bg-[#3C3C4319]" id="visitorScore" type="text" value={matchResults[match?.id]?.visitorScore !== undefined ? matchResults[match?.id].visitorScore : ''} onChange={(e) => handleMatchResult(e, match?.id)} autoComplete="off"/>
                                   </div>
                                   ) : (
-                                    <span className="w-1/3 text-center">{match?.localScore} - {match?.visitorScore}</span>
+                                    <div className="w-1/3 text-center"> <span className="w-fit border border-[#ABABAB] text-[#8F8383] py-1 px-4 rounded-[8px]">{match?.localScore} - {match?.visitorScore}</span></div>
                                   )
                                 ) : (
-                                  <span>{!match?.localScore ? "?" : match?.localScore} - {!match?.visitorScore ? "?" : match?.visitorScore}</span>
+                                  <span className="border border-[#ABABAB] text-[#8F8383] py-1 px-4 rounded-[8px]" >{!match?.localScore ? "?" : match?.localScore} - {!match?.visitorScore ? "?" : match?.visitorScore}</span>
                                 )
                               }
                               {
                                 globalUser?.selectedRole === "ADMIN" && (
                                   <span className="w-1/3">
-                                    <button className={`${match?.localScore ? "border-green-400 text-green-400" : (!matchResults[match?.id] || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")) ? "border-slate-400 text-slate-400" : "border-white"} ${rivals.hasOwnProperty(match?.id) && Object.keys(rivals[match?.id]).length === 3 ? "border-white text-white" : ""} w-2/3 px-4 py-1 border-solid border-2 rounded-2xl text-center`} disabled={(leftCountryFlag && (match?.localScore || (!matchResults.hasOwnProperty(match?.id) || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")))) || (!leftCountryFlag && (!rivals.hasOwnProperty(match?.id) || (rivals.hasOwnProperty(match?.id) && Object.keys(rivals[match?.id]).length < 3)))} onClick={!leftCountryFlag ? () => saveMatchRivals(match) : () => saveMatchResult(match)}>{!leftCountryFlag ? "Guardar rivales" : match?.localScore ? "Completo" : "Guardar"}</button>
+                                    <button className={`${match?.localScore ? "bg-[#A0E9DD] text-[#42AD9C]" : (!matchResults[match?.id] || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")) ? "border-slate-400 text-slate-400 " : "border-black text-black cursor-pointer hover:bg-[#A0E9DD] hover:text-[#42AD9C] hover:border-transparent"} ${rivals.hasOwnProperty(match?.id) && Object.keys(rivals[match?.id]).length === 3 ? "border-black text-black cursor-pointer hover:bg-[#A0E9DD] hover:text-[#42AD9C] hover:border-transparent" : ""} w-4/5 px-4 py-1 border-solid border-2 rounded-2xl text-center`} disabled={(leftCountryFlag && (match?.localScore || (!matchResults.hasOwnProperty(match?.id) || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")))) || (!leftCountryFlag && (!rivals.hasOwnProperty(match?.id) || (rivals.hasOwnProperty(match?.id) && Object.keys(rivals[match?.id]).length < 3)))} onClick={!leftCountryFlag ? () => saveMatchRivals(match) : () => saveMatchResult(match)}>{!leftCountryFlag ? "Guardar" : match?.localScore ? "Completo" : "Guardar"}</button>
                                   </span>
                                 )
                               }
                               {
                                 globalUser?.selectedRole === "PLAYER" && (
-                              <span>
+                              <span className="text-[#FA0E0E] bg-[#FA0E0E19] py-1 px-4 rounded-[8px]">
                                 {
                                   existantPredictions[match?.id] && 
                                   match?.localScore !== "" && 

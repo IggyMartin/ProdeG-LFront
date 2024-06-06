@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveUserData, updateUserLoginProcess } from '../redux/userSlice'
 import { acceptTermsAndConditionsDB } from '../services/loginProcess';
 import { getCookies } from '../services/cookiesService';
+import GoogleLogo from "../assets/logos/googleLogo.png"
 
 
 function Login() {
@@ -94,6 +95,7 @@ function Login() {
                             <div className='flex flex-col items-center gap-4'>
                                 <p>Inicia sesión en tu cuenta</p>
                                 <GoogleLogin
+                                className="hidden"
                                 onSuccess={credentialResponse => {
                                     const decodedCredentials = jwtDecode(credentialResponse.credential);
                                     if (!adminEmails.includes(decodedCredentials.email)) {
@@ -110,8 +112,11 @@ function Login() {
                                 }}
                                 onError={() => {
                                     console.log('Login Failed');
-                                }}
-                                />
+                                }}/>
+                                <div className='flex items-center pointer-events-none justify-evenly p-2 rounded-[30px] bg-[#404040] w-[240px] relative inset-y-[-60px]'>
+                                    <img className='h-[32px]' src={GoogleLogo}></img>
+                                    Continua con google
+                                </div>
                             </div>
                         </div>
                     )

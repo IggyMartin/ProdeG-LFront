@@ -109,7 +109,7 @@ function HomePage() {
               <div className="w-52">
                 <ReactSelect
                 className="text-black bg-blue-700"
-                options={[{value: "groupStage", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
+                options={[{value: "groups", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
                 placeholder="FIXTURE"
                 isSearchable={false}
                 onChange={(chosenStage) => navigate(`/${chosenStage.value}`)}
@@ -123,12 +123,15 @@ function HomePage() {
             globalUser?.topFourCountriesPrediction.length > 0 ? (
                 <section className="w-1/2 flex justify-between">
                   {
-                    topFourPredictionCountriesWithFlags(globalUser.topFourCountriesPrediction).map(country => (
-                      <div className="flex items-center gap-2">
-                        <img className="w-10 h-10 object-cover rounded-full" src={country.flag} alt="country image" />
-                        <span>{country.name}</span>
+                    topFourPredictionCountriesWithFlags(globalUser.topFourCountriesPrediction).map((country, index) => (
+                      <div className="flex flex-col items-center gap-1 border border-slate-200 rounded-[16px] px-4 py-1">
+                        <h1>{index == 0 ? "Campeón" : index == 1 ? "Subcampeón" : index==2 ? "Tercer puesto" : "Cuarto puesto"}</h1>
+                        <div className="flex items-center gap-2">
+                          <img className="w-10 h-10 object-cover rounded-full" src={country.flag} alt="country image" />
+                          <span>{country.name}</span>
+                        </div>
                       </div>
-                    ))
+                      ))
                   }
                 </section>
             ) : (
@@ -173,9 +176,9 @@ function HomePage() {
               </div>
             </div>
           </section>
-          <section className="flex w-1/2 justify-start">
+          <section className="flex w-1/2 justify-start cursor-pointer gap-[8px]">
             <img src={logitoCA} alt="logo chico CA" />
-            <span onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
+            <span className="flex items-center gap-[8px]" onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
           </section>
           { showPlayers && <PositionsTable />}
         </div>
