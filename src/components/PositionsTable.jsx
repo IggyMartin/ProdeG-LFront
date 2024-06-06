@@ -18,29 +18,26 @@ function PositionsTable() {
   }, [players])
 
   return (
-    <table className="w-1/2">
-        <thead>
-            <tr>
-                <th></th>
-                <td>Posicion</td>
-                <td>Puntos</td>
-            </tr>
-        </thead>
-        <tbody>
-            {
-              players?.map(player => (
-                <tr key={player.position} className="py-4 bg-white text-black font-bold">
-                  <td className="flex items-center gap-2 pl-6">
-                    <img className="w-8 h-auto" src={player.selectAvatar} alt="player avatar" />
-                    {player.fullName}
-                  </td>
-                  <td>{player.position}</td>
-                  <td>{player.totalPoints}</td>
-                </tr>
-              ))
-            }
-        </tbody>
-    </table>
+    <div className="w-1/2">
+      <div className="w-full flex justify-end gap-[120px] pr-11">
+        <p>Puntos</p>
+        <p>Posicion</p>
+      </div>
+      {
+        players?.map((player, index) => (
+          <div key={player.position} className={`flex justify-between p-2 rounded-[8px] ${index %2 ? "bg-[#FEE6EB]" : "bg-white"} text-black font-bold mb-2 px-16`}>
+            <div className="flex items-center">
+              <img className="w-8 h-auto" src={player.selectAvatar} alt="player avatar" />
+              <p>{player.fullName}</p>
+            </div>
+            <div className="flex w-[180px] justify-between">
+              <p>{player.totalPoints}</p>
+              <p>{player.position}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
   )
 }
 
