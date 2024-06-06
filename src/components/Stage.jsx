@@ -213,6 +213,17 @@ function Stage({ stage, division }) {
     }))
   }
 
+  const checkAvailability = () => {
+    let disabled = false
+    const games = allGames.filter(game => game.stage === stage)
+    games.forEach((game) => {
+      if(!game.localCountryResponse || !game.visitorCountryResponse){
+        disabled = true
+      }
+    })
+    return disabled
+  }
+
   useEffect(() => {
     console.log(rivals)
   }, [rivals])
@@ -279,7 +290,7 @@ function Stage({ stage, division }) {
           {stage === "groups" ? "⚽Fase de grupos" : stage === "quarterfinals" ? "⚽Cuartos de final" : stage === "semifinals" ? "⚽Semifinales" : "⚽Estancia Final"} 
           {
             globalUser.selectedRole === "ADMIN" && stages.some(obj => obj.name === stage && obj.status === false) && stage !== "groups" && (
-                <button className="p-2 border-solid border-2 border-white rounded-2xl " onClick={enableView}>Habilitar</button>
+                <button disabled={checkAvailability()} className={`py-1 px-4 border-solid border-2 border-[#F6EFEF] text-[#F6EFEF] bg-[#F6EFEF33] rounded-2xl cursor-pointer ${!checkAvailability() && "hover:border-[#42AD9C] hover:text-[#42AD9C] hover:bg-[#A0E9DD] "} disabled:cursor-default disabled:border-slate-400 disabled:text-slate-400`} onClick={enableView}>Habilitar</button>
             )
           }
         </p>
