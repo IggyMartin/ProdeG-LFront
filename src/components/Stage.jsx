@@ -134,33 +134,41 @@ function Stage({ stage, division }) {
   }
 
   const selectRivals = (selectedCountry, matchId, leftCountry) => {
-    if(leftCountry) {
-      if(rivals.hasOwnProperty("id")) {
-        setRivals(prevState => {
-          return {
+    if(rivals.hasOwnProperty(matchId)) {
+        if(leftCountry) {
+          setRivals(prevState => ({
             ...prevState,
+            [matchId]: {
+              ...prevState[matchId],
+              localCountryId: selectedCountry.value
+            }
+          }))
+        } else {
+          setRivals(prevState => ({
+            ...prevState,
+            [matchId]: {
+              ...prevState[matchId],
+              visitorCountryId: selectedCountry.value
+            }
+          }))
+        }
+    } else {
+      if(leftCountry) {
+        setRivals(prevState => ({
+          ...prevState,
+          [matchId]: {
+            id: matchId,
             localCountryId: selectedCountry.value
           }
-        })
+        }))
       } else {
-        setRivals({
-          id: matchId,
-          localCountryId: selectedCountry.value
-        })
-      }
-    } else {
-      if(rivals.hasOwnProperty("id")) {
-        setRivals(prevState => {
-          return {
-            ...prevState,
+        setRivals(prevState => ({
+          ...prevState,
+          [matchId]: {
+            id: matchId,
             visitorCountryId: selectedCountry.value
           }
-        })
-      } else {
-        setRivals({
-          id: matchId,
-          visitorCountryId: selectedCountry.value
-        })
+        }))
       }
     }
   }
@@ -170,8 +178,9 @@ function Stage({ stage, division }) {
       stage: match.stage,
       localScore: "",
       visitorScore: "",
-      ...rivals
+      ...rivals[match?.id]
     })
+    delete rivals[match?.id]
     await getAllGames()
   }
 
@@ -223,6 +232,10 @@ function Stage({ stage, division }) {
     })
     setReady(true)
   }, [existantPredictions])
+
+  useEffect(() => {
+    console.log(matchResults)
+  }, [matchResults])
 
   useEffect(() => {
     console.log(allGames)
@@ -347,7 +360,7 @@ function Stage({ stage, division }) {
                               {
                                 globalUser?.selectedRole === "ADMIN" && (
                                   <span className="w-1/3">
-                                    <button className={`${match?.localScore ? "border-green-400 text-green-400" : (!matchResults[match?.id] || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")) ? "border-slate-400 text-slate-400" : "border-white"} ${Object.keys(rivals).length === 3 && rivals.id === match?.id ? "border-white text-white" : ""} w-2/3 px-4 py-1 border-solid border-2 rounded-2xl text-center`} disabled={match?.localScore || Object.keys(rivals).length > 0 && Object.keys(rivals).length < 3 && rivals.id !== match?.id} onClick={!leftCountryFlag ? () => saveMatchRivals(match) : () => saveMatchResult(match)}>{!leftCountryFlag ? "Guardar rivales" : match?.localScore ? "Completo" : "Guardar"}</button>
+                                    <button className={`${match?.localScore ? "border-green-400 text-green-400" : (!matchResults[match?.id] || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")) ? "border-slate-400 text-slate-400" : "border-white"} ${rivals.hasOwnProperty(match?.id) && Object.keys(rivals[match?.id]).length === 3 ? "border-white text-white" : ""} w-2/3 px-4 py-1 border-solid border-2 rounded-2xl text-center`} disabled={(leftCountryFlag && (match?.localScore || (!matchResults.hasOwnProperty(match?.id) || Object.keys(matchResults[match?.id]).length < 2 || Object.values(matchResults[match?.id]).includes("")))) || (!leftCountryFlag && (!rivals.hasOwnProperty(match?.id) || (rivals.hasOwnProperty(match?.id) && Object.keys(rivals[match?.id]).length < 3)))} onClick={!leftCountryFlag ? () => saveMatchRivals(match) : () => saveMatchResult(match)}>{!leftCountryFlag ? "Guardar rivales" : match?.localScore ? "Completo" : "Guardar"}</button>
                                   </span>
                                 )
                               }
@@ -356,8 +369,8 @@ function Stage({ stage, division }) {
                               <span>
                                 {
                                   existantPredictions[match?.id] && 
-                                  !match?.localScore && 
-                                  !match?.visitorScore ?
+                                  match?.localScore !== "" && 
+                                  match?.visitorScore !== "" ?
                                   (
                                     existantPredictions[match?.id]?.localScorePrediction == match?.localScore &&
                                     existantPredictions[match?.id]?.visitorScorePrediction == match?.visitorScore
