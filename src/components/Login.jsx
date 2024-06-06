@@ -72,8 +72,8 @@ function Login() {
 
     return (
         <LoginLayout>
-            <main className='w-1/3 h-1/2 shadow-login absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-40 transition-transform bg-gray-900 rounded-2xl'>
-                <img className='absolute bottom-0 -left-16 -bottom-1 w-7/12 h-auto' src={argetinaLogin} alt="argentina players Login" />
+            <main className='w-[500px] h-[380px] shadow-login absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-40 transition-transform bg-gray-900 rounded-2xl'>
+                <img className='absolute bottom-0 -left-16 -bottom-3  h-[150%] ' src={argetinaLogin} alt="argentina players Login" />
                 {
                     user !== null && Object.keys(user).length === 2 ? (
                         <div className='absolute top-1/4 left-1/3 flex flex-col gap-8 text-center h-3/5'>
@@ -110,10 +110,12 @@ function Login() {
                                     });
                                     }
                                 }}
+                                width={"240"}
+                                shape='pill'
                                 onError={() => {
                                     console.log('Login Failed');
                                 }}/>
-                                <div className='flex items-center pointer-events-none justify-evenly p-2 rounded-[30px] bg-[#404040] w-[240px] relative inset-y-[-60px]'>
+                                <div className='flex items-center pointer-events-none justify-evenly p-2 rounded-[30px] bg-[#404040] w-[242px] relative inset-y-[-60px]'>
                                     <img className='h-[32px]' src={GoogleLogo}></img>
                                     Continua con google
                                 </div>
