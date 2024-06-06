@@ -9,7 +9,7 @@ function LoginLayout({ children }) {
     <div className="relative bg-cover bg-center h-screen text-white" style={{backgroundImage: `url(${fondoLogin})`}}>
         <img className='w-1/5 h-auto absolute bottom-0 right-0' src={logoCA} alt="styling logo" />
         <header className='flex justify-between p-4'>
-            <img className='w-60 h-32' src={GL30años} alt="G&L 30 años logo" />
+            <img className='w-[18%] h-[13%]' src={GL30años} alt="G&L 30 años logo" />
             <img className='z-10' src={tituloCopaAmerica} alt="cup title" />
             <img className='w-32 h-32' src={logoCopaAmerica} alt="cup logo" />
         </header>
