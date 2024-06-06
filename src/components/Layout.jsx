@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { getStagesDB } from '../services/stagesService'
 import { saveUserData } from '../redux/userSlice'
 import { removeCookies } from '../services/cookiesService'
+import LogoutIcon from "../assets/logos/logoutIcon.png"
 
 function Layout({ children, page }) {
   const globalUser = useSelector(state => state.user.user)
@@ -50,27 +51,27 @@ function Layout({ children, page }) {
         <div className="h-screen relative flex flex-col justify-between text-white">
           <img className='w-1/5 h-auto absolute bottom-0 right-0' src={logoCA} alt="logo" />
             <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center px-4 py-2 mb-6 border-b-2 border-solid border-opacity-90 border-white">
-              <img className="w-24 h-24 rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
+              <img className="w-[6%] h-full rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
               {
                 page !== undefined && (
                   <>
-                    <nav className='w-1/3'>
+                    <nav className='w-1/3 absolute inset-x-1/3'>
                       <ul className='flex justify-between'>       
                         <li className='text-[24px] hover:cursor-pointer hover:underline' onClick={() => navigate('/groups')}>Fixture</li>
                         <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline' onClick={() => navigate('/rules')}>Reglas</li>
                         <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline' onClick={() => navigate('/rewards')}>Premios</li>
                       </ul>
                     </nav>
-                    <div className="relative flex items-center gap gap-3">
-                      <img className='w-16 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="Profile avatar" />
+                    <div className="cursor-pointer relative flex items-center gap gap-3">
+                      <img onClick={() => setShowLogoutButton(prevState => !prevState)} className='w-16 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="Profile avatar" />
                       <span className='text-[26px]' onClick={() => setShowLogoutButton(prevState => !prevState)}>{globalUser?.fullName}</span>
-                      <span className={`${showLogoutButton ? "visible bg-white text-blue-900 p-2 rounded-2xl font-bold cursor-pointer" : "invisible"} absolute left-1/2 top-3/4 translate-y-1/2 -translate-x-1/2`} onClick={handleLogout}>Cerrar sesion</span>
+                      <span className={`${showLogoutButton ? "flex hover:bg-slate-200 visible bg-white text-[#051E5C] p-2 rounded-2xl font-bold cursor-pointer" : "invisible"} absolute left-1/2 top-3/4 translate-y-1/2 w-[160px] justify-evenly items-center -translate-x-1/2`} onClick={handleLogout}><img className='h-[20px]' src={LogoutIcon} /> Cerrar sesion</span>
                     </div>
                   </>
                 )
               }
             </header>
-            <main className='flex-grow overflow-y-scroll'>
+            <main className='flex-grow overflow-y-auto'>
               {page && (
                 <div className='flex flex-col items-center gap-4 mb-8'>
                   <h1 className='text-[28px]'>Copa America 2024</h1>
