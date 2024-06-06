@@ -15,7 +15,7 @@ function Router() {
         <Route path='/home' element={<HomePage />} />
         <Route path='/rules' element={<Rules />}/>
         <Route path='/rewards' element={<Rewards />} />
-        <Route path='/groupStage' element={<Stage stage="groups" division={4}/>}/>
+        <Route path='/groups' element={<Stage stage="groups" division={4}/>}/>
         <Route path='/quarterfinals' element={<Stage stage="quarterfinals" division={4}/>}/>
         <Route path='/semifinals' element={<Stage stage="semifinals" division={4}/>}/>
         <Route path='/finals' element={<Stage stage="finals" division={4}/>}/>

@@ -55,18 +55,16 @@ function HomePage() {
     const copyTopFour = new Set(topFour)
     if(topFour.includes(null)) {
       Swal.fire({
-        title: 'Error!',
         text: 'Asegurate de elegir las 4 posiciones!',
-        icon: 'error',
+        icon: 'warning',
         confirmButtonText: 'Hecho'
       })
       return
     }
     if(copyTopFour.size < 4) {
       Swal.fire({
-        title: 'Error!',
-        text: 'No puedes repetir el mismo país!',
-        icon: 'error',
+        text: 'No puedes seleccionar el mismo pais mas de una vez',
+        icon: 'warning',
         confirmButtonText: 'Hecho'
       })
       return
@@ -78,7 +76,6 @@ function HomePage() {
       lockDateTime: "2024-06-20T20:50:00"
     })
     Swal.fire({
-      title: 'Exito!',
       text: 'Tu prediccion fue guardada con exito!',
       icon: 'success',
       confirmButtonText: 'Hecho'

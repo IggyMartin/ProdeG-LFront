@@ -4,6 +4,7 @@ import LoginLayout from './LoginLayout'
 import gato from '../assets/avatars/gato.png'
 import leon from '../assets/avatars/leon.png'
 import lobo from '../assets/avatars/lobo.png'
+import aguila from '../assets/avatars/aguila.png'
 import { FaPencilAlt } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux'
 import { setUserAvatarDB } from '../services/loginProcess'
@@ -13,7 +14,7 @@ import { jwtDecode } from 'jwt-decode'
 import { getCookies } from '../services/cookiesService'
 
 
-const avatars = [gato, leon, lobo]
+const avatars = [gato, leon, lobo, aguila]
 
 const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)]
 
@@ -62,10 +63,10 @@ function SetAvatar() {
                 <div className={`text-center ${changeAvatar && 'hidden'}`}>
                     <button className='border-solid border-2 border-white px-4 py-2 rounded-full cursor-pointer' onClick={handleContinue}>Continuar</button>
                 </div>
-                <div className={`flex gap-6 p-6 bg-gray-900 rounded-3xl shadow-login ${!changeAvatar && 'hidden'}`}>
+                <div className={`absolute top-3/4 flex gap-6 p-6 bg-gray-900 rounded-3xl shadow-login ${!changeAvatar && 'hidden'}`}>
                     {
                         avatarsToChoose.map((avatar, index) => (
-                            <img key={index} src={avatar} alt="avatar to choose" className='w-48 h-48 bg-slate-300 rounded-full hover:shadow-avatars hover:cursor-pointer' onClick={() => handleChosenAvatar(avatar)} />
+                            <img key={index} src={avatar} alt="avatar to choose" className='w-32 h-32 bg-slate-300 rounded-full hover:shadow-avatars hover:cursor-pointer' onClick={() => handleChosenAvatar(avatar)} />
                         ))
                     }
                 </div>

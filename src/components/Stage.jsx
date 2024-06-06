@@ -9,6 +9,7 @@ import Swal from "sweetalert2"
 import { convertToDateObject } from "../utils/functions"
 import SelectCountry from "./SelectCountry"
 import { useLocation } from "react-router-dom"
+import { getStagesDB, updateStageDB } from "../services/stagesService"
 
 const Toast = Swal.mixin({
   toast: true,
@@ -27,6 +28,7 @@ const Toast = Swal.mixin({
 function Stage({ stage, division }) {
   const location = useLocation()
   const [allGames, setAllGames] = useState([])
+  const [stages, setStages] = useState([])
   const globalUser = useSelector(state => state.user.user)
   const [makePredictions, setmakePredictions] = useState({})
   const [existantPredictions, setExistantPredictions] = useState({})
@@ -38,6 +40,11 @@ function Stage({ stage, division }) {
   const getAllGames = async () => {
     const data = await getAllGamesDB()
     setAllGames(data)
+  }
+
+  const getAllStages = async () => {
+    const data = await getStagesDB()
+    setStages(data)
   }
 
   const handleMakePrediction = (e, matchId) => {
@@ -102,13 +109,17 @@ function Stage({ stage, division }) {
         ...onlyExpiredMatchesBackToObject,
         ...updatedPredictions
       });
+      setmakePredictions(prevState => {
+        const { [matchId]: _, ...rest } = prevState;
+        return rest;
+      });
       Toast.fire({
         icon: "success",
         title: "Prediccion hecha!"
       });
     } catch (error) {
+      await getAllGames()
       Swal.fire({
-        title: 'Error!',
         text: 'El partido ya fue bloqueado!',
         icon: 'error',
         confirmButtonText: 'Hecho'
@@ -180,8 +191,26 @@ function Stage({ stage, division }) {
       visitorScore: "",
       ...rivals[match?.id]
     })
-    delete rivals[match?.id]
+    setRivals(prevState => {
+      const { [match?.id]: _, ...rest } = prevState;
+      return rest;
+    });
     await getAllGames()
+  }
+
+  const enableView = async () => {
+    const viewToEnable = stages.find(obj => obj.name === stage)
+    await updateStageDB({
+      id: viewToEnable.id,
+      name: stage,
+      status: true
+    })
+    await getAllStages()
+    Swal.fire(({
+      text: 'La vista se habilitó correctamente!',
+      icon: 'success',
+      confirmButtonText: 'Hecho'
+    }))
   }
 
   useEffect(() => {
@@ -213,6 +242,7 @@ function Stage({ stage, division }) {
 
   useEffect(() => {
     getAllGames();
+    getAllStages()
   }, [])
 
   useEffect(() => {
@@ -238,8 +268,8 @@ function Stage({ stage, division }) {
   }, [matchResults])
 
   useEffect(() => {
-    console.log(allGames)
-  }, [allGames])
+    console.log(makePredictions)
+  }, [makePredictions])
 
   return (
     <Layout page={stage === "groups" ? "Fase de grupos" : stage === "quarterfinals" ? "Cuartos de final" : stage === "semifinals" ? "Semifinales" : "Estancia Final"}>
@@ -248,8 +278,8 @@ function Stage({ stage, division }) {
         <p className="w-[950px] mb-10 text-xl items-center flex justify-between">
           {stage === "groups" ? "⚽Fase de grupos" : stage === "quarterfinals" ? "⚽Cuartos de final" : stage === "semifinals" ? "⚽Semifinales" : "⚽Estancia Final"} 
           {
-            stage !== "groups" && (
-                <button className="p-2 border-solid border-2 border-white rounded-2xl ">Habilitar</button>
+            globalUser.selectedRole === "ADMIN" && stages.some(obj => obj.name === stage && obj.status === false) && stage !== "groups" && (
+                <button className="p-2 border-solid border-2 border-white rounded-2xl " onClick={enableView}>Habilitar</button>
             )
           }
         </p>
@@ -291,7 +321,6 @@ function Stage({ stage, division }) {
                 <tbody className="w-[950px] flex flex-col">
                   {
                     group.map((match, rowIndex) => {
-                      console.log(match)
                       const leftCountryFlag = getCountryFlag(match?.localCountryResponse?.name)
                       const rightCountryFlag = getCountryFlag(match?.visitorCountryResponse?.name)
                       const bgColorForRow = rowIndex % 2 === 0 ? 'bg-blue-900' : 'bg-blue-950';
