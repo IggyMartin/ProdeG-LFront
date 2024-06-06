@@ -173,9 +173,9 @@ function HomePage() {
               </div>
             </div>
           </section>
-          <section className="flex w-1/2 justify-start">
+          <section className="flex w-1/2 justify-start cursor-pointer gap-[8px]">
             <img src={logitoCA} alt="logo chico CA" />
-            <span onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
+            <span className="flex items-center gap-[8px]" onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
           </section>
           { showPlayers && <PositionsTable />}
         </div>
