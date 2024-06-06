@@ -55,7 +55,7 @@ function RulesDefinition() {
                         </tr>
                         <tr>
                             <td className="p-2 border-r-2 border-b-2 border-solid border-white">En caso de acertar las 4 posiciones del torneo se obtendra un punto mas como bonus</td>
-                            <td className="whitespace-nowrap px-2">+1 punto</td>
+                            <td className="whitespace-nowrap px-2">1 punto</td>
                         </tr>
                     </tbody>
                 </table>
