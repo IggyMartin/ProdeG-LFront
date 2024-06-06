@@ -37,6 +37,7 @@ function SelectCountry({place = null, addToTopFour = null, selectRivals = null, 
                 </div>
             )}
             onChange={place ? handleAddToTopFour : handleSelectedCountry}
+            menuPortalTarget={document.body}
             />
         </div>
     )
