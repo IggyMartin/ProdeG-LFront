@@ -124,7 +124,7 @@ function HomePage() {
                 <section className="w-1/2 flex justify-between">
                   {
                     topFourPredictionCountriesWithFlags(globalUser.topFourCountriesPrediction).map((country, index) => (
-                      <div className="flex flex-col items-center gap-1 border border-slate-200 rounded-[16px] px-4 py-1">
+                      <div className="flex flex-col items-center gap-1 border border-slate-200 w-[160px] rounded-[16px] px-4 py-1">
                         <h1>{index == 0 ? "Campeón" : index == 1 ? "Subcampeón" : index==2 ? "Tercer puesto" : "Cuarto puesto"}</h1>
                         <div className="flex items-center gap-2">
                           <img className="w-10 h-10 object-cover rounded-full" src={country.flag} alt="country image" />
@@ -165,20 +165,20 @@ function HomePage() {
           <section className="mb-8">
             <h2 className='text-[22px]'>Posiciones</h2>
             <div className="flex justify-center items-center gap-4">
-              <img className='w-20 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
-              <div className="flex flex-col gap-2">
+              <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
+              <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
                 <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.playerPosition}</span>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
                 <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.totalPoints}</span> 
               </div>
             </div>
           </section>
-          <section className="flex w-1/2 justify-start cursor-pointer gap-[8px]">
+          <section className="flex w-1/2 justify-start gap-[8px]">
             <img src={logitoCA} alt="logo chico CA" />
-            <span className="flex items-center gap-[8px]" onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
+            <span className="flex items-center gap-[8px] cursor-pointer" onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
           </section>
           { showPlayers && <PositionsTable />}
         </div>
