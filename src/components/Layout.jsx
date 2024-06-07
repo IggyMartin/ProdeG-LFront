@@ -71,7 +71,7 @@ function Layout({ children, page }) {
                 )
               }
             </header>
-            <main className='flex-grow overflow-y-auto'>
+            <main className='relative flex-grow overflow-y-auto'>
               {page && (
                 <div className='flex flex-col items-center gap-4 mb-8'>
                   <h1 className='text-[28px]'>Copa America 2024</h1>

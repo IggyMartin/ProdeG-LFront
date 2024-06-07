@@ -11,7 +11,7 @@ import PositionsTable from "./PositionsTable";
 import ReactSelect from "react-select"
 import { useSelector, useDispatch } from 'react-redux'
 import Swal from "sweetalert2"
-import { createUserTopFourPredictionDB } from "../services/topFourPredictionService"
+import { createUserTopFourPredictionDB, createAdminTopFourPredictionDB } from "../services/topFourPredictionService"
 import { loginUserDB } from '../services/loginService'
 import { jwtDecode } from 'jwt-decode'
 import { getCookies } from '../services/cookiesService'
@@ -90,6 +90,63 @@ function HomePage() {
     dispatch(saveUserData(decodedToken))
   }
 
+  const handleAdminTopFourSubmit = (e) => {
+    e.preventDefault()
+    const copyTopFour = new Set(topFour)
+    if(topFour.includes(null)) {
+      Swal.fire({
+        text: 'Asegurate de elegir las 4 posiciones!',
+        icon: 'warning',
+        confirmButtonText: 'Hecho'
+      })
+      return
+    }
+    if(copyTopFour.size < 4) {
+      Swal.fire({
+        text: 'No puedes seleccionar el mismo pais mas de una vez',
+        icon: 'warning',
+        confirmButtonText: 'Hecho'
+      })
+      return
+    }
+    Swal.fire({
+      title: "¿Estás seguro de guardar el ranking con estos valores?",
+      html: `<b>¡Esta acción es irreversible!</b>`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3BD3BB",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+      confirmButtonText: "Guardar",
+      didRender: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+        if (confirmButton && cancelButton) {
+          confirmButton.parentNode.insertBefore(cancelButton, confirmButton);
+        }
+      }
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await createAdminTopFourPredictionDB({
+            adminCountryIdList: topFour
+          });
+          Swal.fire({
+            text: "El ranking ha sido guardado exitosamente.",
+            icon: "success",
+            confirmButtonText: "Cerrar"
+          });
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Hubo un problema al guardar el ranking.",
+            icon: "error"
+          });
+        }
+      }
+    })
+  }
+
   useEffect(() => {
     console.log(globalUser)
   }, [globalUser])
@@ -102,10 +159,33 @@ function HomePage() {
     <Layout page={globalUser.selectedRole === "PLAYER" && "Prediccion de tus 4 mejores de America"}>
       {
         globalUser.selectedRole === "ADMIN" ? (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <img className="mb-8" src={logoCATitulo} alt="logo CA titulo" />
+          <div className="absolute flex flex-col items-center top-52 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <img className="w-2/5 h-auto" src={logoCATitulo} alt="logo CA titulo" />
             <div className="flex flex-col items-center gap-6">
-              <span className="text-[20px]">Gestion de partidos</span>
+              <p>Carga de resultados de las predicciones para los 4 mejores equipos de América</p>
+              <div className="flex justify-center gap-4">
+                <div className="flex flex-col items-center gap-2">
+                  <label>Campeon</label>
+                  <SelectCountry place="first" addToTopFour={addToTopFour}/>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <label>Sub-Campeon</label>
+                  <SelectCountry place="second" addToTopFour={addToTopFour}/>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <label>Tercer Puesto</label>
+                  <SelectCountry place="third" addToTopFour={addToTopFour}/>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <label>Cuarto Puesto</label>
+                  <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
+                </div>
+              </div>
+              <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white" onClick={handleAdminTopFourSubmit}>Guardar</button>
+            </div>
+            <img className="my-6 w-full" src={homeDivider} alt="home divider" />
+            <div className="flex gap-2">
+              <span className="text-[20px]">Gestion de partidos:</span>
               <div className="w-52">
                 <ReactSelect
                 className="text-black bg-blue-700"
@@ -113,6 +193,7 @@ function HomePage() {
                 placeholder="FIXTURE"
                 isSearchable={false}
                 onChange={(chosenStage) => navigate(`/${chosenStage.value}`)}
+                menuPortalTarget={document.body}
                 />
               </div>
             </div>
