@@ -122,7 +122,12 @@ function Stage({ stage, division }) {
       Swal.fire({
         text: 'El partido ya fue bloqueado!',
         icon: 'error',
-        confirmButtonText: 'Hecho'
+        confirmButtonText: 'Hecho',
+        customClass: {
+          popup: "rounded-[20px]",
+          confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]",
+        },
+        buttonsStyling: false,
       })
     }
   }
@@ -133,10 +138,14 @@ function Stage({ stage, division }) {
       html: `<b>¡Esta acción es irreversible!</b>`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3BD3BB",
-      cancelButtonColor: "#d33",
       cancelButtonText: "No",
       confirmButtonText: "Guardar",
+      customClass: {
+        popup: "rounded-[20px]",
+        confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]",
+        cancelButton: "text-[#D80027] border-[#D80027] border hover:bg-red-500 hover:text-red-800 px-8 py-2 rounded-[20px]",
+      },
+      buttonsStyling: false,
       didRender: () => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
@@ -217,10 +226,14 @@ function Stage({ stage, division }) {
       html: `<b>¡Esta acción es irreversible!</b>`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3BD3BB",
-      cancelButtonColor: "#d33",
       cancelButtonText: "No",
       confirmButtonText: "Guardar",
+      customClass: {
+        popup: "rounded-[20px]",
+        confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]",
+        cancelButton: "text-[#D80027] border-[#D80027] border hover:bg-red-500 hover:text-red-800 px-8 py-2 rounded-[20px]",
+      },
+      buttonsStyling: false,
       didRender: () => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
@@ -353,10 +366,7 @@ function Stage({ stage, division }) {
             )
           }
         </p>
-        <div className="w-[950px] flex-col justify-between text-[20px] ">
-          
-        </div>
-        <div className="flex w-2/3 gap-8">
+        <div className="flex w-[950px] gap-8">
           {
             divideGames(allGames.filter(game => game.stage === stage), division).map((el, elIndex) => (
               <span className={`${selectedStage == elIndex ? "text-white border-b-2  border-red-500" : "text-[#A4A4A4]"} min-w-[75px] text-center cursor-pointer`} onClick={() => setSelectedStage(elIndex)} key={elIndex}>{getTitle(stage, elIndex)}</span>
@@ -393,7 +403,7 @@ function Stage({ stage, division }) {
                     group.map((match, rowIndex) => {
                       const leftCountryFlag = getCountryFlag(match?.localCountryResponse?.name)
                       const rightCountryFlag = getCountryFlag(match?.visitorCountryResponse?.name)
-                      const bgColorForRow = rowIndex % 2 === 0 ? "bg-white" : "bg-[#FEE6EB]";
+                      const bgColorForRow = rowIndex % 2 === 0 ? "bg-[#F0F0F0]" : "bg-[#FEE6EB]";
 
                       return (
                         <tr key={match?.id} className={`p-3 rounded-[8px] mb-2 text-black ${bgColorForRow}`}>
