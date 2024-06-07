@@ -1,7 +1,7 @@
 
 function RulesDefinition() {
   return (
-    <div>
+    <div className="w-4/5">
         <section className='w-4/5 m-auto'>
             <h3 className='text-[24px] text-red-600 mb-4'>Como participar</h3>
             <ul className="list-disc mb-6">
