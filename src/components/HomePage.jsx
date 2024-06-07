@@ -11,7 +11,7 @@ import PositionsTable from "./PositionsTable";
 import ReactSelect from "react-select"
 import { useSelector, useDispatch } from 'react-redux'
 import Swal from "sweetalert2"
-import { createUserTopFourPredictionDB, createAdminTopFourPredictionDB } from "../services/topFourPredictionService"
+import { createUserTopFourPredictionDB, createAdminTopFourPredictionDB, getTopFourRanking } from "../services/topFourPredictionService"
 import { loginUserDB } from '../services/loginService'
 import { jwtDecode } from 'jwt-decode'
 import { getCookies } from '../services/cookiesService'
@@ -29,6 +29,7 @@ function HomePage() {
   const globalUser = useSelector(state => state.user.user)
   const [showPlayers, setShowPlayers] = useState(false)
   const [topFour, setTopFour] = useState([null, null, null, null])
+  const [topFourResults, setTopFourResults] = useState(null)
 
   const addToTopFour = (place, selectedCountry) => {
     setTopFour(prevTopFour => {
@@ -184,6 +185,7 @@ function HomePage() {
             icon: "success",
             confirmButtonText: "Cerrar"
           });
+          await getTopFourResults()
         } catch (error) {
           Swal.fire({
             title: "Error!",
@@ -196,41 +198,60 @@ function HomePage() {
   }
 
   useEffect(() => {
-    console.log(globalUser)
-  }, [globalUser])
+    getTopFourResults()
+  }, [])
 
-  useEffect(() => {
-    console.log(topFour)
-  }, [topFour])
+  const getTopFourResults = async () => {
+    setTopFourResults((await getTopFourRanking())[0].adminCountryResponseList)
+  }
+
+
 
   return (
     <Layout page={globalUser.selectedRole === "PLAYER" && "Prediccion de tus 4 mejores de America"}>
       {
         globalUser.selectedRole === "ADMIN" ? (
-          <div className="absolute flex flex-col items-center top-52 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <img className="w-2/5 h-auto" src={logoCATitulo} alt="logo CA titulo" />
-            <div className="flex flex-col items-center gap-6 mb-8">
-              <p>Carga de resultados de las predicciones para los 4 mejores equipos de América</p>
-              <div className="flex justify-center gap-4">
-                <div className="flex flex-col items-center gap-2">
-                  <label>Campeon</label>
-                  <SelectCountry place="first" addToTopFour={addToTopFour}/>
+          <div className="absolute w-4/5 h-[500px] flex flex-col items-center top-52 left-1/2 transform -translate-x-1/2 -translate-y-[45%]">
+            <img className="w-1/3 h-auto" src={logoCATitulo} alt="logo CA titulo" /> 
+            {topFourResults ? 
+              <section className="flex justify-between mb-8">
+                {
+                  topFourPredictionCountriesWithFlags(topFourResults.map((country => country.name))).map((country, index) => {
+                    {console.log(country)}
+                    return <div className={`flex flex-col items-center gap-3 w-[160px]`}>
+                      <h1 className="text-lg">{index == 0 ? "🥇 Campeón" : index == 1 ? "🥈 Subcampeón" : index==2 ? "🥉 Tercer puesto" : "Cuarto puesto"}</h1>
+                      <div className="flex items-center gap-2">
+                        <img className="w-10 h-10 object-cover rounded-full" src={country.flag} alt="country image" />
+                        <span>{country.name}</span>
+                      </div>
+                    </div>
+                  })
+                }
+              </section>
+              :
+              <div className="flex w-4/5 flex-col items-center gap-6 mb-8">
+                  <p>Carga de resultados de las predicciones para los 4 mejores equipos de América</p>
+                  <div className="flex justify-center gap-4">
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Campeon</label>
+                      <SelectCountry place="first" addToTopFour={addToTopFour}/>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Sub-Campeon</label>
+                      <SelectCountry place="second" addToTopFour={addToTopFour}/>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Tercer Puesto</label>
+                      <SelectCountry place="third" addToTopFour={addToTopFour}/>
+                    </div>
+                    <div className="flex flex-col items-center gap-2">
+                      <label>Cuarto Puesto</label>
+                      <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
+                    </div>
+                  </div>
+                  <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleAdminTopFourSubmit}>Guardar</button>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <label>Sub-Campeon</label>
-                  <SelectCountry place="second" addToTopFour={addToTopFour}/>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <label>Tercer Puesto</label>
-                  <SelectCountry place="third" addToTopFour={addToTopFour}/>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <label>Cuarto Puesto</label>
-                  <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
-                </div>
-              </div>
-              <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleAdminTopFourSubmit}>Guardar</button>
-            </div>
+            }
             <img className="my-6 w-full" src={homeDivider} alt="home divider" />
             <div className="flex gap-2">
               <span className="text-[20px]">Gestion de partidos:</span>
