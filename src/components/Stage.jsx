@@ -128,20 +128,47 @@ function Stage({ stage, division }) {
   }
 
   const saveMatchResult = async (match) => {
-    console.log(match)
-    await updateGameDB({
-      id: match.id,
-      stage: match.stage,
-      localCountryId: match.localCountryResponse.id,
-      visitorCountryId: match.visitorCountryResponse.id,
-      localScore: matchResults[match.id].localScore,
-      visitorScore: matchResults[match.id].visitorScore,
+    Swal.fire({
+      title: "¿Estás seguro de guardar el partido con este resultado?",
+      html: `<b>¡Esta acción es irreversible!</b>`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3BD3BB",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+      confirmButtonText: "Guardar",
+      didRender: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+        if (confirmButton && cancelButton) {
+          confirmButton.parentNode.insertBefore(cancelButton, confirmButton);
+        }
+      }
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await updateGameDB({
+            id: match.id,
+            stage: match.stage,
+            localCountryId: match.localCountryResponse.id,
+            visitorCountryId: match.visitorCountryResponse.id,
+            localScore: matchResults[match.id].localScore,
+            visitorScore: matchResults[match.id].visitorScore,
+          })
+          await getAllGames()
+          Toast.fire({
+            icon: "success",
+            title: "Resultado cargado con exito!"
+          });
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Hubo un problema al guardar el resultado.",
+            icon: "error"
+          });
+        }
+      }
     })
-    await getAllGames()
-    Toast.fire({
-      icon: "success",
-      title: "Resultado cargado con exito!"
-    });
   }
 
   const selectRivals = (selectedCountry, matchId, leftCountry) => {
@@ -185,17 +212,50 @@ function Stage({ stage, division }) {
   }
 
   const saveMatchRivals = async (match) => {
-    await updateGameDB({
-      stage: match.stage,
-      localScore: "",
-      visitorScore: "",
-      ...rivals[match?.id]
+    Swal.fire({
+      title: "¿Estás seguro de guardar el partido con estos rivales?",
+      html: `<b>¡Esta acción es irreversible!</b>`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3BD3BB",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+      confirmButtonText: "Guardar",
+      didRender: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+        if (confirmButton && cancelButton) {
+          confirmButton.parentNode.insertBefore(cancelButton, confirmButton);
+        }
+      }
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await updateGameDB({
+            stage: match.stage,
+            localScore: "",
+            visitorScore: "",
+            ...rivals[match?.id]
+          })
+          setRivals(prevState => {
+            const { [match?.id]: _, ...rest } = prevState;
+            return rest;
+          });
+          await getAllGames()
+          Swal.fire({
+            text: "Los rivales del partido se guardaron correctamente.",
+            icon: "success",
+            confirmButtonText: "Cerrar"
+          });
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Hubo un problema al guardar los rivales.",
+            icon: "error"
+          });
+        }
+      }
     })
-    setRivals(prevState => {
-      const { [match?.id]: _, ...rest } = prevState;
-      return rest;
-    });
-    await getAllGames()
   }
 
   const enableView = async () => {
