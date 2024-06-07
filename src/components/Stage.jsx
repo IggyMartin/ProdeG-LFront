@@ -242,10 +242,9 @@ function Stage({ stage, division }) {
             return rest;
           });
           await getAllGames()
-          Swal.fire({
-            text: "Los rivales del partido se guardaron correctamente.",
+          Toast.fire({
             icon: "success",
-            confirmButtonText: "Cerrar"
+            title: "Rivales guradados correctamente!"
           });
         } catch (error) {
           Swal.fire({
