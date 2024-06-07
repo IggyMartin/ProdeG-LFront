@@ -25,7 +25,7 @@ function PositionsTable() {
               <p className="w-[120px]">Posicion</p>
           </div>
         </div>
-      <div className="max-h-[280px] overflow-y-scroll scrollbar scrollbar-w-2 scrollbar-thumb-[#FD2A2A] scrollbar-thumb-rounded-full pr-2">
+      <div className="max-h-[280px] overflow-y-scroll scrollbar pr-2">
         {
           players?.map((player, index) => (
             <div key={player.position} className={`flex justify-between p-2 rounded-[8px] ${index %2 ? "bg-[#FEE6EB]" : "bg-white"} text-black font-bold mb-2 px-16`}>

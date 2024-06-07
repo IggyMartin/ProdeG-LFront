@@ -49,7 +49,7 @@ function Layout({ children, page }) {
   return (
     <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url(${fondo})`}}>
         <div className="h-screen relative flex flex-col justify-between text-white">
-          <img className='w-1/5 h-auto absolute bottom-0 right-0' src={logoCA} alt="logo" />
+          <img className='w-[15%] h-auto absolute bottom-0 right-0' src={logoCA} alt="logo" />
             <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center px-4 py-2 mb-6 border-b-2 border-solid border-opacity-90 border-white">
               <img className="w-[6%] h-full rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
               {
@@ -71,21 +71,20 @@ function Layout({ children, page }) {
                 )
               }
             </header>
-            <main className='relative flex-grow overflow-y-auto'>
+            <main className='relative flex-grow overflow-y-auto scrollbar scrollbar-w-2 scrollbar-thumb-[#FD2A2A] scrollbar-thumb-rounded-full scrollbar-track-blue-950'>
               {page && (
                 <div className='flex flex-col items-center gap-4 mb-8'>
                   <h1 className='text-[28px]'>Copa America 2024</h1>
-                  <h2 className='text-[22px]'>{page}</h2>
                 </div>
               )}
               {children}
             </main>
             {page !== undefined && (
-            <nav className="flex justify-center items-center mb-6 mt-10 h-16">
-              <span className="text-[24px] hover:cursor-pointer	mx-8" onClick={() => handleNavigation("groups")}>FASE DE GRUPOS</span>
-              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "quarterfinals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer"} text-[24px] mx-8`} onClick={() => handleNavigation("quarterfinals")}>CUARTOS DE FINAL</span>
-              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "semifinals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer"} text-[24px] mx-8`} onClick={() => handleNavigation("semifinals")}>SEMIFINALES</span>
-              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "finals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer"} text-[24px] mx-8`} onClick={() => handleNavigation("finals")}>ESTANCIA FINAL</span>
+            <nav className="flex justify-center items-center mb-6 mt-6 min-h-16 max-h-16 w-[1000px] self-center text-center">
+              <span className={`${location.pathname=="/groups" ? "text-[26px]" : "text-[20px] hover:text-[26px]"} hover:cursor-pointer w-1/4`} onClick={() => handleNavigation("groups")}>FASE DE GRUPOS</span>
+              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "quarterfinals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer hover:text-[26px]"} ${location.pathname=="/quarterfinals" && "text-[26px]"} w-1/4 text-[20px]`} onClick={() => handleNavigation("quarterfinals")}>CUARTOS DE FINAL</span>
+              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "semifinals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer hover:text-[26px]"} ${location.pathname=="/semifinals" && "text-[26px]"} w-1/4 text-[20px]`} onClick={() => handleNavigation("semifinals")}>SEMIFINALES</span>
+              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "finals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer hover:text-[26px]"} ${location.pathname=="/finals" && "text-[26px]"} w-1/4 text-[20px]`} onClick={() => handleNavigation("finals")}>ESTANCIA FINAL</span>
             </nav>
             )}
         </div>
