@@ -19,7 +19,7 @@ function PositionsTable() {
 
   return (
     <div className="w-1/2">
-        <div className="w-full flex justify-end pr-[80px] pl-16">
+        <div className="w-full flex justify-end pr-[90px] pl-16">
           <div className="flex justify-between w-[240px]">
               <p className="w-[120px]">Puntos</p>
               <p className="w-[120px]">Posicion</p>
