@@ -18,6 +18,9 @@ import { getCookies } from '../services/cookiesService'
 import { saveUserData } from '../redux/userSlice'
 import { topFourPredictionCountriesWithFlags } from "../utils/functions"
 import { useNavigate } from "react-router-dom"
+import { IoIosWarning } from "react-icons/io";
+
+
 
 
 function HomePage() {
@@ -70,24 +73,63 @@ function HomePage() {
       return
     }
 
-    await createUserTopFourPredictionDB({
-      userId: globalUser?.userId,
-      countryIdList: topFour,
-      lockDateTime: "2024-06-20T20:50:00"
-    })
     Swal.fire({
-      text: 'Tu prediccion fue guardada con exito!',
-      icon: 'success',
-      confirmButtonText: 'Hecho'
+      title: "¿Estás seguro de guardar el ranking con estos valores?",
+      html: `<b>¡Esta acción es irreversible!</b>`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3BD3BB",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+      confirmButtonText: "Guardar",
+      customClass: {
+        popup: "rounded-[20px]",
+        confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]",
+        cancelButton: "text-[#D80027] border-[#D80027] border hover:bg-red-500 hover:text-red-800 px-8 py-2 rounded-[20px]",
+      },
+      buttonsStyling: false,
+      didRender: () => {
+        const confirmButton = Swal.getConfirmButton();
+        const cancelButton = Swal.getCancelButton();
+        if (confirmButton && cancelButton) {
+          confirmButton.parentNode.insertBefore(cancelButton, confirmButton);
+        }
+      }
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await createUserTopFourPredictionDB({
+            userId: globalUser?.userId,
+            countryIdList: topFour,
+            lockDateTime: "2024-06-20T20:50:00"
+          })
+          Swal.fire({
+            text: 'Tu prediccion fue guardada con exito!',
+            icon: 'success',
+            confirmButtonText: 'Hecho',
+            customClass: {
+              popup: "rounded-[20px]",
+              confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]",
+            },
+            buttonsStyling: false,
+          })
+          await loginUserDB({
+            username: globalUser?.username,
+            fullName: globalUser?.fullName,
+            roleId: 2
+          })
+          const token = getCookies("jwt")
+          let decodedToken = jwtDecode(token)
+          dispatch(saveUserData(decodedToken))
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Hubo un problema al guardar el ranking.",
+            icon: "error"
+          });
+        }
+      }
     })
-    await loginUserDB({
-      username: globalUser?.username,
-      fullName: globalUser?.fullName,
-      roleId: 2
-    })
-    const token = getCookies("jwt")
-    let decodedToken = jwtDecode(token)
-    dispatch(saveUserData(decodedToken))
   }
 
   const handleAdminTopFourSubmit = (e) => {
@@ -118,6 +160,12 @@ function HomePage() {
       cancelButtonColor: "#d33",
       cancelButtonText: "No",
       confirmButtonText: "Guardar",
+      customClass: {
+        popup: "rounded-[20px]",
+        confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]",
+        cancelButton: "text-[#D80027] border-[#D80027] border hover:bg-red-500 hover:text-red-800 px-8 py-2 rounded-[20px]",
+      },
+      buttonsStyling: false,
       didRender: () => {
         const confirmButton = Swal.getConfirmButton();
         const cancelButton = Swal.getCancelButton();
@@ -161,7 +209,7 @@ function HomePage() {
         globalUser.selectedRole === "ADMIN" ? (
           <div className="absolute flex flex-col items-center top-52 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <img className="w-2/5 h-auto" src={logoCATitulo} alt="logo CA titulo" />
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center gap-6 mb-8">
               <p>Carga de resultados de las predicciones para los 4 mejores equipos de América</p>
               <div className="flex justify-center gap-4">
                 <div className="flex flex-col items-center gap-2">
@@ -181,7 +229,7 @@ function HomePage() {
                   <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
                 </div>
               </div>
-              <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white" onClick={handleAdminTopFourSubmit}>Guardar</button>
+              <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleAdminTopFourSubmit}>Guardar</button>
             </div>
             <img className="my-6 w-full" src={homeDivider} alt="home divider" />
             <div className="flex gap-2">
@@ -202,11 +250,11 @@ function HomePage() {
         <div className="flex flex-col items-center text-center">
           {
             globalUser?.topFourCountriesPrediction.length > 0 ? (
-                <section className="w-1/2 flex justify-between">
+                <section className="w-1/2 flex justify-between mb-8">
                   {
                     topFourPredictionCountriesWithFlags(globalUser.topFourCountriesPrediction).map((country, index) => (
-                      <div className="flex flex-col items-center gap-1 border border-slate-200 w-[160px] rounded-[16px] px-4 py-1">
-                        <h1>{index == 0 ? "Campeón" : index == 1 ? "Subcampeón" : index==2 ? "Tercer puesto" : "Cuarto puesto"}</h1>
+                      <div className={`flex flex-col items-center gap-3 w-[160px]`}>
+                        <h1 className="text-lg">{index == 0 ? "🥇 Campeón" : index == 1 ? "🥈 Subcampeón" : index==2 ? "🥉 Tercer puesto" : "Cuarto puesto"}</h1>
                         <div className="flex items-center gap-2">
                           <img className="w-10 h-10 object-cover rounded-full" src={country.flag} alt="country image" />
                           <span>{country.name}</span>
@@ -216,7 +264,7 @@ function HomePage() {
                   }
                 </section>
             ) : (
-              <section className="flex flex-col items-center">
+              <section className="flex flex-col items-center mb-8">
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-center gap-4">
                     <div className="flex flex-col items-center gap-2">
@@ -236,8 +284,8 @@ function HomePage() {
                       <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
                     </div>
                   </div>
-                  <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white" onClick={handleTopFourSubmit}>Guardar</button>
-                  <p>¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p>
+                  <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleTopFourSubmit}>Guardar</button>
+                  <p className="flex text-[24px] items-center gap-[8px] text-yellow-500"><IoIosWarning /><p className="text-white font-bold italic text-[18px] tracking-[1px]">¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p></p>
                 </div>
               </section>
             )
