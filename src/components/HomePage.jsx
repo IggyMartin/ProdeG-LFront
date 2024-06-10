@@ -19,9 +19,7 @@ import { saveUserData } from '../redux/userSlice'
 import { topFourPredictionCountriesWithFlags } from "../utils/functions"
 import { useNavigate } from "react-router-dom"
 import { IoIosWarning } from "react-icons/io";
-
-
-
+import { getOrderedPlayersDB } from "../services/userService"
 
 function HomePage() {
   const dispatch = useDispatch()
@@ -210,7 +208,7 @@ function HomePage() {
   }, [])
 
   const getTopFourResults = async () => {
-    setTopFourResults((await getTopFourRanking())[0].adminCountryResponseList)
+    setTopFourResults((await getTopFourRanking())[0]?.adminCountryResponseList)
   }
 
 
@@ -266,7 +264,7 @@ function HomePage() {
               <div className="w-52">
                 <ReactSelect
                 className="text-black bg-blue-700"
-                options={[{value: "groups", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Estancia final"}]}
+                options={[{value: "groups", label: "Fase de grupos"}, {value: "quarterfinals", label: "Cuartos de final"}, {value: "semifinals", label: "Semifinales"}, {value:"finals", label: "Instancia final"}]}
                 placeholder="FIXTURE"
                 isSearchable={false}
                 onChange={(chosenStage) => navigate(`/${chosenStage.value}`)}
@@ -326,11 +324,11 @@ function HomePage() {
               <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.playerPosition}</span>
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.position}</span>
               </div>
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.totalPoints}</span> 
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.totalPoints}</span> 
               </div>
             </div>
           </section>
