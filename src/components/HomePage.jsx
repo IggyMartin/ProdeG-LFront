@@ -223,7 +223,6 @@ function HomePage() {
               <section className="flex justify-between mb-8">
                 {
                   topFourPredictionCountriesWithFlags(topFourResults.map((country => country.name))).map((country, index) => {
-                    {console.log(country)}
                     return <div className={`flex flex-col items-center gap-3 w-[160px]`}>
                       <h1 className="text-lg">{index == 0 ? "🥇 Campeón" : index == 1 ? "🥈 Subcampeón" : index==2 ? "🥉 Tercer puesto" : "Cuarto puesto"}</h1>
                       <div className="flex items-center gap-2">
@@ -324,11 +323,11 @@ function HomePage() {
               <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.position || globalUser.playerPosition}</span>
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.position || globalUser.playerPosition}</span>
               </div>
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.totalPoints || globalUser.totalPoints}</span> 
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.totalPoints || globalUser.totalPoints}</span> 
               </div>
             </div>
           </section>
