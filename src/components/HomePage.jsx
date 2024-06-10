@@ -31,9 +31,7 @@ function HomePage() {
   const [topFourResults, setTopFourResults] = useState(null)
 
   const getPlayersInOrder = async () => {
-    const orderedPlayers = await getOrderedPlayersDB()
-    const loggedUser= orderedPlayers.find(playerObj => playerObj.userId === globalUser?.userId)
-    setUser(loggedUser)
+    setUser((await getOrderedPlayersDB()).find(playerObj => playerObj.userId === globalUser?.userId))
   }
 
   const addToTopFour = (place, selectedCountry) => {
@@ -323,11 +321,11 @@ function HomePage() {
               <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.position}</span>
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.position}</span>
               </div>
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.totalPoints}</span> 
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.totalPoints}</span> 
               </div>
             </div>
             :
@@ -335,11 +333,11 @@ function HomePage() {
               <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser.playerPosition}</span>
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.playerPosition}</span>
               </div>
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser.totalPoints}</span> 
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{globalUser?.totalPoints}</span> 
               </div>
             </div>
             }
