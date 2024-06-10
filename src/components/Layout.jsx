@@ -93,7 +93,7 @@ function Layout({ children, page }) {
               <span className={`${location.pathname=="/groups" ? "text-[26px]" : "text-[20px] hover:text-[26px]"} hover:cursor-pointer w-1/4`} onClick={() => handleNavigation("groups")}>FASE DE GRUPOS</span>
               <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "quarterfinals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer hover:text-[26px]"} ${location.pathname=="/quarterfinals" && "text-[26px]"} w-1/4 text-[20px]`} onClick={() => handleNavigation("quarterfinals")}>CUARTOS DE FINAL</span>
               <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "semifinals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer hover:text-[26px]"} ${location.pathname=="/semifinals" && "text-[26px]"} w-1/4 text-[20px]`} onClick={() => handleNavigation("semifinals")}>SEMIFINALES</span>
-              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "finals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer hover:text-[26px]"} ${location.pathname=="/finals" && "text-[26px]"} w-1/4 text-[20px]`} onClick={() => handleNavigation("finals")}>ESTANCIA FINAL</span>
+              <span className={`${globalUser?.selectedRole === "PLAYER" && stages.find(obj => obj.name === "finals" && obj.status === false) ? "text-slate-400 cursor-default" : "hover:cursor-pointer hover:text-[26px]"} ${location.pathname=="/finals" && "text-[26px]"} w-1/4 text-[20px]`} onClick={() => handleNavigation("finals")}>INSTANCIA FINAL</span>
             </nav>
             )}
         </div>
