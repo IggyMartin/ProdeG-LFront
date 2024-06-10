@@ -29,7 +29,14 @@ function HomePage() {
   const globalUser = useSelector(state => state.user.user)
   const [showPlayers, setShowPlayers] = useState(false)
   const [topFour, setTopFour] = useState([null, null, null, null])
+  const [user, setUser] = useState(null)
   const [topFourResults, setTopFourResults] = useState(null)
+
+  const getPlayersInOrder = async () => {
+    const orderedPlayers = await getOrderedPlayersDB()
+    const loggedUser= orderedPlayers.find(playerObj => playerObj.userId === globalUser?.userId)
+    setUser(loggedUser)
+  }
 
   const addToTopFour = (place, selectedCountry) => {
     setTopFour(prevTopFour => {
@@ -198,6 +205,7 @@ function HomePage() {
   }
 
   useEffect(() => {
+    getPlayersInOrder()
     getTopFourResults()
   }, [])
 

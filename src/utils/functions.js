@@ -1,8 +1,8 @@
 import { countriesFlags } from "./flagsJSON"
 import { getAllCountriesDB } from "../services/countryService"
+import Swal from "sweetalert2"
 
 const countriesFlagsObj = countriesFlags
-console.log(countriesFlagsObj)
 
 export const divideGames = (arr, division) => {
     const size = Math.ceil(arr.length / division)
@@ -73,3 +73,16 @@ export const getCountryFlag = (country) => {
       }      
   }
 }
+
+export const Toast = Swal.mixin({
+  toast: true,
+  position: "top",
+  width: '300px',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: false,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});

@@ -10,19 +10,7 @@ import { convertToDateObject } from "../utils/functions"
 import SelectCountry from "./SelectCountry"
 import { useLocation } from "react-router-dom"
 import { getStagesDB, updateStageDB } from "../services/stagesService"
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top",
-  width: '300px',
-  showConfirmButton: false,
-  timer: 2000,
-  timerProgressBar: false,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  }
-});
+import { Toast } from "../utils/functions"
 
 
 function Stage({ stage, division }) {
@@ -297,10 +285,6 @@ function Stage({ stage, division }) {
   }
 
   useEffect(() => {
-    console.log(rivals)
-  }, [rivals])
-
-  useEffect(() => {
     setSelectedStage(0)
   }, [stage])
 
@@ -345,14 +329,6 @@ function Stage({ stage, division }) {
     })
     setReady(true)
   }, [existantPredictions])
-
-  useEffect(() => {
-    console.log(matchResults)
-  }, [matchResults])
-
-  useEffect(() => {
-    console.log(makePredictions)
-  }, [makePredictions])
 
   return (
     <Layout page={stage === "groups" ? "Fase de grupos" : stage === "quarterfinals" ? "Cuartos de final" : stage === "semifinals" ? "Semifinales" : "Estancia Final"}>
@@ -500,7 +476,7 @@ function Stage({ stage, division }) {
                               </span>
                                 )
                               }
-                              <span className={globalUser?.selectedRole === "ADMIN" && "w-1/3"}>{match?.matchStartDateTime.split(" - ")[0].split("/").reverse().join("/") + " - " + match?.matchStartDateTime.split(" - ")[1]}</span>
+                              <span className={globalUser?.selectedRole === "ADMIN" ? "w-1/3": null}>{match?.matchStartDateTime.split(" - ")[0].split("/").reverse().join("/") + " - " + match?.matchStartDateTime.split(" - ")[1]}</span>
                             </div>
                           </td>
                         </tr>

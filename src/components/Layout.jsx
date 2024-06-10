@@ -8,6 +8,7 @@ import { getStagesDB } from '../services/stagesService'
 import { saveUserData } from '../redux/userSlice'
 import { removeCookies } from '../services/cookiesService'
 import LogoutIcon from "../assets/logos/logoutIcon.png"
+import { Toast } from '../utils/functions'
 
 function Layout({ children, page }) {
   const globalUser = useSelector(state => state.user.user)
@@ -43,7 +44,15 @@ function Layout({ children, page }) {
   }, [])
 
   useEffect(() => {
-    console.log(stages)
+    stages.forEach(stageObj => {
+      if(globalUser.selectedRole === "PLAYER" && location.pathname.toLowerCase() === `/${stageObj.name}` && stageObj.status === false) {
+        navigate("/home")
+        Toast.fire({
+          icon: "error",
+          title: "¡Aun no tienes acceso!"
+        })
+      }
+    })
   }, [stages])
 
   return (

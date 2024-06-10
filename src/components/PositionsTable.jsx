@@ -13,10 +13,6 @@ function PositionsTable() {
     getPlayersInOrder()
   }, [])
 
-  useEffect(() => {
-    console.log(players)
-  }, [players])
-
   return (
     <div className="w-1/2">
         <div className="w-full flex justify-end pr-[90px] pl-16">
