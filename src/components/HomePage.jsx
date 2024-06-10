@@ -317,15 +317,15 @@ function HomePage() {
           <img className="my-4 w-3/4" src={homeDivider} alt="home divider" />
           <section className="mb-8">
             <h2 className='text-[22px]'>Posiciones</h2>
-            {user && <div className="flex justify-center items-center gap-4">
+            {(user && user.position) && <div className="flex justify-center items-center gap-4">
               <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.position}</span>
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.position}</span>
               </div>
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user?.totalPoints}</span> 
+                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.totalPoints}</span> 
               </div>
             </div>}
           </section>
