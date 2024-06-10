@@ -331,11 +331,11 @@ function Stage({ stage, division }) {
   }, [existantPredictions])
 
   return (
-    <Layout page={stage === "groups" ? "Fase de grupos" : stage === "quarterfinals" ? "Cuartos de final" : stage === "semifinals" ? "Semifinales" : "Estancia Final"}>
+    <Layout page={stage === "groups" ? "Fase de grupos" : stage === "quarterfinals" ? "Cuartos de final" : stage === "semifinals" ? "Semifinales" : "Instancia Final"}>
       <div className="flex flex-col items-center">
         <span className="text-xs relative inset-y-[-28px]">Consulta aquí todos los partidos de la Copa América y sigue el progreso de tu equipo favorito</span>
         <p className="w-[950px] mb-10 text-xl items-center flex justify-between">
-          {stage === "groups" ? "⚽Fase de grupos" : stage === "quarterfinals" ? "⚽Cuartos de final" : stage === "semifinals" ? "⚽Semifinales" : "⚽Estancia Final"} 
+          {stage === "groups" ? "⚽Fase de grupos" : stage === "quarterfinals" ? "⚽Cuartos de final" : stage === "semifinals" ? "⚽Semifinales" : "⚽Instancia Final"} 
           {
             globalUser.selectedRole === "ADMIN" && stages.some(obj => obj.name === stage && obj.status === false) && stage !== "groups" && (
                 <button disabled={checkAvailability()} className={`py-1 px-4 border-solid border-2 border-[#F6EFEF] text-[#F6EFEF] bg-[#F6EFEF33] rounded-2xl cursor-pointer ${!checkAvailability() && "hover:border-[#42AD9C] hover:text-[#42AD9C] hover:bg-[#A0E9DD] "} disabled:cursor-default disabled:border-slate-400 disabled:text-slate-400`} onClick={enableView}>Habilitar</button>
