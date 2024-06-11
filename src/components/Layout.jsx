@@ -59,8 +59,8 @@ function Layout({ children, page }) {
     <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url(${fondo})`}}>
         <div className="h-screen relative flex flex-col justify-between text-white">
           <img className='w-[15%] h-auto absolute bottom-0 right-0' src={logoCA} alt="logo" />
-            <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center px-4 py-4 mb-6 border-b-2 border-solid border-opacity-90 border-white">
-              <img className="w-[78px] h-auto rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
+            <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 h-[10%] flex justify-between items-center px-4 py-4 mb-6 border-b-2 border-solid border-opacity-90 border-white">
+              <img className="w-[60px] h-auto rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
               {
                 page !== undefined && (
                   <>
@@ -72,8 +72,8 @@ function Layout({ children, page }) {
                       </ul>
                     </nav>
                     <div className="cursor-pointer relative flex items-center gap gap-3">
-                      <img onClick={() => setShowLogoutButton(prevState => !prevState)} className='w-16 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="Profile avatar" />
-                      <span className='text-[26px]' onClick={() => setShowLogoutButton(prevState => !prevState)}>{globalUser?.fullName}</span>
+                      <img onClick={() => setShowLogoutButton(prevState => !prevState)} className='w-[56px] h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="Profile avatar" />
+                      <span className='text-[24px]' onClick={() => setShowLogoutButton(prevState => !prevState)}>{globalUser?.fullName}</span>
                       <span className={`${showLogoutButton ? "flex hover:bg-slate-200 visible bg-white text-[#051E5C] p-2 rounded-2xl font-bold cursor-pointer" : "invisible"} absolute left-1/2 top-3/4 translate-y-1/2 w-[160px] justify-evenly items-center -translate-x-1/2`} onClick={handleLogout}><img className='h-[20px]' src={LogoutIcon} /> Cerrar sesion</span>
                     </div>
                   </>
@@ -83,7 +83,7 @@ function Layout({ children, page }) {
             <main className='relative flex-grow overflow-y-auto scrollbar scrollbar-w-2 scrollbar-thumb-[#FD2A2A] scrollbar-thumb-rounded-full scrollbar-track-blue-950'>
               {page && (
                 <div className='flex flex-col items-center gap-4 mb-8'>
-                  <h1 className='text-[28px]'>Copa America 2024</h1>
+                  <h1 className='text-[35px]'>Copa America 2024</h1>
                 </div>
               )}
               {children}

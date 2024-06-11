@@ -254,7 +254,7 @@ function HomePage() {
                   </div>
                   <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleAdminTopFourSubmit}>Guardar</button>
                 </div>
-            }
+            }        
             <img className="my-6 w-full" src={homeDivider} alt="home divider" />
             <div className="flex gap-2">
               <span className="text-[20px]">Gestion de partidos:</span>
