@@ -12,6 +12,7 @@ import { saveUserData } from '../redux/userSlice'
 import { loginUserDB } from '../services/loginService'
 import { jwtDecode } from 'jwt-decode'
 import { getCookies } from '../services/cookiesService'
+import { IoMdArrowDropleft } from "react-icons/io";
 
 
 const avatars = [gato, leon, lobo, aguila]
@@ -57,6 +58,18 @@ function SetAvatar() {
                 <div className='my-8 relative'>
                     <div className='w-6 h-6 bg-white border-solid border-white rounded-full flex items-center justify-center absolute right-5 top-3 cursor-pointer' onClick={() => setChangeAvatar(prevState => !prevState)}>
                         <FaPencilAlt className='fill-black'/>
+                        {
+                            !changeAvatar && (
+                                <>
+                                    <span className="absolute -right-5 top-1/2 transform -translate-y-1/2">
+                                        <IoMdArrowDropleft className="text-black text-2xl" />
+                                    </span>
+                                    <span className="absolute -right-[103px] bg-black p-2 rounded-2xl text-white">
+                                        ¡Cambialo!
+                                    </span>
+                                </>
+                            )
+                        }
                     </div>
                     <img className='w-48 h-48 rounded-full bg-transparent border-solid border-2 border-white p-2' src={userAvatar} alt="avatar" />
                 </div>
@@ -64,6 +77,7 @@ function SetAvatar() {
                     <button className='border-solid border-2 border-white px-4 py-2 rounded-full cursor-pointer' onClick={handleContinue}>Continuar</button>
                 </div>
                 <div className={`absolute top-3/4 flex gap-6 p-6 bg-gray-900 rounded-3xl shadow-login ${!changeAvatar && 'hidden'}`}>
+                    <button className='absolute top-2 right-2 font-bold bg-red-600 border-2 border-white px-2 rounded-2xl' onClick={() => setChangeAvatar(prevState => !prevState)}>X</button>
                     {
                         avatarsToChoose.map((avatar, index) => (
                             <img key={index} src={avatar} alt="avatar to choose" className='w-32 h-32 bg-slate-300 rounded-full hover:shadow-avatars hover:cursor-pointer' onClick={() => handleChosenAvatar(avatar)} />

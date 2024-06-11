@@ -27,6 +27,13 @@ function SelectCountry({place = null, addToTopFour = null, selectRivals = null, 
     return (
         <div className="w-52">
             <ReactSelect
+            styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  borderRadius: "8px",
+                  backgroundColor: "#F0F0F0"
+                }),
+              }}
             options={selectOptions}
             placeholder="Paises"
             isSearchable={false}

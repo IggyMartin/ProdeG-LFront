@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import Layout from "./Layout"
 import SelectCountry from "./SelectCountry"
 import homeDivider from "../assets/fondos-de-pantalla/homeDivider.png"
@@ -14,21 +14,47 @@ import Swal from "sweetalert2"
 import { createUserTopFourPredictionDB, createAdminTopFourPredictionDB, getTopFourRanking } from "../services/topFourPredictionService"
 import { loginUserDB } from '../services/loginService'
 import { jwtDecode } from 'jwt-decode'
-import { getCookies } from '../services/cookiesService'
-import { saveUserData } from '../redux/userSlice'
-import { topFourPredictionCountriesWithFlags } from "../utils/functions"
+import { getCookies, removeCookies } from '../services/cookiesService'
+import { saveUserData, setTimeoutId, setScheduleLogout } from '../redux/userSlice'
+import { Toast, topFourPredictionCountriesWithFlags } from "../utils/functions"
 import { useNavigate } from "react-router-dom"
 import { IoIosWarning } from "react-icons/io";
 import { getOrderedPlayersDB } from "../services/userService"
+import { handleTokenExpiration } from "../utils/functions"
 
 function HomePage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const globalUser = useSelector(state => state.user.user)
+  const scheduleLogout = useSelector(state => state.user.scheduleLogout)
   const [showPlayers, setShowPlayers] = useState(false)
   const [topFour, setTopFour] = useState([null, null, null, null])
   const [user, setUser] = useState(null)
   const [topFourResults, setTopFourResults] = useState(null)
+  const time = useRef(scheduleLogout)
+
+  const logoutAndRedirectToLogin = () => {
+    Swal.fire({
+      title: "¡Tu sesion ha expirado!",
+      icon: 'warning',
+      confirmButtonText: 'Volver',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      confirmButtonColor: "#3BD3BB",
+      customClass: {
+        popup: "rounded-[20px]",
+        confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]"
+      }
+    }).then(result => {
+      if(result.isConfirmed) {
+        navigate("/")
+        dispatch(saveUserData({}))
+        dispatch(setTimeoutId(null))
+        dispatch(setScheduleLogout(false))
+        removeCookies("jwt")
+      }
+    })
+  };
 
   const getPlayersInOrder = async () => {
     setUser((await getOrderedPlayersDB()).find(playerObj => playerObj.id === globalUser?.userId))
@@ -201,6 +227,14 @@ function HomePage() {
   }
 
   useEffect(() => {
+    if(!time.current) {
+      time.current = true
+      const returnedTimeoutId = handleTokenExpiration(logoutAndRedirectToLogin)
+      if(returnedTimeoutId) {
+        dispatch(setTimeoutId(returnedTimeoutId))
+        dispatch(setScheduleLogout(true))
+      }
+    }
     getPlayersInOrder()
     getTopFourResults()
   }, [])
@@ -254,7 +288,7 @@ function HomePage() {
                   </div>
                   <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleAdminTopFourSubmit}>Guardar</button>
                 </div>
-            }
+            }        
             <img className="my-6 w-full" src={homeDivider} alt="home divider" />
             <div className="flex gap-2">
               <span className="text-[20px]">Gestion de partidos:</span>
@@ -316,22 +350,21 @@ function HomePage() {
           }
           <img className="my-4 w-3/4" src={homeDivider} alt="home divider" />
           <section className="mb-8">
-            <h2 className='text-[22px]'>Posiciones</h2>
-            {(user && user.position) && <div className="flex justify-center items-center gap-4">
+            {(user && user.position) && <div className="flex justify-center items-center gap-4 border-2 border-[#ffffff33] shadow-lg shadow-black p-4 rounded-2xl">
               <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.position}</span>
+                <span className="font-bold text-[18px] px-4 py-1">{user.position}</span>
               </div>
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
-                <span className="font-bold text-[18px] px-4 py-1 border-solid border-white border-2 rounded-2xl">{user.totalPoints}</span> 
+                <span className="font-bold text-[18px] px-4 py-1">{user.totalPoints}</span> 
               </div>
             </div>}
           </section>
           <section className="flex w-1/2 justify-start gap-[8px]">
             <img src={logitoCA} alt="logo chico CA" />
-            <span className="flex items-center gap-[8px] cursor-pointer" onClick={() => setShowPlayers(prevState => !prevState)}>JUGADORES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
+            <span className="flex items-center gap-[8px] cursor-pointer" onClick={() => setShowPlayers(prevState => !prevState)}> POSICIONES {showPlayers ? <SlArrowUp className="inline-block" /> : <SlArrowDown className="inline-block"/>}</span>
           </section>
           { showPlayers && <PositionsTable />}
         </div>

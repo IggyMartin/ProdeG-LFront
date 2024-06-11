@@ -11,6 +11,7 @@ import SelectCountry from "./SelectCountry"
 import { useLocation } from "react-router-dom"
 import { getStagesDB, updateStageDB } from "../services/stagesService"
 import { Toast } from "../utils/functions"
+import { getOrderedPlayersDB } from "../services/userService"
 
 
 function Stage({ stage, division }) {
@@ -24,6 +25,7 @@ function Stage({ stage, division }) {
   const [ready, setReady] = useState(false)
   const [rivals, setRivals] = useState({})
   const [selectedStage, setSelectedStage] = useState(0)
+  const [player, setPlayer] = useState(null)
 
   const getAllGames = async () => {
     const data = await getAllGamesDB()
@@ -34,6 +36,12 @@ function Stage({ stage, division }) {
     const data = await getStagesDB()
     setStages(data)
   }
+
+  const getPlayerData = async () => {
+    setPlayer((await getOrderedPlayersDB()).find(playerObj => playerObj.id === globalUser?.userId))
+  }
+
+  console.log(player)
 
   const handleMakePrediction = (e, matchId) => {
     let newValue = e.target.value;
@@ -310,6 +318,7 @@ function Stage({ stage, division }) {
   useEffect(() => {
     getAllGames();
     getAllStages()
+    getPlayerData()
   }, [])
 
   useEffect(() => {
@@ -332,6 +341,16 @@ function Stage({ stage, division }) {
 
   return (
     <Layout page={stage === "groups" ? "Fase de grupos" : stage === "quarterfinals" ? "Cuartos de final" : stage === "semifinals" ? "Semifinales" : "Instancia Final"}>
+      {(player && player.position) && <div className="w-60 absolute text-center right-0 top-0 flex justify-center items-center gap-4 border-2 border-[#ffffff33] shadow-lg shadow-black p-4 rounded-2xl">
+        <div className="flex w-24 flex-col gap-2">
+          <span className="text-[14px]">TU POSICION</span>
+          <span className="font-bold text-[18px] px-4 py-1">{player.position}</span>
+        </div>
+        <div className="flex w-24 flex-col gap-2">
+          <span className="text-[14px]">TU PUNTAJE</span>
+          <span className="font-bold text-[18px] px-4 py-1">{player.totalPoints}</span> 
+        </div>
+      </div>}
       <div className="flex flex-col items-center">
         <span className="text-xs relative inset-y-[-28px]">Consulta aquí todos los partidos de la Copa América y sigue el progreso de tu equipo favorito</span>
         <p className="w-[950px] mb-10 text-xl items-center flex justify-between">
