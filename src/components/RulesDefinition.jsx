@@ -11,11 +11,11 @@ function RulesDefinition() {
                 <li className="mb-4">Los puntos que obtiene el Participante, una vez finalizado el partido, estarán dados de la siguiente forma: </li>
             </ul>
             <div className="flex gap-40">
-                <table className="border-solid border-2 border-white h-fit bg-slate-200 text-black">
+                <table className="border-solid border-2 border-white h-fit bg-slate-200 text-black border-separate border-spacing-0 rounded-[5px]">
                     <thead>
                         <tr className="border-b-2 border-solid border-white">
                             <th className="border-r-2 border-b-2 border-solid border-white p-2">Metodo de calificacion</th>
-                            <th className="p-2">Puntos</th>
+                            <th className="p-2 border-b-2 border-solid border-white">Puntos</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,17 +29,17 @@ function RulesDefinition() {
                         </tr>
                     </tbody>
                 </table>
-                <table className="border-solid border-2 border-white bg-slate-200 text-black">
+                <table className="border-solid border-2 border-white bg-slate-200 text-black rounded-[5px] border-separate border-spacing-0">
                     <thead>
-                        <tr className="border-b-2 border-solid border-white">
-                            <th className="p-2 border-r-2 border-solid border-white">Metodo de calificacion para posiciones</th>
+                        <tr className="border-b-2 border-solid border-white rounded-t-[5px]">
+                            <th className="p-2 border-r-2 border-solid border-white rounded-tl-[5px]">Metodo de calificacion para posiciones</th>
                             <th className="p-2">Puntos</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="p-2 border-r-2 border-b-2 border-solid border-white">Acertar quien sera el campeon del torneo</td>
-                            <td className="border-b-2 border-solid border-white p-2 text-center">1 Punto</td>
+                            <td className="p-2 border-t-2 border-r-2 border-b-2 border-solid border-white">Acertar quien sera el campeon del torneo</td>
+                            <td className="border-b-2 border-t-2 border-solid border-white p-2 text-center">1 Punto</td>
                         </tr>
                         <tr>
                             <td className="p-2 border-r-2 border-b-2 border-solid border-white">Acertar quien sera el subcampeon del torneo</td>
@@ -54,7 +54,7 @@ function RulesDefinition() {
                             <td className="border-b-2 border-solid border-white p-2 text-center">1 Punto</td>
                         </tr>
                         <tr>
-                            <td className="p-2 border-r-2 border-b-2 border-solid border-white">En caso de acertar las 4 posiciones del torneo se obtendra un punto mas como bonus</td>
+                            <td className="p-2 border-r-2 border-solid border-white">En caso de acertar las 4 posiciones del torneo se obtendra un punto mas como bonus</td>
                             <td className="whitespace-nowrap px-2">1 punto</td>
                         </tr>
                     </tbody>
