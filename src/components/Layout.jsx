@@ -5,13 +5,14 @@ import logoCA from '../assets/fondo-copa-america-2024/logitoCA.png'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getStagesDB } from '../services/stagesService'
-import { saveUserData } from '../redux/userSlice'
+import { saveUserData, setScheduleLogout, setTimeoutId } from '../redux/userSlice'
 import { removeCookies } from '../services/cookiesService'
 import LogoutIcon from "../assets/logos/logoutIcon.png"
 import { Toast } from '../utils/functions'
 
 function Layout({ children, page }) {
   const globalUser = useSelector(state => state.user.user)
+  const timeoutId = useSelector(state => state.user.timeoutId)
   const dispatch = useDispatch()
   const [stages, setStages] = useState([])
   const [showLogoutButton, setShowLogoutButton] = useState(false)
@@ -25,6 +26,12 @@ function Layout({ children, page }) {
 
   const handleLogout = () => {
     dispatch(saveUserData({}))
+    if(timeoutId) {
+      console.log("hola", timeoutId)
+      clearTimeout(timeoutId)
+      dispatch(setTimeoutId(null))
+      dispatch(setScheduleLogout(false))
+    }
     removeCookies("jwt")
     navigate("/")
   }
@@ -39,9 +46,21 @@ function Layout({ children, page }) {
     }
   }
   
+  const handleFixture = (e) => {
+    for(let stage of stages) {
+      if(stage.status === true) {
+        navigate(`/${stage.name}`)
+      }
+    }
+  }
+
   useEffect(() => {
     getAllStages()
   }, [])
+
+  useEffect(() => {
+    console.log(stages)
+  }, [stages])
 
   useEffect(() => {
     stages.forEach(stageObj => {
@@ -66,7 +85,7 @@ function Layout({ children, page }) {
                   <>
                     <nav className='w-1/3 absolute inset-x-1/3'>
                       <ul className='flex justify-between'>       
-                        <li className='text-[24px] hover:cursor-pointer hover:underline' onClick={() => navigate('/groups')}>Fixture</li>
+                        <li className='text-[24px] hover:cursor-pointer hover:underline' onClick={handleFixture}>Fixture</li>
                         <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline' onClick={() => navigate('/rules')}>Reglas</li>
                         <li className='text-[24px] hover:cursor-pointer hover:decoration-solid hover:underline' onClick={() => navigate('/rewards')}>Premios</li>
                       </ul>

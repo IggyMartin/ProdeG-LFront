@@ -123,9 +123,11 @@ function Login() {
                         </div>
                     )
                 }
-                <dialog ref={dialogRef} className='w-4/5 h-4/5 p-6 outline-none rounded-3xl text-left absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[30%]'>
+                <dialog ref={dialogRef} className='w-4/5 h-4/5 p-6 outline-none rounded-3xl text-left absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[30%] overflow-y-auto scrollbar scrollbar-w-2 scrollbar-thumb-[#FD2A2A] scrollbar-thumb-rounded-full scrollbar-track-blue-950'>
                     <h1 className='text-center text-[48px]'>Reglamento</h1>
-                    <RulesDefinition />
+                    <div className="w-full flex justify-center">
+                        <RulesDefinition />
+                    </div>
                     <section className='w-4/5 m-auto mt-12'>
                         <p className='my-12'>Por favor, ten en cuenta que los puntajes de los partidos se actualizaran durante el horario laboral de lunes a viernes</p>
                         <div className='flex gap-6 h-10 items-center'>

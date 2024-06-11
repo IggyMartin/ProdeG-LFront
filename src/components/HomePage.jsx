@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import Layout from "./Layout"
 import SelectCountry from "./SelectCountry"
 import homeDivider from "../assets/fondos-de-pantalla/homeDivider.png"
@@ -14,21 +14,47 @@ import Swal from "sweetalert2"
 import { createUserTopFourPredictionDB, createAdminTopFourPredictionDB, getTopFourRanking } from "../services/topFourPredictionService"
 import { loginUserDB } from '../services/loginService'
 import { jwtDecode } from 'jwt-decode'
-import { getCookies } from '../services/cookiesService'
-import { saveUserData } from '../redux/userSlice'
-import { topFourPredictionCountriesWithFlags } from "../utils/functions"
+import { getCookies, removeCookies } from '../services/cookiesService'
+import { saveUserData, setTimeoutId, setScheduleLogout } from '../redux/userSlice'
+import { Toast, topFourPredictionCountriesWithFlags } from "../utils/functions"
 import { useNavigate } from "react-router-dom"
 import { IoIosWarning } from "react-icons/io";
 import { getOrderedPlayersDB } from "../services/userService"
+import { handleTokenExpiration } from "../utils/functions"
 
 function HomePage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const globalUser = useSelector(state => state.user.user)
+  const scheduleLogout = useSelector(state => state.user.scheduleLogout)
   const [showPlayers, setShowPlayers] = useState(false)
   const [topFour, setTopFour] = useState([null, null, null, null])
   const [user, setUser] = useState(null)
   const [topFourResults, setTopFourResults] = useState(null)
+  const time = useRef(scheduleLogout)
+
+  const logoutAndRedirectToLogin = () => {
+    Swal.fire({
+      title: "¡Tu sesion ha expirado!",
+      icon: 'warning',
+      confirmButtonText: 'Volver',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      confirmButtonColor: "#3BD3BB",
+      customClass: {
+        popup: "rounded-[20px]",
+        confirmButton: "bg-[#61DBC7] hover:bg-[#2DC8AE] text-[#21655A] px-8 py-2 rounded-[20px] ml-[15px]"
+      }
+    }).then(result => {
+      if(result.isConfirmed) {
+        navigate("/")
+        dispatch(saveUserData({}))
+        dispatch(setTimeoutId(null))
+        dispatch(setScheduleLogout(false))
+        removeCookies("jwt")
+      }
+    })
+  };
 
   const getPlayersInOrder = async () => {
     setUser((await getOrderedPlayersDB()).find(playerObj => playerObj.id === globalUser?.userId))
@@ -201,6 +227,14 @@ function HomePage() {
   }
 
   useEffect(() => {
+    if(!time.current) {
+      time.current = true
+      const returnedTimeoutId = handleTokenExpiration(logoutAndRedirectToLogin)
+      if(returnedTimeoutId) {
+        dispatch(setTimeoutId(returnedTimeoutId))
+        dispatch(setScheduleLogout(true))
+      }
+    }
     getPlayersInOrder()
     getTopFourResults()
   }, [])

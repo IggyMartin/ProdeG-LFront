@@ -1,6 +1,8 @@
 import { countriesFlags } from "./flagsJSON"
 import { getAllCountriesDB } from "../services/countryService"
 import Swal from "sweetalert2"
+import { getCookies } from "../services/cookiesService"
+import { jwtDecode } from "jwt-decode"
 
 const countriesFlagsObj = countriesFlags
 
@@ -71,6 +73,18 @@ export const getCountryFlag = (country) => {
       if(key === country) {
           return countriesFlagsObj[key]
       }      
+  }
+}
+
+export function handleTokenExpiration(callback) {
+  const token = getCookies("jwt")
+  const decodedToken = jwtDecode(token)
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  const difference = decodedToken.exp - currentTimestamp;
+
+  if (difference > 0) {
+    const timeoutId = setTimeout(callback, difference * 1000);
+    return timeoutId
   }
 }
 
