@@ -59,8 +59,8 @@ function Layout({ children, page }) {
     <div className="bg-cover bg-center h-screen" style={{backgroundImage: `url(${fondo})`}}>
         <div className="h-screen relative flex flex-col justify-between text-white">
           <img className='w-[15%] h-auto absolute bottom-0 right-0' src={logoCA} alt="logo" />
-            <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center px-4 py-2 mb-6 border-b-2 border-solid border-opacity-90 border-white">
-              <img className="w-[6%] h-full rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
+            <header style={{ boxShadow: 'inset 0 -20px 10px -10px rgba(255, 255, 255, 0.7), 0 5px 10px 5px rgba(255, 255, 255, 0.8)' }} className="bg-red-600 flex justify-between items-center px-4 py-4 mb-6 border-b-2 border-solid border-opacity-90 border-white">
+              <img className="w-[78px] h-auto rounded-2xl cursor-pointer" src={GL} alt="Logo GyL" onClick={() => navigate('/home')}/>
               {
                 page !== undefined && (
                   <>
