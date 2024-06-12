@@ -128,16 +128,18 @@ function Login() {
                     <div className="w-full flex justify-center">
                         <RulesDefinition />
                     </div>
-                    <section className='w-4/5 m-auto mt-12'>
-                        <p className='my-12'>Por favor, ten en cuenta que los puntajes de los partidos se actualizaran durante el horario laboral de lunes a viernes</p>
-                        <div className='flex gap-6 h-10 items-center'>
-                            <input className={'self-stretch w-10 outline-none cursor-pointer'} type="checkbox" onClick={() => setAcceptTerms(prevState => !prevState)}/>
-                            <span className={`text-[18px] ${acceptTerms ? 'text-green-600' : 'text-red-600'}`}>{acceptTerms ? 'Reglas aceptadas!' : 'Aceptar Reglas'}</span>
-                        </div>
-                        <div className='text-center mt-6'>
-                            <button className={`px-10 py-2 rounded-3xl ${acceptTerms ? 'text-white bg-blue-800' : 'text-slate-200 bg-slate-500 cursor-default'}`} disabled={!acceptTerms} onClick={acceptTerms ? acceptedTerms : undefined}>Aceptar</button>
-                        </div>
-                    </section>
+                    <div className='w-4/5 m-auto'>
+                        <section className='w-4/5 m-auto'>
+                            <p className='my-8'>Por favor, ten en cuenta que los puntajes de los pronósticos se actualizarán durante el horario laboral de lunes a viernes.</p>
+                            <div className='flex gap-6 h-10 items-center'>
+                                <input className={'self-stretch w-6 outline-none cursor-pointer'} type="checkbox" onClick={() => setAcceptTerms(prevState => !prevState)}/>
+                                <span className={`text-[18px] ${acceptTerms ? 'text-green-600' : 'text-red-600'}`}>{acceptTerms ? 'Reglas aceptadas!' : 'He leído y acepto los términos '}</span>
+                            </div>
+                            <div className='text-center mt-10'>
+                                <button className={`px-14 py-[10px] rounded-[20px] ${acceptTerms ? 'text-[#192B5B] bg-[#61DBC7]' : 'text-white bg-[#9B9B9B] cursor-default'}`} disabled={!acceptTerms} onClick={acceptTerms ? acceptedTerms : undefined}>Aceptar</button>
+                            </div>
+                        </section>
+                    </div>
                 </dialog>
             </main>
         </LoginLayout>
