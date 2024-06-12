@@ -344,7 +344,7 @@ function Stage({ stage, division }) {
       {(player && player.position) && <div className="w-60 absolute text-center right-5 top-0 flex justify-center items-center gap-4 border-2 border-[#ffffff33] shadow-lg shadow-black p-4 rounded-2xl">
         <div className="flex w-24 flex-col gap-2">
           <span className="text-[14px]">TU POSICION</span>
-          <span className="font-bold text-[18px] px-4 py-1">{player.position === 1 ? "🥇": player.position === 2 ? "🥈" : player.position === 3 ? "🥉" : user.position}</span>
+          <span className="font-bold text-[18px] px-4 py-1">{player.position === 1 ? "🥇": player.position === 2 ? "🥈" : player.position === 3 ? "🥉" : player.position}</span>
         </div>
         <div className="flex w-24 flex-col gap-2">
           <span className="text-[14px]">TU PUNTAJE</span>
