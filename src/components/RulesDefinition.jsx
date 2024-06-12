@@ -67,7 +67,8 @@ function RulesDefinition() {
             <div className="list-disc">
                 <p>PRIMERA CLAUSULA: Haya acertado la mayor cantidad de resultados exactos. </p>
                 <p>SEGUNDA CLAUSULA: Tenga la mayor cantidad de pronósticos acertados.</p>
-                <p>TERCERA CLAUSULA: Si aún persiste el empate, se realizará un sorteo entre los participantes para determinar al ganador final.</p>
+                <p>TERCERA CLAUSULA: Haya acertado los 4 primeros puestos.</p>
+                <p>CUARTA CLAUSULA: Si aún persiste el empate, se realizará un sorteo entre los participantes para determinar al ganador final.</p>
             </div>
         </section>
     </div>

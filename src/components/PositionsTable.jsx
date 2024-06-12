@@ -17,8 +17,8 @@ function PositionsTable() {
     <div className="w-1/2">
         <div className="w-full flex justify-end pr-[90px] pl-16">
           <div className="flex justify-between w-[240px]">
-              <p className="w-[120px]">Puntos</p>
               <p className="w-[120px]">Posicion</p>
+              <p className="w-[120px]">Puntos</p>
           </div>
         </div>
       <div className="max-h-[280px] overflow-y-scroll scrollbar pr-2">
@@ -30,8 +30,8 @@ function PositionsTable() {
                 <p>{player.fullName}</p>
               </div>
               <div className="flex w-[240px] justify-between">
-                <p className="w-[120px]">{player.totalPoints}</p>
                 <p className="w-[120px]">{player.position === 1 ? "🥇": player.position === 2 ? "🥈" : player.position === 3 ? "🥉" : player.position}</p>
+                <p className="w-[120px]">{player.totalPoints}</p>
               </div>
             </div>
           ))
