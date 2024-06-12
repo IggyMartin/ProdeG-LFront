@@ -7,6 +7,7 @@ function RulesDefinition() {
             <div className="list-disc mb-6">
                 <p className="mb-4">Dentro del juego el Participante puede comenzar a pronosticar los partidos de las fechas habilitadas del torneo en curso.</p>
                 <p className="mb-4">El participante tiene hasta 10 minutos antes del inicio del partido para pronosticar el resultado. Si el partido ya ha comenzado, no podrá ingresar resultados y, por lo tanto, no obtendrá puntos.</p>
+                <p className="mb-4">En el caso que un partido tenga alargue (es decir, que se jueguen más de 90 minutos), el resultado que se tomará para el mismo es el del final de la prórroga.</p>
                 <p className="mb-4">Una vez realizado el pronóstico y hecho clic en "Guardar", los resultados no podrán modificarse.</p>
                 <p className="mb-4">Los puntos que obtenga el participante, una vez finalizado el partido, se distribuirán de la siguiente manera:</p>
             </div>
