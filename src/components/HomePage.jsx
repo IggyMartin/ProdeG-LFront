@@ -354,11 +354,11 @@ function HomePage() {
               <img className='w-24 h-auto' src={globalUser?.loginProcess?.selectAvatar} alt="user avatar" /> {/* avatar del usuario */}
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU POSICION</span>
-                <span className="font-bold text-[18px] px-4 py-1">{user.position}</span>
+                <span className="font-bold text-[32px] px-4 py-1">{user.position === 1 ? "🥇": user.position === 2 ? "🥈" : user.position === 3 ? "🥉" : user.position}</span>
               </div>
               <div className="flex w-24 flex-col gap-2">
                 <span className="text-[14px]">TU PUNTAJE</span>
-                <span className="font-bold text-[18px] px-4 py-1">{user.totalPoints}</span> 
+                <span className="font-bold text-[32px] px-4 py-1">{user.totalPoints}</span> 
               </div>
             </div>}
           </section>
