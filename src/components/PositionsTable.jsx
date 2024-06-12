@@ -31,7 +31,7 @@ function PositionsTable() {
               </div>
               <div className="flex w-[240px] justify-between">
                 <p className="w-[120px]">{player.totalPoints}</p>
-                <p className="w-[120px]">{player.position === 1 ? "🥇": player.position === 2 ? "🥈" : player.position === 3 ? "🥉" : user.position}</p>
+                <p className="w-[120px]">{player.position === 1 ? "🥇": player.position === 2 ? "🥈" : player.position === 3 ? "🥉" : player.position}</p>
               </div>
             </div>
           ))
