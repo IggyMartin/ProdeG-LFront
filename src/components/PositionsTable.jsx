@@ -23,7 +23,7 @@ function PositionsTable() {
         </div>
       <div className="max-h-[280px] overflow-y-scroll scrollbar pr-2">
         {
-          players?.slice(0, 15).map((player, index) => (
+          players?.map((player, index) => (
           <div key={player.userId} className={`flex justify-between p-2 rounded-[8px] ${index %2 ? "bg-[#FEE6EB]" : "bg-[#F0F0F0]"} text-black font-bold mb-2 px-16`}>
               <div className="flex items-center">
                 <img className="w-8 h-auto" src={player.selectAvatar} alt="player avatar" />

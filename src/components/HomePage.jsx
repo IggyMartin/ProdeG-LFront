@@ -27,7 +27,7 @@ function HomePage() {
   const navigate = useNavigate()
   const globalUser = useSelector(state => state.user.user)
   const scheduleLogout = useSelector(state => state.user.scheduleLogout)
-  const [showPlayers, setShowPlayers] = useState(true)
+  const [showPlayers, setShowPlayers] = useState(false)
   const [topFour, setTopFour] = useState([null, null, null, null])
   const [user, setUser] = useState(null)
   const [topFourResults, setTopFourResults] = useState(null)
