@@ -32,6 +32,7 @@ function HomePage() {
   const [user, setUser] = useState(null)
   const [topFourResults, setTopFourResults] = useState(null)
   const time = useRef(scheduleLogout)
+  const [showTopFour, setShowTopFour] = useState(null)
 
   const logoutAndRedirectToLogin = () => {
     Swal.fire({
@@ -85,6 +86,8 @@ function HomePage() {
 
   const handleTopFourSubmit = async (e) => {
     e.preventDefault()
+    const targetDate = new Date("2024-06-20T20:50:00")
+    const currentDate = new Date()
     const copyTopFour = new Set(topFour)
     if(topFour.includes(null)) {
       Swal.fire({
@@ -98,6 +101,14 @@ function HomePage() {
       Swal.fire({
         text: 'No puedes seleccionar el mismo pais mas de una vez',
         icon: 'warning',
+        confirmButtonText: 'Hecho'
+      })
+      return
+    }
+    if(currentDate > targetDate) {
+      Swal.fire({
+        text: 'La predicción ya fue bloqueada',
+        icon: 'error',
         confirmButtonText: 'Hecho'
       })
       return
@@ -227,6 +238,13 @@ function HomePage() {
   }
 
   useEffect(() => {
+    const targetDate = new Date("2024-06-20T20:50:00")
+    const currentDate = new Date()
+    if(currentDate > targetDate) {
+      setShowTopFour(false)
+    } else {
+      setShowTopFour(true)
+    }
     if(!time.current) {
       time.current = true
       const returnedTimeoutId = handleTokenExpiration(logoutAndRedirectToLogin)
@@ -321,32 +339,38 @@ function HomePage() {
                       ))
                   }
                 </section>
-            ) : (
-              <section className="flex flex-col items-center mb-8">
-                <div className="flex flex-col gap-6">
-                  <div className="flex justify-center gap-4">
-                    <div className="flex flex-col items-center gap-2">
-                      <label>Campeon</label>
-                      <SelectCountry place="first" addToTopFour={addToTopFour}/>
+            ) : showTopFour ? (
+                  <section className="flex flex-col items-center mb-8">
+                    <div className="flex flex-col gap-6">
+                      <div className="flex justify-center gap-4">
+                        <div className="flex flex-col items-center gap-2">
+                          <label>Campeon</label>
+                          <SelectCountry place="first" addToTopFour={addToTopFour}/>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <label>Sub-Campeon</label>
+                          <SelectCountry place="second" addToTopFour={addToTopFour}/>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <label>Tercer Puesto</label>
+                          <SelectCountry place="third" addToTopFour={addToTopFour}/>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <label>Cuarto Puesto</label>
+                          <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
+                        </div>
+                      </div>
+                      <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleTopFourSubmit}>Guardar</button>
+                      <p className="flex text-[24px] items-center gap-[8px] text-yellow-500"><IoIosWarning /><p className="text-white font-bold italic text-[18px] tracking-[1px]">¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p></p>
                     </div>
-                    <div className="flex flex-col items-center gap-2">
-                      <label>Sub-Campeon</label>
-                      <SelectCountry place="second" addToTopFour={addToTopFour}/>
-                    </div>
-                    <div className="flex flex-col items-center gap-2">
-                      <label>Tercer Puesto</label>
-                      <SelectCountry place="third" addToTopFour={addToTopFour}/>
-                    </div>
-                    <div className="flex flex-col items-center gap-2">
-                      <label>Cuarto Puesto</label>
-                      <SelectCountry place="fourth" addToTopFour={addToTopFour}/>
-                    </div>
+                  </section>
+                ) : (
+                  <div className="flex">
+                    <span>🏆</span>
+                    <p className="italic text-[18px] tracking-[1px]">¡Haz tu pronóstico y deja tu huella en el ranking!</p>
+                    <span>🏆</span>
                   </div>
-                  <button className="self-center px-4 py-2 rounded-full bg-blue-800 text-[18px] active:bg-blue-950 border-[1px] border-solid border-white hover:bg-blue-900" onClick={handleTopFourSubmit}>Guardar</button>
-                  <p className="flex text-[24px] items-center gap-[8px] text-yellow-500"><IoIosWarning /><p className="text-white font-bold italic text-[18px] tracking-[1px]">¡No te olvides guardar tus predicciones! Una vez que comience el torneo no podras cambiarlas</p></p>
-                </div>
-              </section>
-            )
+                )
           }
           <img className="my-4 w-3/4" src={homeDivider} alt="home divider" />
           <section className="mb-8">
