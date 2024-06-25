@@ -326,16 +326,6 @@ function Stage({ stage, division }) {
   }, [location.pathname])
 
   useEffect(() => {
-    const actualDateTime = new Date()
-    allGames.filter(game => game.stage === stage && !existantPredictions.hasOwnProperty(game.id)).map(game => {
-      const matchLockInDateTimeFormat = convertToDateObject(game.matchLockDateTime)
-      if(actualDateTime > matchLockInDateTimeFormat) {
-        setExistantPredictions(prevState => ({
-          ...prevState,
-          [game.id]: "expired"
-        }))
-      }
-    })
     setReady(true)
   }, [existantPredictions])
 
@@ -396,6 +386,8 @@ function Stage({ stage, division }) {
                 <tbody className="w-[950px] flex flex-col">
                   {
                     group.map((match, rowIndex) => {
+                      const currentDateTime = new Date()
+                      const matchLockInDateFormat = convertToDateObject(match?.matchLockDateTime)
                       const leftCountryFlag = getCountryFlag(match?.localCountryResponse?.name)
                       const rightCountryFlag = getCountryFlag(match?.visitorCountryResponse?.name)
                       const bgColorForRow = rowIndex % 2 === 0 ? "bg-[#F0F0F0]" : "bg-[#FEE6EB]";
@@ -421,9 +413,9 @@ function Stage({ stage, division }) {
                                 <span className="w-1/3 flex justify-center items-center">vs</span>
                                 ) : (
                                 <div className="w-1/3 flex justify-center items-center gap-[8px]">
-                                  <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]" id="localScorePrediction" type="text" value={existantPredictions[match?.id]?.localScorePrediction !== undefined ? existantPredictions[match?.id]?.localScorePrediction : null || makePredictions[match?.id]?.localScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                  <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]" id="localScorePrediction" type="text" value={existantPredictions[match?.id]?.localScorePrediction !== undefined ? existantPredictions[match?.id]?.localScorePrediction : null || makePredictions[match?.id]?.localScorePrediction || ''} disabled={existantPredictions[match?.id] || matchLockInDateFormat <= currentDateTime} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
                                   <span className="outline-none text-[#5742A9] font-bold text-center text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]">vs</span>
-                                  <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]" id="visitorScorePrediction" type="text" value={existantPredictions[match?.id]?.visitorScorePrediction !== undefined ? existantPredictions[match?.id].visitorScorePrediction : null || makePredictions[match?.id]?.visitorScorePrediction || ''} disabled={existantPredictions[match?.id]} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
+                                  <input className="w-1/4 outline-none text-[#6D6B6B] text-center font-bold text-[12px] py-1 w-[40px] rounded-[16px] bg-[#3C3C4319]" id="visitorScorePrediction" type="text" value={existantPredictions[match?.id]?.visitorScorePrediction !== undefined ? existantPredictions[match?.id].visitorScorePrediction : null || makePredictions[match?.id]?.visitorScorePrediction || ''} disabled={existantPredictions[match?.id] || matchLockInDateFormat <= currentDateTime} onChange={(e) => handleMakePrediction(e, match?.id)} autoComplete="off"/>
                                 </div>
                                 )
                               }
@@ -443,7 +435,7 @@ function Stage({ stage, division }) {
                             <div className="w-1/2 flex justify-evenly items-center">
                               {
                                 globalUser?.selectedRole === "PLAYER" && (
-                                <button className={`${existantPredictions[match?.id] === "expired" ? 'bg-[#C0CBC9] text-[#626366] border-none' : existantPredictions[match?.id] ? "bg-[#A0E9DD] text-[#0D9A83] border-none" : !makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("") ? "text-slate-400 border-slate-400 cursor-default" : "border-black text-black cursor-pointer hover:bg-[#A0E9DD] hover:text-[#42AD9C] hover:border-transparent"} px-4 py-1 border-solid border-2 rounded-2xl text-[14px] w-[100px]`} disabled={!makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("")} onClick={() => saveMatchPrediction(globalUser?.userId, match?.id, match?.matchLockDateTime)}>{typeof existantPredictions[match?.id] == "object" ? "Completo" : existantPredictions[match?.id] === "expired" ? "Finalizo" : "Guardar"}</button>
+                                <button className={`${existantPredictions[match?.id] ? "bg-[#A0E9DD] text-[#0D9A83] border-none" : matchLockInDateFormat <= currentDateTime ? 'bg-[#C0CBC9] text-[#626366] border-none' : existantPredictions[match?.id] ? "bg-[#A0E9DD] text-[#0D9A83] border-none" : !makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("") ? "text-slate-400 border-slate-400 cursor-default" : "border-black text-black cursor-pointer hover:bg-[#A0E9DD] hover:text-[#42AD9C] hover:border-transparent"} px-4 py-1 border-solid border-2 rounded-2xl text-[14px] w-[100px]`} disabled={!makePredictions[match?.id] || Object.keys(makePredictions[match?.id]).length < 2 || Object.values(makePredictions[match?.id]).includes("")} onClick={() => saveMatchPrediction(globalUser?.userId, match?.id, match?.matchLockDateTime)}>{typeof existantPredictions[match?.id] == "object" ? "Completo" : matchLockInDateFormat <= currentDateTime ? "Finalizo" : "Guardar"}</button>
                                 )
                               }
                               {
