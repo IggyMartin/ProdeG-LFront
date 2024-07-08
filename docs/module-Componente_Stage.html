@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Componente_Stage - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Componente_HomePage.html">Componente_HomePage</a><ul class='methods'><li data-type='method'><a href="module-Componente_HomePage.html#~addToTopFour">addToTopFour</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~getPlayersInOrder">getPlayersInOrder</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~getTopFourResults">getTopFourResults</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~handleAdminTopFourSubmit">handleAdminTopFourSubmit</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~handleTopFourSubmit">handleTopFourSubmit</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~logoutAndRedirectToLogin">logoutAndRedirectToLogin</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~useEffect">useEffect</a></li></ul></li><li><a href="module-Componente_Layout.html">Componente_Layout</a><ul class='methods'><li data-type='method'><a href="module-Componente_Layout.html#~getAllStages">getAllStages</a></li><li data-type='method'><a href="module-Componente_Layout.html#~handleFixture">handleFixture</a></li><li data-type='method'><a href="module-Componente_Layout.html#~handleLogout">handleLogout</a></li><li data-type='method'><a href="module-Componente_Layout.html#~handleNavigation">handleNavigation</a></li><li data-type='method'><a href="module-Componente_Layout.html#~useEffect">useEffect</a></li><li data-type='method'><a href="module-Componente_Layout.html#~useEffect2">useEffect2</a></li></ul></li><li><a href="module-Componente_Login.html">Componente_Login</a><ul class='methods'><li data-type='method'><a href="module-Componente_Login.html#~acceptedTerms">acceptedTerms</a></li><li data-type='method'><a href="module-Componente_Login.html#~loginAdmin">loginAdmin</a></li><li data-type='method'><a href="module-Componente_Login.html#~loginPlayer">loginPlayer</a></li></ul></li><li><a href="module-Componente_LoginLayout.html">Componente_LoginLayout</a></li><li><a href="module-Componente_NotFound.html">Componente_NotFound</a></li><li><a href="module-Componente_PositionsTable.html">Componente_PositionsTable</a><ul class='methods'><li data-type='method'><a href="module-Componente_PositionsTable.html#~getPlayersInOrder">getPlayersInOrder</a></li><li data-type='method'><a href="module-Componente_PositionsTable.html#~useEffect">useEffect</a></li></ul></li><li><a href="module-Componente_Rewards.html">Componente_Rewards</a></li><li><a href="module-Componente_Router.html">Componente_Router</a></li><li><a href="module-Componente_Rules.html">Componente_Rules</a></li><li><a href="module-Componente_RulesDefinition.html">Componente_RulesDefinition</a></li><li><a href="module-Componente_SelectCountry.html">Componente_SelectCountry</a><ul class='methods'><li data-type='method'><a href="module-Componente_SelectCountry.html#~handleAddToTopFour">handleAddToTopFour</a></li><li data-type='method'><a href="module-Componente_SelectCountry.html#~handleSelectedCountry">handleSelectedCountry</a></li><li data-type='method'><a href="module-Componente_SelectCountry.html#~useEffect">useEffect</a></li></ul></li><li><a href="module-Componente_SetAvatar.html">Componente_SetAvatar</a><ul class='methods'><li data-type='method'><a href="module-Componente_SetAvatar.html#~handleChosenAvatar">handleChosenAvatar</a></li><li data-type='method'><a href="module-Componente_SetAvatar.html#~handleContinue">handleContinue</a></li></ul></li><li><a href="module-Componente_Stage.html">Componente_Stage</a><ul class='methods'><li data-type='method'><a href="module-Componente_Stage.html#~checkAvailability">checkAvailability</a></li><li data-type='method'><a href="module-Componente_Stage.html#~enableView">enableView</a></li><li data-type='method'><a href="module-Componente_Stage.html#~getAllGames">getAllGames</a></li><li data-type='method'><a href="module-Componente_Stage.html#~getAllStages">getAllStages</a></li><li data-type='method'><a href="module-Componente_Stage.html#~getPlayerData">getPlayerData</a></li><li data-type='method'><a href="module-Componente_Stage.html#~handleMakePrediction">handleMakePrediction</a></li><li data-type='method'><a href="module-Componente_Stage.html#~handleMatchResult">handleMatchResult</a></li><li data-type='method'><a href="module-Componente_Stage.html#~saveMatchPrediction">saveMatchPrediction</a></li><li data-type='method'><a href="module-Componente_Stage.html#~saveMatchResult">saveMatchResult</a></li><li data-type='method'><a href="module-Componente_Stage.html#~saveMatchRivals">saveMatchRivals</a></li><li data-type='method'><a href="module-Componente_Stage.html#~selectRivals">selectRivals</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect">useEffect</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect2">useEffect2</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect3">useEffect3</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect4">useEffect4</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect5">useEffect5</a></li></ul></li><li><a href="module-Redux.html">Redux</a><ul class='methods'><li data-type='method'><a href="module-Redux.html#~saveUserData">saveUserData</a></li><li data-type='method'><a href="module-Redux.html#~setScheduleLogout">setScheduleLogout</a></li><li data-type='method'><a href="module-Redux.html#~setTimeoutId">setTimeoutId</a></li><li data-type='method'><a href="module-Redux.html#~updateUserLoginProcess">updateUserLoginProcess</a></li></ul></li><li><a href="module-Servicios_de_conexi%25C3%25B3n_al_backend.html">Servicios_de_conexión_al_backend</a><ul class='methods'><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~acceptTermsAndConditionsDB">acceptTermsAndConditionsDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~createAdminTopFourPredictionDB">createAdminTopFourPredictionDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~createGamePredictionDB">createGamePredictionDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~createUserTopFourPredictionDB">createUserTopFourPredictionDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~findAllByUserIdDB">findAllByUserIdDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getAllCountriesDB">getAllCountriesDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getAllGamesDB">getAllGamesDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getCookies">getCookies</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getHeaders">getHeaders</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getOrderedPlayersDB">getOrderedPlayersDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getStagesDB">getStagesDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getTopFourRanking">getTopFourRanking</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getUserByIdDB">getUserByIdDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~getWithHeaders">getWithHeaders</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~loginUserDB">loginUserDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~makeRequest">makeRequest</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~postWithHeaders">postWithHeaders</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~putWithHeaders">putWithHeaders</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~removeCookies">removeCookies</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~setCookies">setCookies</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~setUserAvatarDB">setUserAvatarDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~updateGameDB">updateGameDB</a></li><li data-type='method'><a href="module-Servicios_de_conexi%2525C3%2525B3n_al_backend.html#~updateStageDB">updateStageDB</a></li></ul></li><li><a href="module-Utils.html">Utils</a><ul class='methods'><li data-type='method'><a href="module-Utils.html#~convertToDateObject">convertToDateObject</a></li><li data-type='method'><a href="module-Utils.html#~divideGames">divideGames</a></li><li data-type='method'><a href="module-Utils.html#~getCountriesAndSetSelectOptions">getCountriesAndSetSelectOptions</a></li><li data-type='method'><a href="module-Utils.html#~getCountryFlag">getCountryFlag</a></li><li data-type='method'><a href="module-Utils.html#~getTitle">getTitle</a></li><li data-type='method'><a href="module-Utils.html#~handleTokenExpiration">handleTokenExpiration</a></li><li data-type='method'><a href="module-Utils.html#~topFourPredictionCountriesWithFlags">topFourPredictionCountriesWithFlags</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Componente_Stage</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~checkAvailability"><span class="type-signature type-signature-inner">(inner) </span>checkAvailability<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función para controlar la opción de habilitar una instancia de la competencia únicamente si ya fueron cargados todos lols rivales de dicha instancia</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line351">line 351</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~enableView"><span class="type-signature type-signature-async, inner">(async, inner) </span>enableView<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que habilita una instancia de la competenciaMuestra un mensaje de éxito con la habilitación de la instancia exitosa</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line330">line 330</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getAllGames"><span class="type-signature type-signature-async, inner">(async, inner) </span>getAllGames<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Busca todos los partidos y actualiza el estado que los almacena</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getAllStages"><span class="type-signature type-signature-async, inner">(async, inner) </span>getAllStages<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Busca todas las fases de la competencia (desde de fase de grupo hasta la instancia final) y actualiza el estado que los almacena</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getPlayerData"><span class="type-signature type-signature-async, inner">(async, inner) </span>getPlayerData<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Busca al usuario logueado y actualiza el estado que lo almacena</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~handleMakePrediction"><span class="type-signature type-signature-inner">(inner) </span>handleMakePrediction<span class="signature">(e, matchId)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que maneja la predicción de un partido, agregándola al estado que almacena las predicciones que el jugador este escribiendoAcepta unicamente valores numéricos y no permite 0 al inicio de un valor de mas de un digito</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el objeto evento.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>matchId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el id del partido a predecir.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~handleMatchResult"><span class="type-signature type-signature-inner">(inner) </span>handleMatchResult<span class="signature">(e, matchId)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que maneja la carga del resultado final de un partido, agregándola al estado que almacena los resultados siendo cargados por el adminAcepta unicamente valores numéricos y no permite 0 al inicio de un valor de mas de un digito</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line89">line 89</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Event</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el objeto evento.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>matchId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el id del partido a cargar el resultado.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~saveMatchPrediction"><span class="type-signature type-signature-async, inner">(async, inner) </span>saveMatchPrediction<span class="signature">(userId, matchId, matchLockDateTime)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que guarda la prediccion de un partido y actualiza el estado que almacena las predicciones existentes del jugadorMuestra un mensaje de éxito o error dependiendo de si el partido ya fue bloqueado o no</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line115">line 115</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>userId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">id del usuario</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>matchId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">id del partido</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>matchLockDateTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">dato de fecha y hora del bloqueo para el partido</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~saveMatchResult"><span class="type-signature type-signature-async, inner">(async, inner) </span>saveMatchResult<span class="signature">(match)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que guarda el resultado final de un partidoMuestra un mensaje de confirmación para guardar la carga del resultado final</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line171">line 171</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>match</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el objeto 'partido' con la información necesaria para guardar el resultado final</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~saveMatchRivals"><span class="type-signature type-signature-async, inner">(async, inner) </span>saveMatchRivals<span class="signature">(match)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que guarda los rivales seleccionados para un partido Muestra un mensaje de confirmación antes de guardar los rivales del partido</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line273">line 273</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>match</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el objeto 'partido' con la información necesaria para guardar el resultado final</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~selectRivals"><span class="type-signature type-signature-inner">(inner) </span>selectRivals<span class="signature">(selectedCountry, matchId, leftCountry)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que maneja la selección de los rivales para un partido</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line226">line 226</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>selectedCountry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">El objeto del país seleccionado</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>matchId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">id del partido</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>leftCountry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">indica si el país seleccionado es el de la izquierda (para definir en la función si el admin esta cargando al 'local' o 'visitante')</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~useEffect"><span class="type-signature type-signature-inner">(inner) </span>useEffect<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Con cada cambio de instancia al navegar en la aplicaciòn, se va a colocar al usuario en el primer grupo o partido de dicha instancia</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line366">line 366</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~useEffect2"><span class="type-signature type-signature-inner">(inner) </span>useEffect2<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Se ejecuta para buscar las predicciones realizadas del usuario y actualiza el estado que las almacena</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line374">line 374</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~useEffect3"><span class="type-signature type-signature-inner">(inner) </span>useEffect3<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Al montarse el componente se ejecutan las funciones definidas mas arriba (buscar todos los partidos, todas las fases/instancias de la competencia, y los datos del jugador logueado)</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line397">line 397</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~useEffect4"><span class="type-signature type-signature-inner">(inner) </span>useEffect4<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Al navegar a una fase/instancia diferente en la que se enontraba el usuario, el estado que almacena los rivales a enfrentarse vuelve a estar vacío</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line407">line 407</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~useEffect5"><span class="type-signature type-signature-inner">(inner) </span>useEffect5<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Al estar ya listas las predicciones hechas por el usuario, se setea en verdadero el estado que permite la renderizacion de los partidos</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_Stage.jsx.html">components/Stage.jsx</a>, <a href="components_Stage.jsx.html#line415">line 415</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

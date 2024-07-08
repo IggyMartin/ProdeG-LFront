@@ -2,6 +2,10 @@ import Layout from "./Layout";
 import premios from '../assets/fondos-de-pantalla/rewards.png'
 import estrellas from '../assets/fondos-de-pantalla/estrellas.png'
 
+/**
+ * @module Componente_Rewards
+ * @description Componente estático que muestra los premios de la competencia 
+ */
 function Rewards() {
   return (
    <Layout page={null}>

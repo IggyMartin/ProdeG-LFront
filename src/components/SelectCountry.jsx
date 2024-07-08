@@ -2,27 +2,41 @@ import { useEffect, useRef, useState } from "react"
 import ReactSelect from "react-select"
 import { getCountriesAndSetSelectOptions } from "../utils/functions"
 
+/**
+ * @module Componente_SelectCountry
+ * @description Componente que maneja la selección de un país de un 'dropdown' de todos los paises posibles
+ */
 function SelectCountry({place = null, addToTopFour = null, selectRivals = null, matchId = null, setLeftCountry = null}) {
     const [selectOptions, setSelectOptions] = useState([])
 
+    /**
+     * Función que maneja agregar el país seleccionado al top cuatro
+     * @function handleAddToTopFour
+     * @param {Object} selectedCountry - El país seleccionado a agregar
+     */
     const handleAddToTopFour = (selectedCountry) => {
         addToTopFour(place, selectedCountry)
     }
 
+    /**
+     * Función que maneja la selección de un país y setea rivales para un partido (para cuartos de final en adelante)
+     * @function handleSelectedCountry
+     * @param {Object} selectedCountry - El país seleccionado
+     */
     const handleSelectedCountry = (selectedCountry) => {
         selectRivals(selectedCountry, matchId, setLeftCountry)
     }
 
+    /**
+     * Al montarse el componente, busca la lista de paises y actualiza el estado que los almacena para luego utilizarlos en las opciones del 'dropdown'
+     * @function useEffect
+     */
     useEffect(() => {
         (async function() {
             const countriesForSelect = await getCountriesAndSetSelectOptions()
             setSelectOptions(countriesForSelect)
         })()
     }, [])
-
-    useEffect(() => {
-        console.log(selectOptions)
-    }, [selectOptions])
 
     return (
         <div className="w-52">

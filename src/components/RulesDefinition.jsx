@@ -1,4 +1,7 @@
-
+/**
+ * @module Componente_RulesDefinition
+ * @description Componente estático que muestra las reglas y condiciones de desempate
+ */
 function RulesDefinition() {
   return (
     <div className="w-4/5">

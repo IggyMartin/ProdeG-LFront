@@ -4,6 +4,10 @@ import GL30años from '../assets/logos/GyL30años.png'
 import tituloCopaAmerica from '../assets/fondo-copa-america-2024/tituloCopaAmerica.png'
 import logoCopaAmerica from '../assets/logos/logocopaAmerica.png'
 
+/**
+ * @module Componente_LoginLayout
+ * @description Componente para el layout del login
+ */
 function LoginLayout({ children }) {
   return (
     <div className="relative bg-cover bg-center h-screen text-white" style={{backgroundImage: `url(${fondoLogin})`}}>

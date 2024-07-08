@@ -7,6 +7,10 @@ import Rewards from '../components/Rewards'
 import NotFound from '../components/NotFound'
 import SetAvatar from '../components/SetAvatar'
 
+/**
+ * @module Componente_Router
+ * @description Componente Router en el cuál se define la estructura de las rutas de la aplicación
+ */
 function Router() {
   return (
     <Routes>

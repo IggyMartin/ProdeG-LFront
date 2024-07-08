@@ -9,7 +9,7 @@ const getHeaders = () => ({
 
 const makeRequest = (method, url, data, config = {}) => {
   const completeUrl = API_URL + url;
-  const headers = getHeaders()
+  const headers = getHeaders();
 
   return axios({
     method,
@@ -20,6 +20,8 @@ const makeRequest = (method, url, data, config = {}) => {
   });
 };
 
-export const getWithHeaders = url => makeRequest("get", url);
+export const getWithHeaders = (url) => makeRequest("get", url);
+
 export const postWithHeaders = (url, data) => makeRequest("post", url, data);
+
 export const putWithHeaders = (url, data) => makeRequest("put", url, data);

@@ -14,6 +14,10 @@ import { Toast } from "../utils/functions"
 import { getOrderedPlayersDB } from "../services/userService"
 
 
+/**
+ * @module Componente_Stage
+ * @category Componente funcional que maneja (tanto para usuario jugador como admin) las distintas fases de la competencia y sus partidos
+ */
 function Stage({ stage, division }) {
   const location = useLocation()
   const [allGames, setAllGames] = useState([])
@@ -27,26 +31,46 @@ function Stage({ stage, division }) {
   const [selectedStage, setSelectedStage] = useState(0)
   const [player, setPlayer] = useState(null)
 
+  /**
+   * Busca todos los partidos y actualiza el estado que los almacena
+   * @function getAllGames
+   * @async
+   */
   const getAllGames = async () => {
     const data = await getAllGamesDB()
     setAllGames(data)
   }
 
+  /**
+   * Busca todas las fases de la competencia (desde de fase de grupo hasta la instancia final) y actualiza el estado que los almacena
+   * @function getAllStages
+   * @async
+   */
   const getAllStages = async () => {
     const data = await getStagesDB()
     setStages(data)
   }
 
+  /**
+   * Busca al usuario logueado y actualiza el estado que lo almacena
+   * @function getPlayerData
+   * @async
+   */
   const getPlayerData = async () => {
     setPlayer((await getOrderedPlayersDB()).find(playerObj => playerObj.id === globalUser?.userId))
   }
 
-  console.log(player)
-
+  /**
+   * Función que maneja la predicción de un partido, agregándola al estado que almacena las predicciones que el jugador este escribiendo
+   * Acepta unicamente valores numéricos y no permite 0 al inicio de un valor de mas de un digito
+   * @function handleMakePrediction
+   * @param {Event} e - el objeto evento.
+   * @param {string} matchId - el id del partido a predecir.
+   */
   const handleMakePrediction = (e, matchId) => {
     let newValue = e.target.value;
     const regex = /^\d+$/;
-    if(newValue.length > 1 && newValue[0] == 0) {
+    if (newValue.length > 1 && newValue[0] == 0) {
       newValue = newValue.slice(1)
     }
     if (newValue === '' || regex.test(newValue)) {
@@ -62,10 +86,17 @@ function Stage({ stage, division }) {
     }
   }
 
+  /**
+   * Función que maneja la carga del resultado final de un partido, agregándola al estado que almacena los resultados siendo cargados por el admin
+   * Acepta unicamente valores numéricos y no permite 0 al inicio de un valor de mas de un digito
+   * @function handleMatchResult
+   * @param {Event} e - el objeto evento.
+   * @param {string} matchId - el id del partido a cargar el resultado.
+   */
   const handleMatchResult = (e, matchId) => {
     let newValue = e.target.value;
     const regex = /^\d+$/;
-    if(newValue.length > 1 && newValue[0] == 0) {
+    if (newValue.length > 1 && newValue[0] == 0) {
       newValue = newValue.slice(1)
     }
     if (newValue === '' || regex.test(newValue)) {
@@ -81,6 +112,15 @@ function Stage({ stage, division }) {
     }
   }
 
+  /**
+   * Función que guarda la prediccion de un partido y actualiza el estado que almacena las predicciones existentes del jugador
+   * Muestra un mensaje de éxito o error dependiendo de si el partido ya fue bloqueado o no
+   * @function saveMatchPrediction
+   * @async
+   * @param {string} userId - id del usuario
+   * @param {string} matchId - id del partido
+   * @param {string} matchLockDateTime - dato de fecha y hora del bloqueo para el partido
+   */
   const saveMatchPrediction = async (userId, matchId, matchLockDateTime) => {
     try {
       await createGamePredictionDB({
@@ -128,6 +168,13 @@ function Stage({ stage, division }) {
     }
   }
 
+  /**
+   * Función que guarda el resultado final de un partido
+   * Muestra un mensaje de confirmación para guardar la carga del resultado final
+   * @function saveMatchResult
+   * @async
+   * @param {Object} match - el objeto 'partido' con la información necesaria para guardar el resultado final
+   */
   const saveMatchResult = async (match) => {
     Swal.fire({
       title: "¿Estás seguro de guardar el partido con este resultado?",
@@ -176,27 +223,34 @@ function Stage({ stage, division }) {
     })
   }
 
+  /**
+   * Función que maneja la selección de los rivales para un partido
+   * @function selectRivals
+   * @param {Object} selectedCountry - El objeto del país seleccionado
+   * @param {string} matchId - id del partido
+   * @param {boolean} leftCountry - indica si el país seleccionado es el de la izquierda (para definir en la función si el admin esta cargando al 'local' o 'visitante')
+   */
   const selectRivals = (selectedCountry, matchId, leftCountry) => {
-    if(rivals.hasOwnProperty(matchId)) {
-        if(leftCountry) {
-          setRivals(prevState => ({
-            ...prevState,
-            [matchId]: {
-              ...prevState[matchId],
-              localCountryId: selectedCountry.value
-            }
-          }))
-        } else {
-          setRivals(prevState => ({
-            ...prevState,
-            [matchId]: {
-              ...prevState[matchId],
-              visitorCountryId: selectedCountry.value
-            }
-          }))
-        }
+    if (rivals.hasOwnProperty(matchId)) {
+      if (leftCountry) {
+        setRivals(prevState => ({
+          ...prevState,
+          [matchId]: {
+            ...prevState[matchId],
+            localCountryId: selectedCountry.value
+          }
+        }))
+      } else {
+        setRivals(prevState => ({
+          ...prevState,
+          [matchId]: {
+            ...prevState[matchId],
+            visitorCountryId: selectedCountry.value
+          }
+        }))
+      }
     } else {
-      if(leftCountry) {
+      if (leftCountry) {
         setRivals(prevState => ({
           ...prevState,
           [matchId]: {
@@ -216,6 +270,13 @@ function Stage({ stage, division }) {
     }
   }
 
+  /**
+   * Función que guarda los rivales seleccionados para un partido 
+   * Muestra un mensaje de confirmación antes de guardar los rivales del partido
+   * @function saveMatchRivals
+   * @async
+   * @param {Object} match - el objeto 'partido' con la información necesaria para guardar el resultado final
+   */
   const saveMatchRivals = async (match) => {
     Swal.fire({
       title: "¿Estás seguro de guardar el partido con estos rivales?",
@@ -266,6 +327,12 @@ function Stage({ stage, division }) {
     })
   }
 
+  /**
+   * Función que habilita una instancia de la competencia
+   * Muestra un mensaje de éxito con la habilitación de la instancia exitosa
+   * @function enableView
+   * @async
+   */
   const enableView = async () => {
     const viewToEnable = stages.find(obj => obj.name === stage)
     await updateStageDB({
@@ -281,50 +348,74 @@ function Stage({ stage, division }) {
     }))
   }
 
+  /**
+   * Función para controlar la opción de habilitar una instancia de la competencia únicamente si ya fueron cargados todos lols rivales de dicha instancia
+   * @function checkAvailability
+   */
   const checkAvailability = () => {
     let disabled = false
     const games = allGames.filter(game => game.stage === stage)
     games.forEach((game) => {
-      if(!game.localCountryResponse || !game.visitorCountryResponse){
+      if (!game.localCountryResponse || !game.visitorCountryResponse) {
         disabled = true
       }
     })
     return disabled
   }
 
+  /**
+   * Con cada cambio de instancia al navegar en la aplicaciòn, se va a colocar al usuario en el primer grupo o partido de dicha instancia
+   * @function useEffect
+   */
   useEffect(() => {
     setSelectedStage(0)
   }, [stage])
 
+  /**
+   * Se ejecuta para buscar las predicciones realizadas del usuario y actualiza el estado que las almacena
+   * @function useEffect2
+   */
   useEffect(() => {
     const fetchPredictions = async () => {
-        const predictionsByUserResponse = await findAllByUserIdDB(globalUser?.userId);
-        const updatedPredictions = predictionsByUserResponse.reduce((accumulator, currentObject) => {
-          accumulator[currentObject.gameResponse.id] = {
-            localScorePrediction: currentObject.localScorePrediction,
-            visitorScorePrediction: currentObject.visitorScorePrediction
-          };
-          return accumulator;
-        }, {});
-        setExistantPredictions(prevState => ({
-          ...prevState,
-          ...updatedPredictions
-        }));
+      const predictionsByUserResponse = await findAllByUserIdDB(globalUser?.userId);
+      const updatedPredictions = predictionsByUserResponse.reduce((accumulator, currentObject) => {
+        accumulator[currentObject.gameResponse.id] = {
+          localScorePrediction: currentObject.localScorePrediction,
+          visitorScorePrediction: currentObject.visitorScorePrediction
+        };
+        return accumulator;
+      }, {});
+      setExistantPredictions(prevState => ({
+        ...prevState,
+        ...updatedPredictions
+      }));
     };
-  
+
     fetchPredictions();
   }, [globalUser]);
 
+  /**
+   * Al montarse el componente se ejecutan las funciones definidas mas arriba (buscar todos los partidos, todas las fases/instancias de la competencia, y los datos del jugador logueado)
+   * @function useEffect3
+   */
   useEffect(() => {
     getAllGames();
     getAllStages()
     getPlayerData()
   }, [])
 
+  /**
+   * Al navegar a una fase/instancia diferente en la que se enontraba el usuario, el estado que almacena los rivales a enfrentarse vuelve a estar vacío
+   * @function useEffect4
+   */
   useEffect(() => {
     setRivals({})
   }, [location.pathname])
 
+  /**
+   * Al estar ya listas las predicciones hechas por el usuario, se setea en verdadero el estado que permite la renderizacion de los partidos
+   * @function useEffect5
+   */
   useEffect(() => {
     setReady(true)
   }, [existantPredictions])

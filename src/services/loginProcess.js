@@ -3,21 +3,21 @@ import { putWithHeaders } from "./config";
 const PATH = "/prode/loginProcess"
 
 export const acceptTermsAndConditionsDB = async (data) => {
-    const url = `${PATH}/acceptTerms`
+    const url = `${PATH}/acceptTerms`;
     try {
-        const response = await putWithHeaders(url, data)
-        return response.data
+        const response = await putWithHeaders(url, data);
+        return response.data;
     } catch (error) {
-        throw error.response
+        throw error.response;
     }
 }
 
 export const setUserAvatarDB = async (data) => {
-    const url = `${PATH}/updateAvatar`
+    const url = `${PATH}/updateAvatar`;
     try {
-        const response = await putWithHeaders(url, data)
-        return response.data
+        const response = await putWithHeaders(url, data);
+        return response.data;
     } catch (error) {
-        throw error.response
+        throw error.response;
     }
 }

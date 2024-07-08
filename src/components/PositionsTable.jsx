@@ -1,14 +1,27 @@
 import { useState, useEffect } from "react"
 import { getOrderedPlayersDB } from "../services/userService"
 
+/**
+ * @module Componente_PositionsTable
+ * @description Componente que maneja la tabla de posiciones de los jugadores según sus puntos y criterios de desempate
+ */
 function PositionsTable() {
   const [players, setPlayers] = useState([])
 
+  /**
+ * Busca la lista de jugadores ordenados por posicion y actualiza el estado que los almacena
+ * @function getPlayersInOrder
+ * @async
+ */
   const getPlayersInOrder = async () => {
     const orderedPlayers = await getOrderedPlayersDB() 
     setPlayers(orderedPlayers)
   }
 
+  /**
+ * Al montarse el componente se lleva a cabo la búsqueda de los jugadores orenados
+ * @function useEffect
+ */
   useEffect(() => {
     getPlayersInOrder()
   }, [])

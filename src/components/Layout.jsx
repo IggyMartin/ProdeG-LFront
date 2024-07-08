@@ -10,6 +10,10 @@ import { removeCookies } from '../services/cookiesService'
 import LogoutIcon from "../assets/logos/logoutIcon.png"
 import { Toast } from '../utils/functions'
 
+/**
+ * @module Componente_Layout
+ * @description Componente Layout para la aplicación
+ */
 function Layout({ children, page }) {
   const globalUser = useSelector(state => state.user.user)
   const timeoutId = useSelector(state => state.user.timeoutId)
@@ -19,15 +23,24 @@ function Layout({ children, page }) {
   const navigate = useNavigate()
   const location = useLocation()
 
+  /**
+   * Busca todas las fases de la competencia (fase de grupos, cuartos de final, etc) y actualiza el estado que las guarda
+   * @async
+   * @function getAllStages
+   */
   const getAllStages = async () => {
     const response = await getStagesDB()
     setStages(response)
   }
 
+  /**
+   * Desloguea al usuario limpiando el estado global en el que se lo almacena con sus datos, reseteando la función que se ejecuta al expirar la sesión, y remueve la 'cookie' (token) almacenada
+   * Navega al login
+   * @function handleLogout
+   */
   const handleLogout = () => {
     dispatch(saveUserData({}))
-    if(timeoutId) {
-      console.log("hola", timeoutId)
+    if (timeoutId) {
       clearTimeout(timeoutId)
       dispatch(setTimeoutId(null))
       dispatch(setScheduleLogout(false))
@@ -36,35 +49,52 @@ function Layout({ children, page }) {
     navigate("/")
   }
 
+  /**
+   * Navega a la fase correspondiente según el rol del usuario y el estado (verdadero o falso) de la fase seleccionada
+   * @function handleNavigation
+   * @param {string} stage - Nombre de la fase a la cuál navegar
+   */
   const handleNavigation = (stage) => {
     if (globalUser?.selectedRole === "ADMIN" && location.pathname !== `/${stage}`) {
-      navigate(`/${stage}`);
+      navigate(`/${stage}`)
     } else if (globalUser?.selectedRole === "PLAYER" &&
-               stages.find(obj => obj.name === stage && obj.status === true) &&
-               location.pathname !== `/${stage}`) {
-      navigate(`/${stage}`);
+              stages.find(obj => obj.name === stage && obj.status === true) &&
+              location.pathname !== `/${stage}`) {
+      navigate(`/${stage}`)
     }
   }
-  
+
+  /**
+   * Navega a la fase disponible más próxima al final de la competencia
+   * @function handleFixture
+   * @param {Event} e - El objeto 'evento'.
+   */
   const handleFixture = (e) => {
-    for(let stage of stages) {
-      if(stage.status === true) {
+    for (let stage of stages) {
+      if (stage.status === true) {
         navigate(`/${stage.name}`)
       }
     }
   }
 
+  /**
+   * Al montarse el componente busca todas las fases/instancias de la competencia
+   * @function useEffect 
+   */
   useEffect(() => {
     getAllStages()
   }, [])
 
-  useEffect(() => {
-    console.log(stages)
-  }, [stages])
-
+  /**
+   * Chequea si el usuario jugador tiene acceso a la fase de la competencia a la que quiere acceder y lo redirije al Home en caso de no tener acceso aún
+   * Muesra un mensaje de acceso denegado
+   * @function useEffect2
+   */
   useEffect(() => {
     stages.forEach(stageObj => {
-      if(globalUser.selectedRole === "PLAYER" && location.pathname.toLowerCase() === `/${stageObj.name}` && stageObj.status === false) {
+      if (globalUser.selectedRole === "PLAYER" &&
+          location.pathname.toLowerCase() === `/${stageObj.name}` &&
+          stageObj.status === false) {
         navigate("/home")
         Toast.fire({
           icon: "error",

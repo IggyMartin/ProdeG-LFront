@@ -1,6 +1,10 @@
 import Layout from "./Layout"
 import { Link } from "react-router-dom"
 
+/**
+ * @module Componente_NotFound
+ * @description Componente utilizado para todas las rutas a las que quiera acceder un usuario que no esten definidas en la aplicación
+ */
 function NotFound() {
   return (
     <Layout>

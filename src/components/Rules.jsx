@@ -1,6 +1,10 @@
 import Layout from "./Layout";
 import RulesDefinition from "./RulesDefinition";
 
+/**
+ * @module Componente_Rules
+ * @description Componente utilizado en la url 'rules'
+ */
 function Rules() {
   return (
     <Layout page="Reglamento">

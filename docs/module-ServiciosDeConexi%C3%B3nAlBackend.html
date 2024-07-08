@@ -1,0 +1,3176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>ServiciosDeConexiónAlBackend - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Componente_HomePage.html">Componente_HomePage</a><ul class='methods'><li data-type='method'><a href="module-Componente_HomePage.html#~addToTopFour">addToTopFour</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~getPlayersInOrder">getPlayersInOrder</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~getTopFourResults">getTopFourResults</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~handleAdminTopFourSubmit">handleAdminTopFourSubmit</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~handleTopFourSubmit">handleTopFourSubmit</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~logoutAndRedirectToLogin">logoutAndRedirectToLogin</a></li><li data-type='method'><a href="module-Componente_HomePage.html#~useEffect">useEffect</a></li></ul></li><li><a href="module-Componente_Layout.html">Componente_Layout</a><ul class='methods'><li data-type='method'><a href="module-Componente_Layout.html#~getAllStages">getAllStages</a></li><li data-type='method'><a href="module-Componente_Layout.html#~handleFixture">handleFixture</a></li><li data-type='method'><a href="module-Componente_Layout.html#~handleLogout">handleLogout</a></li><li data-type='method'><a href="module-Componente_Layout.html#~handleNavigation">handleNavigation</a></li><li data-type='method'><a href="module-Componente_Layout.html#~useEffect">useEffect</a></li><li data-type='method'><a href="module-Componente_Layout.html#~useEffect2">useEffect2</a></li></ul></li><li><a href="module-Componente_Login.html">Componente_Login</a><ul class='methods'><li data-type='method'><a href="module-Componente_Login.html#~acceptedTerms">acceptedTerms</a></li><li data-type='method'><a href="module-Componente_Login.html#~loginAdmin">loginAdmin</a></li><li data-type='method'><a href="module-Componente_Login.html#~loginPlayer">loginPlayer</a></li></ul></li><li><a href="module-Componente_LoginLayout.html">Componente_LoginLayout</a></li><li><a href="module-Componente_NotFound.html">Componente_NotFound</a></li><li><a href="module-Componente_PositionsTable.html">Componente_PositionsTable</a><ul class='methods'><li data-type='method'><a href="module-Componente_PositionsTable.html#~getPlayersInOrder">getPlayersInOrder</a></li><li data-type='method'><a href="module-Componente_PositionsTable.html#~useEffect">useEffect</a></li></ul></li><li><a href="module-Componente_Rewards.html">Componente_Rewards</a></li><li><a href="module-Componente_Rules.html">Componente_Rules</a></li><li><a href="module-Componente_RulesDefinition.html">Componente_RulesDefinition</a></li><li><a href="module-Componente_SelectCountry.html">Componente_SelectCountry</a><ul class='methods'><li data-type='method'><a href="module-Componente_SelectCountry.html#~handleAddToTopFour">handleAddToTopFour</a></li><li data-type='method'><a href="module-Componente_SelectCountry.html#~handleSelectedCountry">handleSelectedCountry</a></li><li data-type='method'><a href="module-Componente_SelectCountry.html#~useEffect">useEffect</a></li></ul></li><li><a href="module-Componente_SetAvatar.html">Componente_SetAvatar</a><ul class='methods'><li data-type='method'><a href="module-Componente_SetAvatar.html#~handleChosenAvatar">handleChosenAvatar</a></li><li data-type='method'><a href="module-Componente_SetAvatar.html#~handleContinue">handleContinue</a></li></ul></li><li><a href="module-Componente_Stage.html">Componente_Stage</a><ul class='methods'><li data-type='method'><a href="module-Componente_Stage.html#~checkAvailability">checkAvailability</a></li><li data-type='method'><a href="module-Componente_Stage.html#~enableView">enableView</a></li><li data-type='method'><a href="module-Componente_Stage.html#~getAllGames">getAllGames</a></li><li data-type='method'><a href="module-Componente_Stage.html#~getAllStages">getAllStages</a></li><li data-type='method'><a href="module-Componente_Stage.html#~getPlayerData">getPlayerData</a></li><li data-type='method'><a href="module-Componente_Stage.html#~handleMakePrediction">handleMakePrediction</a></li><li data-type='method'><a href="module-Componente_Stage.html#~handleMatchResult">handleMatchResult</a></li><li data-type='method'><a href="module-Componente_Stage.html#~saveMatchPrediction">saveMatchPrediction</a></li><li data-type='method'><a href="module-Componente_Stage.html#~saveMatchResult">saveMatchResult</a></li><li data-type='method'><a href="module-Componente_Stage.html#~saveMatchRivals">saveMatchRivals</a></li><li data-type='method'><a href="module-Componente_Stage.html#~selectRivals">selectRivals</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect">useEffect</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect2">useEffect2</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect3">useEffect3</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect4">useEffect4</a></li><li data-type='method'><a href="module-Componente_Stage.html#~useEffect5">useEffect5</a></li></ul></li><li><a href="module-Router.html">Router</a></li><li><a href="module-ServiciosDeConexi%25C3%25B3nAlBackend.html">ServiciosDeConexiónAlBackend</a><ul class='methods'><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~acceptTermsAndConditionsDB">acceptTermsAndConditionsDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~createAdminTopFourPredictionDB">createAdminTopFourPredictionDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~createGamePredictionDB">createGamePredictionDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~createUserTopFourPredictionDB">createUserTopFourPredictionDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~findAllByUserIdDB">findAllByUserIdDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getAllCountriesDB">getAllCountriesDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getAllGamesDB">getAllGamesDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getCookies">getCookies</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getHeaders">getHeaders</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getOrderedPlayersDB">getOrderedPlayersDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getStagesDB">getStagesDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getTopFourRanking">getTopFourRanking</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getUserByIdDB">getUserByIdDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~getWithHeaders">getWithHeaders</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~loginUserDB">loginUserDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~makeRequest">makeRequest</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~postWithHeaders">postWithHeaders</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~putWithHeaders">putWithHeaders</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~removeCookies">removeCookies</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~setCookies">setCookies</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~setUserAvatarDB">setUserAvatarDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~updateGameDB">updateGameDB</a></li><li data-type='method'><a href="module-ServiciosDeConexi%2525C3%2525B3nAlBackend.html#~updateStageDB">updateStageDB</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#Toast">Toast</a></li><li><a href="global.html#adminEmails">adminEmails</a></li><li><a href="global.html#convertToDateObject">convertToDateObject</a></li><li><a href="global.html#countriesFlags">countriesFlags</a></li><li><a href="global.html#countriesFlagsObj">countriesFlagsObj</a></li><li><a href="global.html#decodedToken">decodedToken</a></li><li><a href="global.html#divideGames">divideGames</a></li><li><a href="global.html#getCountriesAndSetSelectOptions">getCountriesAndSetSelectOptions</a></li><li><a href="global.html#getCountryFlag">getCountryFlag</a></li><li><a href="global.html#getTitle">getTitle</a></li><li><a href="global.html#handleTokenExpiration">handleTokenExpiration</a></li><li><a href="global.html#token">token</a></li><li><a href="global.html#topFourPredictionCountriesWithFlags">topFourPredictionCountriesWithFlags</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ServiciosDeConexiónAlBackend</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description usertext">contiene todos las funciones que conectan con los servidores del back-end</div>
+            
+
+            
+                
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>contiene todos las funciones que conectan con los servidores del back-end</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line5">line 5</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~acceptTermsAndConditionsDB"><span class="type-signature type-signature-inner">(inner) </span>acceptTermsAndConditionsDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que envía una petición para aceptar los términos y condiciones mediante una petición HTTP de tipo PUT</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line159">line 159</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la data que contiene la información del jugador aceptando los términos y condiciones</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createAdminTopFourPredictionDB"><span class="type-signature type-signature-inner">(inner) </span>createAdminTopFourPredictionDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que carga el top cuatro resultante de la competencia por parte de un admin mediante una petición HTTP de tipo POST</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line312">line 312</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">los datos para crear/guardar el top 4 de la competencia (guardado por el admin)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createGamePredictionDB"><span class="type-signature type-signature-inner">(inner) </span>createGamePredictionDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que crea la predicción de un partido por parte de un jugador mandando una petición HTTP de tipo POST</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">los datos de la predicción del partido</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createUserTopFourPredictionDB"><span class="type-signature type-signature-inner">(inner) </span>createUserTopFourPredictionDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que crea la predicción del top cuatro de un jugador mediante una petición HTTP de tipo POST</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line297">line 297</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">los datos para crear/guardar el top 4 de un jugador</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~findAllByUserIdDB"><span class="type-signature type-signature-inner">(inner) </span>findAllByUserIdDB<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que busca todos los partidos jugados (a los que les hizo una predicción) por parte del jugador logueado a la base de datos mediante una petición HTTP de tipo GET</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line248">line 248</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getAllCountriesDB"><span class="type-signature type-signature-inner">(inner) </span>getAllCountriesDB<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que busca todos los paises a la base de datos mediante una petición HTTP de tipo GET</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line110">line 110</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getAllGamesDB"><span class="type-signature type-signature-inner">(inner) </span>getAllGamesDB<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que busca todos los partidos a la base de datos mediante una petición HTTP de tipo GET</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line126">line 126</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getCookies"><span class="type-signature type-signature-inner">(inner) </span>getCookies<span class="signature">(name)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que devuelve el valor de una cookie usando su nombre</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line86">line 86</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el nombre de la cookie a devolver por la función</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getHeaders"><span class="type-signature type-signature-inner">(inner) </span>getHeaders<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que devuelve los 'headers' (encabezados HTTP) para la petición, incluyendo el token de autorización</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getOrderedPlayersDB"><span class="type-signature type-signature-inner">(inner) </span>getOrderedPlayersDB<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que busca a todos los jugadores ordenados según su posiciones en la tabla mediante una petición HTTP de tipo GET</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line357">line 357</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getStagesDB"><span class="type-signature type-signature-inner">(inner) </span>getStagesDB<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que busca las distintas instancias/fases de la competencia mandando una petición HTTP de tipo GET</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line264">line 264</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getTopFourRanking"><span class="type-signature type-signature-inner">(inner) </span>getTopFourRanking<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que busca el top cuatro resultante de la competencia cargado por un admin mediante una petición HTTP de tipo GET</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line327">line 327</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getUserByIdDB"><span class="type-signature type-signature-inner">(inner) </span>getUserByIdDB<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que busca un usuario en específico a traves del id del usuario logueado mediante una petición HTTP de tipo GET</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line343">line 343</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getWithHeaders"><span class="type-signature type-signature-inner">(inner) </span>getWithHeaders<span class="signature">(url)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que lleva a cabo una petición HTTP de tipo GET a la url especificada con los 'headers' (encabezados HTTP)</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la url a la cual hacer la petición HTTP de tipo GET</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~loginUserDB"><span class="type-signature type-signature-inner">(inner) </span>loginUserDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que loguea a un usuario mandando una petición HTTP de tipo POST al endpoint de autenticaciónsetea una cookie JWT con el logueo exitoso del usuario</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line189">line 189</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">los datos del usuario para loguearse</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~makeRequest"><span class="type-signature type-signature-inner">(inner) </span>makeRequest<span class="signature">(method, url, data<span class="signature-attributes">opt</span>, config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que hace una petición HTTP usando el método, url, data, y configuración especificadas</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>method</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">El método HTTP (ej: "get", "post", "put").</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">La url a la cual enviar la petición</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">La data a enviar con la petición</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>{}</code>
+                
+                </td>
+            
+
+            <td class="description last">Configuraciones opcionales adicionales para la petición</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~postWithHeaders"><span class="type-signature type-signature-inner">(inner) </span>postWithHeaders<span class="signature">(url, data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que lleva a cabo una petición HTTP de tipo POST a la url especificada con los 'headers' (encabezados HTTP) y la data</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la url a la cual hacer la petición HTTP de tipo POST</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la data enviar con la petición HTTP de tipo POST</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~putWithHeaders"><span class="type-signature type-signature-inner">(inner) </span>putWithHeaders<span class="signature">(url, data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que lleva a cabo una petición HTTP de tipo PUT a la url especificada con los 'headers' (encabezados HTTP) y la data</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la url a la cual hacer la petición HTTP de tipo PUT</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la data enviar con la petición HTTP de tipo PUT</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~removeCookies"><span class="type-signature type-signature-inner">(inner) </span>removeCookies<span class="signature">(name)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que elimina una cookie usando su nombre</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line97">line 97</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el nombre de la cookie a eliminar por la función</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~setCookies"><span class="type-signature type-signature-inner">(inner) </span>setCookies<span class="signature">(name, value, expirationDate)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que setea una cookie con un nombre, valor, y fecha de expiración</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el nombre de la cookie</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el valor de la cookie</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>expirationDate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la fecha de expiración de la cookie</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~setUserAvatarDB"><span class="type-signature type-signature-inner">(inner) </span>setUserAvatarDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que envía una petición para setear un avatar del usuario mediante una petición HTTP de tipo PUT</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line174">line 174</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la data conteniendo el avatar seleccionado por el usuario</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~updateGameDB"><span class="type-signature type-signature-inner">(inner) </span>updateGameDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que actualiza un partido según el id del partido enviado con la data pasada mediante una petición HTTP de tipo PUT</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line140">line 140</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">la data con la que actualizar el partido
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">el id del partido a actualizar</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~updateStageDB"><span class="type-signature type-signature-inner">(inner) </span>updateStageDB<span class="signature">(data)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li>Función que actualiza (habilita) una instancia/fase de la competencia mediante una petición HTTP de tipo PUT</li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="services_all.js.html">services/all.js</a>, <a href="services_all.js.html#line278">line 278</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">los datos para actualizar una fase/instancia de la competencia</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

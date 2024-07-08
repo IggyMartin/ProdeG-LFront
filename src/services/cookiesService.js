@@ -1,19 +1,19 @@
 import Cookies from "universal-cookie";
 
 export function setCookies(name, value, expirationDate) {
-    const cookies = new Cookies()
+    const cookies = new Cookies();
 
-    cookies.set(name, value, {expires: expirationDate})
+    cookies.set(name, value, {expires: expirationDate});
 }
 
-export function getCookies(name){
-    const cookies = new Cookies()
+export function getCookies(name) {
+    const cookies = new Cookies();
 
-    return cookies.get(name)
+    return cookies.get(name);
 }
 
-export function removeCookies(name){
-    const cookies = new Cookies()
+export function removeCookies(name) {
+    const cookies = new Cookies();
 
-    cookies.remove(name)
+    cookies.remove(name);
 }

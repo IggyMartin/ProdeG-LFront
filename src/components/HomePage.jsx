@@ -22,6 +22,11 @@ import { IoIosWarning } from "react-icons/io";
 import { getOrderedPlayersDB } from "../services/userService"
 import { handleTokenExpiration } from "../utils/functions"
 
+
+/**
+ * @module Componente_HomePage
+ * @description Componente funcional representando el Home. Condicional dependiendo el rol del usuario logueado (jugador o admin)
+ */
 function HomePage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -34,9 +39,13 @@ function HomePage() {
   const time = useRef(scheduleLogout)
   const [showTopFour, setShowTopFour] = useState(null)
 
+  /**
+   * Desloguea un usuario y lo redirije al login luego de mostrar una alerta cuando vence la sesión
+   * @function logoutAndRedirectToLogin
+   */
   const logoutAndRedirectToLogin = () => {
     Swal.fire({
-      title: "¡Tu sesion ha expirado!",
+      title: "¡Tu sesión ha expirado!",
       icon: 'warning',
       confirmButtonText: 'Volver',
       allowOutsideClick: false,
@@ -57,10 +66,21 @@ function HomePage() {
     })
   };
 
+  /**
+   * Busca y actualiza el estado que guarda al usuario logueado
+   * @async
+   * @function getPlayersInOrder
+   */
   const getPlayersInOrder = async () => {
     setUser((await getOrderedPlayersDB()).find(playerObj => playerObj.id === globalUser?.userId))
   }
 
+  /**
+   * Agrega el país seleccionado a la predicción del top cuatro
+   * @function addToTopFour
+   * @param {string} place - La posición (primera, segunda, tercera, o cuarta) donde agregar al país seleccionado
+   * @param {object} selectedCountry - El país seleccionado a agregar
+   */
   const addToTopFour = (place, selectedCountry) => {
     setTopFour(prevTopFour => {
         const newTopFour = [...prevTopFour];
@@ -68,13 +88,13 @@ function HomePage() {
             case "first":
                 newTopFour[0] = selectedCountry.value;
                 break;
-            case place = "second":
+            case "second":
                 newTopFour[1] = selectedCountry.value;
                 break;
-            case place = "third":
+            case "third":
                 newTopFour[2] = selectedCountry.value;
                 break;
-            case place = "fourth":
+            case "fourth":
                 newTopFour[3] = selectedCountry.value;
                 break;
             default:
@@ -84,6 +104,13 @@ function HomePage() {
     });
   };
 
+  /**
+   * Maneja la confirmación de la predicción del top cuatro del jugador
+   * Valida la selección y guarda la predicción si se cumplen las condiciones
+   * Muestra una alerta según la validación correspondiente
+   * @function handleTopFourSubmit
+   * @param {Event} e - El objeto 'evento' al hacer click.
+   */
   const handleTopFourSubmit = async (e) => {
     e.preventDefault()
     const targetDate = new Date("2024-06-20T20:50:00")
@@ -91,7 +118,7 @@ function HomePage() {
     const copyTopFour = new Set(topFour)
     if(topFour.includes(null)) {
       Swal.fire({
-        text: 'Asegurate de elegir las 4 posiciones!',
+        text: 'Asegúrate de elegir las 4 posiciones!',
         icon: 'warning',
         confirmButtonText: 'Hecho'
       })
@@ -99,7 +126,7 @@ function HomePage() {
     }
     if(copyTopFour.size < 4) {
       Swal.fire({
-        text: 'No puedes seleccionar el mismo pais mas de una vez',
+        text: 'No puedes seleccionar el mismo país más de una vez',
         icon: 'warning',
         confirmButtonText: 'Hecho'
       })
@@ -145,7 +172,7 @@ function HomePage() {
             lockDateTime: "2024-06-20T20:50:00"
           })
           Swal.fire({
-            text: 'Tu prediccion fue guardada con exito!',
+            text: 'Tu predicción fue guardada con éxito!',
             icon: 'success',
             confirmButtonText: 'Hecho',
             customClass: {
@@ -173,12 +200,19 @@ function HomePage() {
     })
   }
 
+  /**
+   * Maneja la confirmación del top cuatro cargado por un administrador
+   * Valida la selección y guarda la predicción si se cumplen las condiciones
+   * Muestra una alerta según la validación correspondiente
+   * @function handleAdminTopFourSubmit
+   * @param {Event} e - El objeto 'evento' al hacer click
+   */
   const handleAdminTopFourSubmit = (e) => {
     e.preventDefault()
     const copyTopFour = new Set(topFour)
     if(topFour.includes(null)) {
       Swal.fire({
-        text: 'Asegurate de elegir las 4 posiciones!',
+        text: 'Asegúrate de elegir las 4 posiciones!',
         icon: 'warning',
         confirmButtonText: 'Hecho'
       })
@@ -186,7 +220,7 @@ function HomePage() {
     }
     if(copyTopFour.size < 4) {
       Swal.fire({
-        text: 'No puedes seleccionar el mismo pais mas de una vez',
+        text: 'No puedes seleccionar el mismo país más de una vez',
         icon: 'warning',
         confirmButtonText: 'Hecho'
       })
@@ -237,6 +271,13 @@ function HomePage() {
     })
   }
 
+  /**
+   * Chequea si la fecha y hora actual se pasó de la fecha de expiración para realizar la predicción del top cuatro y actualiza el estado para mostrar u ocultar la selección del top cuatro a predecir.
+   * Setea la función a jecutarse una vez que se expira la sesión del usuario si es que esta no fue ya seteada
+   * Busca los jugadores por posición y los resultado del top cuatro
+   * Se ejecuta una vez al montarse el componente
+   * @function useEffect
+   */
   useEffect(() => {
     const targetDate = new Date("2024-06-20T20:50:00")
     const currentDate = new Date()
@@ -257,11 +298,14 @@ function HomePage() {
     getTopFourResults()
   }, [])
 
+  /**
+   * Busca el top cuatro guardado por un admin y actualiza el estado que lo guarda
+   * @async
+   * @function getTopFourResults
+   */
   const getTopFourResults = async () => {
     setTopFourResults((await getTopFourRanking())[0]?.adminCountryResponseList)
   }
-
-
 
   return (
     <Layout page={globalUser.selectedRole === "PLAYER" && "Prediccion de tus 4 mejores de America"}>

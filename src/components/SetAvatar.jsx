@@ -19,6 +19,10 @@ const avatars = [gato, leon, lobo, aguila]
 
 const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)]
 
+/**
+ * @module Componente_SetAvatar
+ * @description  Componente funcional para seleccionar el avatar del perfil
+ */
 function SetAvatar() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -27,28 +31,41 @@ function SetAvatar() {
     const [avatarsToChoose, setAvatarsToChoose] = useState(avatars.filter(avatar => avatar !== randomAvatar))
     const [changeAvatar, setChangeAvatar] = useState(false)
 
+    /**
+     * Actualiza el avatar del usuario con la nueva seleccion
+     * @function handleChosenAvatar
+     * @param {String} chosenAvatar - El avatar seleccionado por el usuario
+     */
     const handleChosenAvatar = (chosenAvatar) => {
-        const prevUserAvatar = userAvatar
-        setUserAvatar(chosenAvatar)
-        setAvatarsToChoose(prevState => [...prevState.filter(avatar => avatar !== chosenAvatar), prevUserAvatar])
-        setChangeAvatar(prevState => !prevState)
-    }
+        const prevUserAvatar = userAvatar;
+        setUserAvatar(chosenAvatar);
+        setAvatarsToChoose(prevState => [...prevState.filter(avatar => avatar !== chosenAvatar), prevUserAvatar]);
+        setChangeAvatar(prevState => !prevState);
+    };
 
+    /**
+     * Maneja la confirmación del avatar seleccionado por el usuario
+     * - Actualiza el avatar del usuario en la base de datos
+     * - Loguea al usuario para actualizar la sesión
+     * - Redirije al usuario al Home
+     * @function handleContinue
+     * @async
+     */
     const handleContinue = async () => {
         await setUserAvatarDB({
             id: globalUser?.loginProcess?.id,
             selectAvatar: userAvatar
-        })
+        });
         await loginUserDB({
             username: globalUser?.username,
             fullName: globalUser?.fullName,
             roleId: 2
-        })
-        const token = getCookies("jwt")
-        let decodedToken = jwtDecode(token)
-        dispatch(saveUserData(decodedToken))
-        navigate('/home')
-    }
+        });
+        const token = getCookies("jwt");
+        let decodedToken = jwtDecode(token);
+        dispatch(saveUserData(decodedToken));
+        navigate('/home');
+    };
 
     return (
         <LoginLayout>

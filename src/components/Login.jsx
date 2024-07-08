@@ -13,62 +13,78 @@ import { acceptTermsAndConditionsDB } from '../services/loginProcess';
 import { getCookies } from '../services/cookiesService';
 import GoogleLogo from "../assets/logos/googleLogo.png"
 
-
+/**
+ * @module Componente_Login
+ * @description Componente Login que maneja el registro/logueo de un usuario
+ */
 function Login() {
-    const dialogRef = useRef(null)
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const globalUser = useSelector(state => state.user.user)
-    const [ user, setUser ] = useState(null);
-    const [acceptTerms, setAcceptTerms] = useState(false)
-
+    const dialogRef = useRef(null);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const globalUser = useSelector(state => state.user.user);
+    const [user, setUser] = useState(null);
+    const [acceptTerms, setAcceptTerms] = useState(false);
+  
+    /**
+     * Loguea a un jugador y lo redirije a la url correspondiente segun el estado de su 'proceso de login'
+     * @function loginPlayer
+     * @async
+     * @param {Object} loginData - Data del login: mail y fullName
+     * @param {string} loginData.username - El mail del usuario
+     * @param {string} loginData.fullName - El nombre completo del usuario
+     */
     const loginPlayer = async (loginData) => {
-        const { username, fullName } = loginData
-        await loginUserDB({
-            username,
-            fullName,
-            roleId: 2
-        })
-        const userToken = getCookies("jwt");
-        const decodedToken = jwtDecode(userToken);
-        dispatch(saveUserData(decodedToken))
-        if (decodedToken?.loginProcess?.termsAndConditions) {
-            if (decodedToken?.loginProcess?.selectAvatar) {
-                navigate("/home");
-            } else {
-                navigate("/setAvatar");
-            }
+      const { username, fullName } = loginData;
+      await loginUserDB({
+        username,
+        fullName,
+        roleId: 2
+      });
+      const userToken = getCookies("jwt");
+      const decodedToken = jwtDecode(userToken);
+      dispatch(saveUserData(decodedToken));
+      if (decodedToken?.loginProcess?.termsAndConditions) {
+        if (decodedToken?.loginProcess?.selectAvatar) {
+          navigate("/home");
         } else {
-            if (dialogRef.current) {
-                dialogRef.current.showModal();
-                dialogRef.current.scrollTop = 0;
-            }
+          navigate("/setAvatar");
         }
-    }
-
+      } else {
+        if (dialogRef.current) {
+          dialogRef.current.showModal();
+          dialogRef.current.scrollTop = 0;
+        }
+      }
+    };
+  
+    /**
+     * Acepta terminos y condiciones. Actualiza el estado de su 'proceso de login'
+     * @async
+     * @function acceptedTerms
+     */
     const acceptedTerms = async () => {
-        const updatedUserLoginProcess = await acceptTermsAndConditionsDB({id: globalUser?.loginProcess?.id})
-        dispatch(updateUserLoginProcess(updatedUserLoginProcess))
-        navigate("/setAvatar")
-    }
-
+      const updatedUserLoginProcess = await acceptTermsAndConditionsDB({ id: globalUser?.loginProcess?.id });
+      dispatch(updateUserLoginProcess(updatedUserLoginProcess));
+      navigate("/setAvatar");
+    };
+  
+    /**
+     * Loguea a un admin y navega al Home
+     * @async
+     * @function loginAdmin
+     */
     const loginAdmin = async () => {
-        const { username, fullName } = user
-        await loginUserDB({
-            username,
-            fullName,
-            roleId: 1
-        })
-        const userToken = getCookies("jwt");
-        const decodedToken = jwtDecode(userToken);
-        dispatch(saveUserData(decodedToken))
-        navigate("/home")
-    }
-
-    // pasar logout a nav al clickear usuario
-    /*const logOut = () => {
-        googleLogout();
-    }*/
+      const { username, fullName } = user;
+      await loginUserDB({
+        username,
+        fullName,
+        roleId: 1
+      });
+      const userToken = getCookies("jwt");
+      const decodedToken = jwtDecode(userToken);
+      dispatch(saveUserData(decodedToken));
+      navigate("/home");
+    };
 
     return (
         <LoginLayout>
